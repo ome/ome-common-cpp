@@ -84,6 +84,7 @@ add_subdirectory(doc)
 add_subdirectory(lib/ome/compat)
 add_subdirectory(lib/ome/xerces)
 add_subdirectory(lib/ome/xml)
+add_subdirectory(lib/ome/bioformats)
 
 enable_testing()
 add_subdirectory(test)
