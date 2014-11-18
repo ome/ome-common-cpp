@@ -1,8 +1,8 @@
 /*
  * #%L
- * OME-BIOFORMATS C++ library for image IO.
+ * OME-INTERNAL C++ headers for internal use only
  * %%
- * Copyright © 2006 - 2014 Open Microscopy Environment:
+ * Copyright © 2013 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -36,43 +36,25 @@
  * #L%
  */
 
-#include <ome/compat/cstdint.h>
+#ifndef OME_TEST_TEST_H
+#define OME_TEST_TEST_H
 
-#include <ome/test/test.h>
+// Google Test has a problem with the protection of its
+// testing::internal::ImplicitlyConvertible<From, To> class
+// constructor; suppress these warnings.  It also misses declaration
+// for INSTANTIATE_TEST_CASE_P.
+#ifdef __GNUC__
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wctor-dtor-privacy"
+#endif
 
-TEST(Cstdint, Types)
-{
-  // Note assignments are purely to squash compiler warnings
+#include <gtest/gtest.h>
+#include <gtest/gtest-death-test.h>
 
-  uint8_t a;
-  a = 1;
-  ASSERT_EQ(a, 1U);
+#ifdef __GNUC__
+#  pragma GCC diagnostic pop
+#endif
 
-  uint16_t b;
-  b = 2;
-  ASSERT_EQ(b, 2U);
+#include <ome/test/config.h>
 
-  uint32_t c;
-  c = 3;
-  ASSERT_EQ(c, 3U);
-
-  uint64_t d;
-  d = 4;
-  ASSERT_EQ(d, 4U);
-
-  int8_t e;
-  e = 5;
-  ASSERT_EQ(e, 5);
-
-  int16_t f;
-  f = 6;
-  ASSERT_EQ(f, 6);
-
-  int32_t g;
-  g = 7;
-  ASSERT_EQ(g, 7);
-
-  int64_t h;
-  h = 8;
-  ASSERT_EQ(h, 8);
-}
+#endif // OME_TEST_TEST_H
