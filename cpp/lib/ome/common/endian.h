@@ -1,8 +1,8 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2014 Open Microscopy Environment:
+ * Copyright © 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -37,42 +37,37 @@
  */
 
 /**
- * @file ome/compat/array.h Array type substitution.
+ * @file endian.h Endian-specific integer types.  This header uses the
+ * proposed Boost.Endian headers, which are not yet an official part of
+ * any Boost release.
  *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
+ * @note Boost.Endian was imported from https://github.com/Beman/endian.git
+ * commit d339470e6.  It should be replaced with the real Boost implementation
+ * once it is included.  This is only included here as a workaround until
+ * then.
  */
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#ifndef OME_COMMON_ENDIAN_H
+# define OME_COMMON_ENDIAN_H
 
-# include <ome/common/config.h>
+#include <ome/common/config.h>
 
-# ifdef OME_HAVE_ARRAY
-#  include <array>
+// Work around missing BOOST_NOEXCEPT in older Boost versions (e.g. 1.46)
+#if defined(noexcept) and !defined(BOOST_NOEXCEPT)
+# define BOOST_NOEXCEPT
+#endif
+
+#include <ome/common/endian/types.hpp>
+
 namespace ome
 {
-  namespace compat
-  {
-    using std::array;
-  }
-}
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
-{
-  namespace compat
-  {
-    using boost::array;
-  }
-}
-# else
-#  error An array implementation is not available
-# endif
 
-#endif // OME_COMPAT_ARRAY_H
+  // Import all endian types into the ome namespace.
+  using namespace boost::endian;
+
+}
+
+#endif /* OME_COMMON_ENDIAN_H */
 
 /*
  * Local Variables:

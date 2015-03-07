@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-BIOFORMATS C++ library for image IO.
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -36,46 +36,38 @@
  * #L%
  */
 
-/**
- * @file ome/compat/array.h Array type substitution.
- *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
- */
+#include <ome/common/mstream.h>
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#include <ome/test/test.h>
 
-# include <ome/common/config.h>
+using ome::imstream;
 
-# ifdef OME_HAVE_ARRAY
-#  include <array>
-namespace ome
+TEST(Imstream, CreateFromIterator)
 {
-  namespace compat
-  {
-    using std::array;
-  }
+  std::string src("43 992.82 objective");
+  imstream is(&*src.begin(), &*src.end());
+
+  int i;
+  double d;
+  std::string s;
+
+  is >> i >> d >> s;
+  ASSERT_FALSE(!is);
+  ASSERT_EQ(i, 43);
+  ASSERT_EQ(s, "objective");
 }
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
+
+TEST(Imstream, CreateFromExtent)
 {
-  namespace compat
-  {
-    using boost::array;
-  }
+  const std::string src("95 982.642 reflector");
+  imstream is(src.c_str(), src.size());
+
+  int i;
+  double d;
+  std::string s;
+
+  is >> i >> d >> s;
+  ASSERT_FALSE(!is);
+  ASSERT_EQ(i, 95);
+  ASSERT_EQ(s, "reflector");
 }
-# else
-#  error An array implementation is not available
-# endif
-
-#endif // OME_COMPAT_ARRAY_H
-
-/*
- * Local Variables:
- * mode:C++
- * End:
- */

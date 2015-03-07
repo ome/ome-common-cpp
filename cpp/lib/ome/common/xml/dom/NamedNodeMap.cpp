@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-XERCES C++ library for working with Xerces C++.
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -36,46 +36,26 @@
  * #L%
  */
 
-/**
- * @file ome/compat/array.h Array type substitution.
- *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
- */
+#include <ome/common/xml/String.h>
+#include <ome/common/xml/dom/NamedNodeMap.h>
+#include <ome/common/xml/dom/Node.h>
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
-
-# include <ome/common/config.h>
-
-# ifdef OME_HAVE_ARRAY
-#  include <array>
 namespace ome
 {
-  namespace compat
+  namespace common
   {
-    using std::array;
+    namespace xml
+    {
+      namespace dom
+      {
+
+        Node
+        NamedNodeMap::getNamedItem(const std::string& name)
+        {
+          return Node((*this)->getNamedItem(String(name)), false);
+        }
+
+      }
+    }
   }
 }
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
-{
-  namespace compat
-  {
-    using boost::array;
-  }
-}
-# else
-#  error An array implementation is not available
-# endif
-
-#endif // OME_COMPAT_ARRAY_H
-
-/*
- * Local Variables:
- * mode:C++
- * End:
- */

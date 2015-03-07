@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-XERCES C++ library for working with Xerces C++.
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -36,46 +36,65 @@
  * #L%
  */
 
-/**
- * @file ome/compat/array.h Array type substitution.
- *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
- */
+#include <iostream>
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#include <ome/common/xml/ErrorReporter.h>
+#include <ome/common/xml/String.h>
 
-# include <ome/common/config.h>
+#include <xercesc/sax/SAXParseException.hpp>
 
-# ifdef OME_HAVE_ARRAY
-#  include <array>
 namespace ome
 {
-  namespace compat
+  namespace common
   {
-    using std::array;
+    namespace xml
+    {
+
+      ErrorReporter::ErrorReporter(std::ostream& stream):
+        stream(stream),
+        saw_error(false)
+      {
+      }
+
+      ErrorReporter::~ErrorReporter()
+      {
+      }
+
+      void
+      ErrorReporter::warning(const xercesc::SAXParseException& e)
+      {
+        stream << "Error at file \"" << String(e.getSystemId())
+               << "\", line " << e.getLineNumber()
+               << ", column " << e.getColumnNumber()
+               << "\n   Message: " << String(e.getMessage()) << std::endl;
+      }
+
+      void
+      ErrorReporter::error(const xercesc::SAXParseException& e)
+      {
+        saw_error = true;
+        stream << "Error at file \"" << String(e.getSystemId())
+               << "\", line " << e.getLineNumber()
+               << ", column " << e.getColumnNumber()
+               << "\n   Message: " << String(e.getMessage()) << std::endl;
+      }
+
+      void
+      ErrorReporter::fatalError(const xercesc::SAXParseException& e)
+      {
+        saw_error = true;
+        std::cerr << "Fatal Error at file \"" << String(e.getSystemId())
+                  << "\", line " << e.getLineNumber()
+                  << ", column " << e.getColumnNumber()
+                  << "\n   Message: " << String(e.getMessage()) << std::endl;
+      }
+
+      void
+      ErrorReporter::resetErrors()
+      {
+        saw_error = false;
+      }
+
+    }
   }
 }
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
-{
-  namespace compat
-  {
-    using boost::array;
-  }
-}
-# else
-#  error An array implementation is not available
-# endif
-
-#endif // OME_COMPAT_ARRAY_H
-
-/*
- * Local Variables:
- * mode:C++
- * End:
- */

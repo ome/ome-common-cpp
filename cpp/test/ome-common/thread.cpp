@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-BIOFORMATS C++ library for image IO.
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -36,46 +36,72 @@
  * #L%
  */
 
-/**
- * @file ome/compat/array.h Array type substitution.
- *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
- */
+#include <boost/thread.h>
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#include <ome/test/test.h>
 
-# include <ome/common/config.h>
-
-# ifdef OME_HAVE_ARRAY
-#  include <array>
-namespace ome
+namespace
 {
-  namespace compat
+
+  void
+  threadtest1()
   {
-    using std::array;
   }
+
+  class threadtest2
+  {
+  private:
+    int a;
+    int b;
+    int value;
+    boost::mutex value_guard;
+
+  public:
+    threadtest2(int a, int b):
+      a(a),
+      b(b),
+      value(0),
+      value_guard()
+    {}
+
+    void operator() ()
+    {
+      boost::lock_guard<boost::mutex> lock(value_guard);
+      value = a + b;
+    }
+
+    int result()
+    {
+      boost::lock_guard<boost::mutex> lock(value_guard);
+      return value;
+    }
+  };
+
 }
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
+
+TEST(Mutex, LockGuard)
 {
-  namespace compat
-  {
-    using boost::array;
-  }
+  boost::mutex m;
+  boost::lock_guard<boost::mutex> lock(m);
 }
-# else
-#  error An array implementation is not available
-# endif
 
-#endif // OME_COMPAT_ARRAY_H
+// Create thread from bare function.  Note: Could also have been a
+// static class method.
+TEST(Thread, Function)
+{
+  boost::thread foo(threadtest1);
+}
 
-/*
- * Local Variables:
- * mode:C++
- * End:
- */
+// Create thread from function object.  Check state after join and use
+// mutexes for testing purposes.
+TEST(Thread, Object)
+{
+  threadtest2 t(4,55);
+
+  // Note that boost::ref avoids a copy of the functor so the result
+  // is set in the same object.
+  boost::thread foo(boost::ref(t));
+  foo.join();
+
+  ASSERT_EQ(59, t.result());
+}

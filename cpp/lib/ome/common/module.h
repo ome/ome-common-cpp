@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-COMMON C++ library for C++ compatibility/portability
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -37,42 +37,41 @@
  */
 
 /**
- * @file ome/compat/array.h Array type substitution.
+ * @file ome/common/module.h Module loading and introspection.
  *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
+ * This header defines functions for introspecting the runtime
+ * location of modules.
  */
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#ifndef OME_COMMON_MODULE_H
+# define OME_COMMON_MODULE_H
 
 # include <ome/common/config.h>
+# include <ome/common/filesystem.h>
 
-# ifdef OME_HAVE_ARRAY
-#  include <array>
 namespace ome
 {
-  namespace compat
+  namespace common
   {
-    using std::array;
-  }
-}
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
-{
-  namespace compat
-  {
-    using boost::array;
-  }
-}
-# else
-#  error An array implementation is not available
-# endif
 
-#endif // OME_COMPAT_ARRAY_H
+    /**
+     * Get the runtime installation prefix path for this module.
+     *
+     * This is intended primarily for internal use, to allow discovery
+     * of the location of datafiles, loadable modules, etc.
+     *
+     * @param dtype the directory type to query.
+     * @returns the installation prefix path.
+     * @throws a @c std::runtime_error if the path could not be
+     * determined.
+     */
+    boost::filesystem::path
+    module_runtime_path(const std::string& dtype);
+
+  }
+}
+
+#endif // OME_COMMON_MODULE_H
 
 /*
  * Local Variables:

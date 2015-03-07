@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-COMMON C++ library for C++ compatibility/portability
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -37,42 +37,44 @@
  */
 
 /**
- * @file ome/compat/array.h Array type substitution.
+ * @file ome/common/variant.h Variant type limit workaround.
  *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
+ * This header increases the Boost MPL size limits, if required.  Some
+ * older versions of Boost.Variant throw runtime exceptions when using
+ * Variant and MPL with a number of types over a compile-time limit.
  */
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#ifndef OME_COMMON_VARIANT_H
+# define OME_COMMON_VARIANT_H
 
 # include <ome/common/config.h>
 
-# ifdef OME_HAVE_ARRAY
-#  include <array>
-namespace ome
-{
-  namespace compat
-  {
-    using std::array;
-  }
-}
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
-{
-  namespace compat
-  {
-    using boost::array;
-  }
-}
-# else
-#  error An array implementation is not available
+#ifndef OME_VARIANT_LIMIT
+# ifndef BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
+/// Disable MPL header preprocessing (to allow the following macros to be modified).
+#  define BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
 # endif
+# ifndef BOOST_MPL_LIMIT_VECTOR_SIZE
+/// MPL vector size limit increase.
+#  define BOOST_MPL_LIMIT_VECTOR_SIZE 40
+# endif
+# ifndef BOOST_MPL_LIMIT_LIST_SIZE
+/// MPL list size limit increase.
+#  define BOOST_MPL_LIMIT_LIST_SIZE 40
+# endif
+#endif
 
-#endif // OME_COMPAT_ARRAY_H
+#include <boost/mpl/insert_range.hpp>
+#include <boost/mpl/joint_view.hpp>
+#include <boost/mpl/transform_view.hpp>
+#include <boost/mpl/vector.hpp>
+
+#include <boost/variant/apply_visitor.hpp>
+//#include <boost/variant/multivisitors.hpp>
+#include <boost/variant/get.hpp>
+#include <boost/variant/variant.hpp>
+
+#endif // OME_COMMON_VARIANT_H
 
 /*
  * Local Variables:

@@ -1,8 +1,8 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2014 Open Microscopy Environment:
+ * Copyright © 2015 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -36,46 +36,37 @@
  * #L%
  */
 
-/**
- * @file ome/compat/array.h Array type substitution.
- *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
- */
+#include <ome/common/log.h>
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+namespace
+{
 
-# include <ome/common/config.h>
+  ome::logging::trivial::severity_level globalSeverity = ome::logging::trivial::warning;
 
-# ifdef OME_HAVE_ARRAY
-#  include <array>
+}
+
 namespace ome
 {
-  namespace compat
+  namespace common
   {
-    using std::array;
+
+    void
+    setLogLevel(logging::trivial::severity_level severity)
+    {
+      globalSeverity = severity;
+#ifdef OME_HAVE_BOOST_LOG
+      ome::logging::core::get()->set_filter
+        (
+         ome::logging::trivial::severity >= severity
+         );
+#endif // OME_HAVE_BOOST_LOG
+    }
+
+    logging::trivial::severity_level
+    getLogLevel()
+    {
+      return globalSeverity;
+    }
+
   }
 }
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
-{
-  namespace compat
-  {
-    using boost::array;
-  }
-}
-# else
-#  error An array implementation is not available
-# endif
-
-#endif // OME_COMPAT_ARRAY_H
-
-/*
- * Local Variables:
- * mode:C++
- * End:
- */

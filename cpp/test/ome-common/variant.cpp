@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-BIOFORMATS C++ library for image IO.
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -36,46 +36,33 @@
  * #L%
  */
 
-/**
- * @file ome/compat/array.h Array type substitution.
- *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
- */
+#include <ome/common/variant.h>
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#include <gtest/gtest.h>
 
-# include <ome/common/config.h>
+typedef boost::variant<int,double,std::string> var;
 
-# ifdef OME_HAVE_ARRAY
-#  include <array>
-namespace ome
+TEST(Variant, Create)
 {
-  namespace compat
-  {
-    using std::array;
-  }
+  var v;
 }
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
+
+TEST(Variant, SetInt)
 {
-  namespace compat
-  {
-    using boost::array;
-  }
+  var v1(int(32354));
+  ASSERT_EQ(boost::get<int>(v1), 32354);
+
+  var v2;
+  v2 = int(32354);
+  ASSERT_EQ(boost::get<int>(v2), 32354);
 }
-# else
-#  error An array implementation is not available
-# endif
 
-#endif // OME_COMPAT_ARRAY_H
+TEST(Variant, SetString)
+{
+  var v1(std::string("test"));
+  ASSERT_EQ(boost::get<std::string>(v1), "test");
 
-/*
- * Local Variables:
- * mode:C++
- * End:
- */
+  var v2;
+  v2 = std::string("test");
+  ASSERT_EQ(boost::get<std::string>(v2), "test");
+}

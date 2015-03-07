@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-XERCES C++ library for working with Xerces C++.
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -36,43 +36,62 @@
  * #L%
  */
 
-/**
- * @file ome/compat/array.h Array type substitution.
- *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
- */
+#ifndef OME_COMMON_XML_PLATFORM_H
+#define OME_COMMON_XML_PLATFORM_H
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#include <xercesc/util/PlatformUtils.hpp>
 
-# include <ome/common/config.h>
-
-# ifdef OME_HAVE_ARRAY
-#  include <array>
 namespace ome
 {
-  namespace compat
+  namespace common
   {
-    using std::array;
-  }
-}
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
-{
-  namespace compat
-  {
-    using boost::array;
-  }
-}
-# else
-#  error An array implementation is not available
-# endif
+    /**
+     * Xerces-C modern C++ wrapper.  All classes in this namespace wrap
+     * the Xerces-C classes and functions to provide RAII and
+     * exception-safe equivalents, and which also handle memory
+     * management transparently.
+     */
+    namespace xml
+    {
 
-#endif // OME_COMPAT_ARRAY_H
+      /**
+       * XML Platform.  This class wraps calls to the
+       * xercesc::XMLPlatformUtils Initialize() and Terminate()
+       * functions, to allow their use in an exception-safe manner.
+       * Create an instance of this class prior to performing any work
+       * with Xerces, and ensure it will remain in scope for all work to
+       * complete.  When the scope is exited, or an exception is thrown,
+       * Xerces will be automatically terminated.  Any number of
+       * instances of this class may be created; Xerces will only be
+       * terminated when the last instance is destroyed.
+       */
+      class Platform
+      {
+      public:
+        inline
+        /**
+         * Construct a Platform.  Calls xercesc::XMLPlatformUtils::Initialize().
+         */
+        Platform()
+        {
+          xercesc::XMLPlatformUtils::Initialize();
+        }
+
+        /**
+         * Destructor. Calls xercesc::XMLPlatformUtils::Terminate().
+         */
+        inline
+        ~Platform()
+        {
+          xercesc::XMLPlatformUtils::Terminate();
+        }
+      };
+
+    }
+  }
+}
+
+#endif // OME_COMMON_XML_PLATFORM_H
 
 /*
  * Local Variables:

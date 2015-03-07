@@ -34,27 +34,62 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-include_directories(${OME_TOPLEVEL_INCLUDES}
-                    ${Boost_INCLUDE_DIRS})
+if(BUILD_TESTS)
+  include_directories(${OME_TOPLEVEL_INCLUDES}
+                      ${Boost_INCLUDE_DIRS}
+                      ${XercesC_INCLUDE_DIRS})
 
-set(ome_compat_headers
-    array.h
-    cstdint.h
-    memory.h
-    regex.h
-    tuple.h)
+  if(extended-tests)
+    header_test_from_file(ome-common ome-common ome/common)
+    bf_add_test(ome-common/headers ome-common-headers)
+  endif(extended-tests)
 
-# Use INTERFACE for cmake 3.0 and later; earlier versions add regex to ome-common.
-if(CMAKE_MAJOR_VERSION GREATER 2)
-  add_library(ome-compat INTERFACE)
-  target_link_libraries(ome-compat INTERFACE
-                        ${REGEX_LIBRARY})
-endif()
+  add_executable(boolean boolean.cpp)
+  target_link_libraries(boolean ome-common)
+  target_link_libraries(boolean ome-test)
 
-set(ome_compat_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/compat")
+  bf_add_test(ome-common/boolean boolean)
 
-install(FILES ${ome_compat_headers}
-        DESTINATION ${ome_compat_includedir})
+  add_executable(endian endian.cpp)
+  target_link_libraries(endian ome-common)
+  target_link_libraries(endian ome-test)
 
-# Dump header list for testing
-header_include_list_write(ome_compat_headers "" ome/compat ${PROJECT_BINARY_DIR}/cpp/test/ome-compat)
+  bf_add_test(ome-common/endian endian)
+
+  add_executable(module module.cpp)
+  target_link_libraries(module ome-common)
+  target_link_libraries(module ome-test)
+
+  bf_add_test(ome-common/module module)
+
+  add_executable(mstream mstream.cpp)
+  target_link_libraries(mstream ome-common)
+  target_link_libraries(mstream ome-test)
+
+  bf_add_test(ome-common/mstream mstream)
+
+  add_executable(thread thread.cpp)
+  target_link_libraries(thread ome-common)
+  target_link_libraries(thread ome-test)
+
+  bf_add_test(ome-common/thread thread)
+
+  add_executable(string string.cpp)
+  target_link_libraries(string ome-common)
+  target_link_libraries(string ome-test)
+
+  bf_add_test(ome-common/string string)
+
+  add_executable(variant variant.cpp)
+  target_link_libraries(variant ome-common)
+  target_link_libraries(variant ome-test)
+
+  bf_add_test(ome-common/variant variant)
+
+  add_executable(xerces xerces.cpp)
+  target_link_libraries(xerces ome-common)
+  target_link_libraries(xerces ome-test)
+
+  bf_add_test(ome-common/xerces xerces)
+
+endif(BUILD_TESTS)

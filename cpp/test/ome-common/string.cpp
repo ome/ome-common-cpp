@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-COMPAT C++ library for C++ compatibility/portability
+ * OME-BIOFORMATS C++ library for image IO.
  * %%
  * Copyright © 2006 - 2014 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -36,46 +36,46 @@
  * #L%
  */
 
-/**
- * @file ome/compat/array.h Array type substitution.
- *
- * This header substitutes Boost types for the same types in the std
- * namespace when not using a conforming C++11 compiler.  This permits
- * all code to use the C++11 standard types irrespective of the
- * compiler being used.
- */
+#include <ome/common/string.h>
 
-#ifndef OME_COMPAT_ARRAY_H
-# define OME_COMPAT_ARRAY_H
+#include <ome/test/test.h>
 
-# include <ome/common/config.h>
+using ome::ltrim;
+using ome::rtrim;
+using ome::trim;
 
-# ifdef OME_HAVE_ARRAY
-#  include <array>
-namespace ome
+TEST(String, LeftTrim)
 {
-  namespace compat
-  {
-    using std::array;
-  }
+  std::string s1(" left ");
+  ASSERT_EQ(ltrim(s1), "left ");
+
+  std::string s2("none");
+  ASSERT_EQ(ltrim(s2), "none");
+
+  std::string s3("");
+  ASSERT_EQ(ltrim(s3), "");
 }
-# elif OME_HAVE_BOOST_ARRAY
-#  include <boost/array.hpp>
-namespace ome
+
+TEST(String, RightTrim)
 {
-  namespace compat
-  {
-    using boost::array;
-  }
+  std::string s1(" right\n");
+  ASSERT_EQ(rtrim(s1), " right");
+
+  std::string s2("none");
+  ASSERT_EQ(rtrim(s2), "none");
+
+  std::string s3("");
+  ASSERT_EQ(rtrim(s3), "");
 }
-# else
-#  error An array implementation is not available
-# endif
 
-#endif // OME_COMPAT_ARRAY_H
+TEST(String, FullTrim)
+{
+  std::string s1("  \tfull \v ");
+  ASSERT_EQ(trim(s1), "full");
 
-/*
- * Local Variables:
- * mode:C++
- * End:
- */
+  std::string s2("none");
+  ASSERT_EQ(trim(s2), "none");
+
+  std::string s3("");
+  ASSERT_EQ(trim(s3), "");
+}
