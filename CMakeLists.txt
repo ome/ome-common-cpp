@@ -61,7 +61,7 @@ enable_language(C)
 list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-include("${CMAKE_CURRENT_LIST_DIR}/cmake/BioFormatsCommon.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/cmake/Options.cmake")
 
 project(ome-common)
 message(STATUS "Configuring ${CMAKE_PROJECT_NAME}")
