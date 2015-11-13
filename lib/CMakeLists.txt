@@ -34,7 +34,6 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-add_subdirectory(ome/internal)
 add_subdirectory(ome/compat)
 add_subdirectory(ome/common)
 add_subdirectory(ome/test)

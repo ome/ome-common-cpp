@@ -36,9 +36,8 @@
  * #L%
  */
 
+#include <ome/common/config-internal.h>
 #include <ome/common/module.h>
-
-#include <ome/internal/config.h>
 
 #include <ome/test/test.h>
 

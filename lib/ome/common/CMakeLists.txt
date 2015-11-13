@@ -41,6 +41,8 @@ include_directories(${OME_TOPLEVEL_INCLUDES}
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-internal.h.in
+               ${CMAKE_CURRENT_BINARY_DIR}/config-internal.h)
 
 set(ome_common_static_headers
     boolean.h

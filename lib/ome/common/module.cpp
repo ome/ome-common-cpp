@@ -39,10 +39,9 @@
 #include <boost/format.hpp>
 #include <boost/range/size.hpp>
 
+#include <ome/common/config-internal.h>
 #include <ome/common/filesystem.h>
 #include <ome/common/module.h>
-
-#include <ome/internal/config.h>
 
 #include <cstring>
 #include <map>
