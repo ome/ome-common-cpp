@@ -34,17 +34,33 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/config.h)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/version.h)
+include_directories(${OME_TOPLEVEL_INCLUDES}
+                    ${Boost_INCLUDE_DIRS}
+                    ${GTEST_INCLUDE_DIR})
 
-set(ome_internal_static_headers
-    url.h)
+if(BUILD_TESTS)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
+                 ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
-set(ome_internal_generated_headers
-    ${CMAKE_CURRENT_BINARY_DIR}/config.h
-    ${CMAKE_CURRENT_BINARY_DIR}/version.h)
+  set(ome_test_static_headers
+      io.h
+      test.h)
 
-# Dump header list for testing
-header_include_list_write(ome_internal_static_headers ome_internal_generated_headers ome/internal ${PROJECT_BINARY_DIR}/cpp/test/ome-internal)
+  set(ome_test_generated_headers
+      ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+
+  set(ome_test_sources
+      io.cpp
+      main.cpp)
+
+  add_library(ome-test STATIC
+              ${ome_test_sources}
+              ${ome_test_static_headers}
+              ${ome_test_generated_headers})
+
+  target_link_libraries(ome-test ${GTEST_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+  set_target_properties(ome-test PROPERTIES LINKER_LANGUAGE CXX)
+
+  # Dump header list for testing
+  header_include_list_write(ome_test_static_headers ome_test_generated_headers ome/test ${PROJECT_BINARY_DIR}/test/ome-test)
+endif(BUILD_TESTS)

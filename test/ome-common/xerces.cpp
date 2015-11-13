@@ -88,29 +88,29 @@ public:
     if (params.resolver == XercesTestParameters::FILES)
       {
         resolver.registerEntity("http://www.w3.org/2001/XMLSchema",
-                               boost::filesystem::path(PROJECT_SOURCE_DIR "/components/specification/released-schema/external/XMLSchema.xsd"));
+                               boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/external/XMLSchema.xsd"));
 
         resolver.registerEntity("http://www.w3.org/2001/xml.xsd",
-                                boost::filesystem::path(PROJECT_SOURCE_DIR "/components/specification/released-schema/external/xml.xsd"));
+                                boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/external/xml.xsd"));
 
         resolver.registerEntity("http://www.openmicroscopy.org/Schemas/OME/2012-06/ome.xsd",
-                                boost::filesystem::path(PROJECT_SOURCE_DIR "/components/specification/released-schema/2012-06/ome.xsd"));
+                                boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/2012-06/ome.xsd"));
 
         resolver.registerEntity("http://www.openmicroscopy.org/Schemas/BinaryFile/2012-06/BinaryFile.xsd",
-                                boost::filesystem::path(PROJECT_SOURCE_DIR "/components/specification/released-schema/2012-06/BinaryFile.xsd"));
+                                boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/2012-06/BinaryFile.xsd"));
 
         resolver.registerEntity("http://www.openmicroscopy.org/Schemas/SA/2012-06/SA.xsd",
-                                boost::filesystem::path(PROJECT_SOURCE_DIR "/components/specification/released-schema/2012-06/SA.xsd"));
+                                boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/2012-06/SA.xsd"));
 
         resolver.registerEntity("http://www.openmicroscopy.org/Schemas/SPW/2012-06/SPW.xsd",
-                                boost::filesystem::path(PROJECT_SOURCE_DIR "/components/specification/released-schema/2012-06/SPW.xsd"));
+                                boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/2012-06/SPW.xsd"));
 
         resolver.registerEntity("http://www.openmicroscopy.org/Schemas/ROI/2012-06/ROI.xsd",
-                                boost::filesystem::path(PROJECT_SOURCE_DIR "/components/specification/released-schema/2012-06/ROI.xsd"));
+                                boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/2012-06/ROI.xsd"));
       }
     else if (params.resolver == XercesTestParameters::CATALOG)
       {
-        resolver.registerCatalog(boost::filesystem::path(PROJECT_SOURCE_DIR "/components/specification/released-schema/catalog.xml"));
+        resolver.registerCatalog(boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/catalog.xml"));
       }
 
   }
@@ -269,7 +269,7 @@ TEST_P(XercesTest, DocumentToFile)
                   std::istreambuf_iterator<char>());
 
       xml::dom::Document doc(ome::common::xml::dom::createDocument(data, resolver));
-      boost::filesystem::path file(PROJECT_BINARY_DIR "/cpp/test/ome-common");
+      boost::filesystem::path file(PROJECT_BINARY_DIR "/test/ome-common");
       std::string name("test-document-output-");
       name += boost::filesystem::path(params.filename).filename().generic_string();
       file /= name;
@@ -416,7 +416,7 @@ TEST_P(XercesTest, NodeToFile)
                   std::istreambuf_iterator<char>());
 
       xml::dom::Document doc(ome::common::xml::dom::createDocument(data, resolver));
-      boost::filesystem::path file(PROJECT_BINARY_DIR "/cpp/test/ome-common");
+      boost::filesystem::path file(PROJECT_BINARY_DIR "/test/ome-common");
       std::string name("test-document-output-");
       name += boost::filesystem::path(params.filename).filename().generic_string();
       file /= name;
@@ -548,11 +548,11 @@ TEST_P(XercesTest, NodeWriteStream)
 
 XercesTestParameters params[] =
   {
-    //    XercesTestParameters(PROJECT_SOURCE_DIR "/components/specification/samples/2012-06/18x24y5z5t2c8b-text.ome", XercesTestParameters::NONE),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/components/specification/samples/2012-06/18x24y5z5t2c8b-text.ome", XercesTestParameters::FILES, true),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/components/specification/samples/2012-06/18x24y5z5t2c8b-text.ome", XercesTestParameters::CATALOG, true),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/cpp/test/ome-common/data/18x24y5z5t2c8b-text-invalid.ome", XercesTestParameters::CATALOG, false),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/cpp/test/ome-common/data/18x24y5z5t2c8b-text-invalid2.ome", XercesTestParameters::CATALOG, false)
+    //    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::NONE),
+    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::FILES, true),
+    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::CATALOG, true),
+    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid.ome", XercesTestParameters::CATALOG, false),
+    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid2.ome", XercesTestParameters::CATALOG, false)
   };
 
 // Disable missing-prototypes warning for INSTANTIATE_TEST_CASE_P;

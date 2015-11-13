@@ -34,10 +34,27 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-add_subdirectory(ome/compat)
-add_subdirectory(ome/common)
-add_subdirectory(ome/internal)
-add_subdirectory(ome/xml)
-add_subdirectory(ome/bioformats)
-add_subdirectory(ome/qtwidgets)
-add_subdirectory(ome/test)
+include_directories(${OME_TOPLEVEL_INCLUDES}
+                    ${Boost_INCLUDE_DIRS})
+
+set(ome_compat_headers
+    array.h
+    cstdint.h
+    memory.h
+    regex.h
+    tuple.h)
+
+# Use INTERFACE for cmake 3.0 and later; earlier versions add regex to ome-common.
+if(CMAKE_MAJOR_VERSION GREATER 2)
+  add_library(ome-compat INTERFACE)
+  target_link_libraries(ome-compat INTERFACE
+                        ${REGEX_LIBRARY})
+endif()
+
+set(ome_compat_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/compat")
+
+install(FILES ${ome_compat_headers}
+        DESTINATION ${ome_compat_includedir})
+
+# Dump header list for testing
+header_include_list_write(ome_compat_headers "" ome/compat ${PROJECT_BINARY_DIR}/test/ome-compat)

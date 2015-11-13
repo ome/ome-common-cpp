@@ -59,14 +59,14 @@ enable_language(CXX)
 enable_language(C)
 
 list(APPEND CMAKE_MODULE_PATH
-     "${CMAKE_CURRENT_LIST_DIR}/cpp/cmake")
+     "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-include("${CMAKE_CURRENT_LIST_DIR}/cpp/cmake/BioFormatsCommon.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/cmake/BioFormatsCommon.cmake")
 
-project(bioformats)
-message(STATUS "Configuring Bio-Formats main build")
+project(ome-common)
+message(STATUS "Configuring ${CMAKE_PROJECT_NAME}")
 
-include(cpp/cmake/Version.cmake)
+include(cmake/Version.cmake)
 
 if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
   message(FATAL_ERROR "In-tree builds are not supported; please run cmake from a separate build directory.")
@@ -86,9 +86,6 @@ include(BoostChecks)
 include(RegexChecks)
 include(ThreadChecks)
 include(XercesChecks)
-include(ImageLibraries)
-include(QtGLChecks)
-include(XsdFu)
 include(GTest)
 include(Doxygen)
 include(HeaderTest)
@@ -155,34 +152,16 @@ foreach(dir
 endforeach()
 
 add_subdirectory(docs/doxygen)
-add_subdirectory(docs/sphinx)
-add_subdirectory(cpp)
 
-set(LIBRARY_PREFIX OME)
-file(MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/cpp/bin")
-configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateShellConfig.cmake.in
-               ${PROJECT_BINARY_DIR}/config @ONLY)
-configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateInternalShellWrapper.cmake.in
-               ${PROJECT_BINARY_DIR}/cpp/cmake/bf-test @ONLY)
-configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateShellWrapper.cmake.in
-               ${PROJECT_BINARY_DIR}/cpp/bin/bf-test @ONLY)
-file(COPY ${PROJECT_BINARY_DIR}/cpp/cmake/bf-test
-     DESTINATION ${PROJECT_BINARY_DIR}
-     FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ
-     GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-install(PROGRAMS ${PROJECT_BINARY_DIR}/cpp/bin/bf-test
-        DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
-if(WIN32)
-  configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateCmdConfig.cmake.in
-                 ${PROJECT_BINARY_DIR}/config.bat @ONLY)
-  configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateInternalCmdWrapper.cmake.in
-                 ${PROJECT_BINARY_DIR}/bf-test.bat @ONLY)
-  configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateCmdWrapper.cmake.in
-                 ${PROJECT_BINARY_DIR}/cpp/bin/bf-test.bat @ONLY)
-  install(PROGRAMS ${PROJECT_BINARY_DIR}/cpp/bin/bf-test.bat
-          DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
-  endif()
-return()
+set(OME_TOPLEVEL_INCLUDES
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib
+    ${CMAKE_CURRENT_BINARY_DIR}/lib)
 
-message("NOTE: The Bio-Formats ${OME_VERSION_SHORT} C++ library is new in version 5.1")
-message("NOTE: API stability will not be guaranteed until version 5.2")
+# Add test, making sure it's run with a suitable environment.
+# If updated, make sure to update the wrappers in cmake.
+function(bf_add_test)
+  add_test(${ARGV})
+endfunction()
+
+add_subdirectory(lib)
+add_subdirectory(test)

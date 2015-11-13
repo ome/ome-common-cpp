@@ -28,7 +28,7 @@ DOXYFILE_ENCODING      = UTF-8
 # identify the project. Note that if you do not use Doxywizard you need
 # to put quotes around the project name if it contains spaces.
 
-PROJECT_NAME           = bioformats
+PROJECT_NAME           = ome-common
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or
@@ -54,7 +54,7 @@ PROJECT_LOGO           =
 # If a relative path is entered, it will be relative to the location
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = bioformats
+OUTPUT_DIRECTORY       = ome-common
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create
 # 4096 sub-directories (in 2 levels) under the output directory of each output
@@ -132,8 +132,8 @@ FULL_PATH_NAMES        = YES
 # relative paths, which will be relative from the directory where doxygen is
 # started.
 
-STRIP_FROM_PATH        = @PROJECT_SOURCE_DIR@/cpp/lib \
-                         @PROJECT_BINARY_DIR@/cpp/lib
+STRIP_FROM_PATH        = @PROJECT_SOURCE_DIR@/lib \
+                         @PROJECT_BINARY_DIR@/lib
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of
 # the path mentioned in the documentation of a class, which tells
@@ -142,8 +142,8 @@ STRIP_FROM_PATH        = @PROJECT_SOURCE_DIR@/cpp/lib \
 # definition is used. Otherwise one should specify the include paths that
 # are normally passed to the compiler using the -I flag.
 
-STRIP_FROM_INC_PATH    = @PROJECT_SOURCE_DIR@/cpp/lib \
-                         @PROJECT_BINARY_DIR@/cpp/lib
+STRIP_FROM_INC_PATH    = @PROJECT_SOURCE_DIR@/lib \
+                         @PROJECT_BINARY_DIR@/lib
 
 # If the SHORT_NAMES tag is set to YES, doxygen will generate much shorter
 # (but less readable) file names. This can be useful if your file system
@@ -645,7 +645,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # and error messages should be written. If left blank the output is written
 # to stderr.
 
-WARN_LOGFILE           = bioformats.log
+WARN_LOGFILE           = ome-common.log
 
 #---------------------------------------------------------------------------
 # configuration options related to the input files
@@ -656,8 +656,8 @@ WARN_LOGFILE           = bioformats.log
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = @PROJECT_SOURCE_DIR@/cpp/lib \
-                         @PROJECT_BINARY_DIR@/cpp/lib
+INPUT                  = @PROJECT_SOURCE_DIR@/lib \
+                         @PROJECT_BINARY_DIR@/lib
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -1637,7 +1637,7 @@ TAGFILES               =
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create
 # a tag file that is based on the input files it reads.
 
-GENERATE_TAGFILE       = bioformats/bioformats.tag
+GENERATE_TAGFILE       = ome-common/ome-common.tag
 
 # If the ALLEXTERNALS tag is set to YES all external classes will be listed
 # in the class index. If set to NO only the inherited external classes

@@ -150,4 +150,4 @@ install(FILES ${ome_common_xml_dom_static_headers}
         DESTINATION ${ome_common_includedir}/xml/dom)
 
 # Dump header list for testing
-header_include_list_write(ome_common_static_headers ome_common_generated_headers ome/common ${PROJECT_BINARY_DIR}/cpp/test/ome-common)
+header_include_list_write(ome_common_static_headers ome_common_generated_headers ome/common ${PROJECT_BINARY_DIR}/test/ome-common)

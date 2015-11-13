@@ -46,7 +46,7 @@ using ome::common::make_relative;
 
 TEST(Filesystem, Relative)
 {
-  path basepath(PROJECT_BINARY_DIR "/cpp/test/ome-common/data");
+  path basepath(PROJECT_BINARY_DIR "/test/ome-common/data");
   boost::filesystem::create_directories(basepath / "testdir1/lib");
   boost::filesystem::create_directories(basepath / "testdir1/include");
   boost::filesystem::create_directories(basepath / "testdir2/share");

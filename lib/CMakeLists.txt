@@ -34,20 +34,7 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-set(OME_TOPLEVEL_INCLUDES
-    ${CMAKE_CURRENT_SOURCE_DIR}/lib
-    ${CMAKE_CURRENT_BINARY_DIR}/lib)
-
-# Add test, making sure it's run with a suitable environment.
-# If updated, make sure to update the wrappers in cpp/cmake.
-function(bf_add_test)
-  add_test(${ARGV})
-  set_tests_properties(${ARGV0}
-    PROPERTIES ENVIRONMENT "BIOFORMATS_SCHEMADIR=${PROJECT_SOURCE_DIR}/components/specification/released-schema")
-endfunction()
-
-add_subdirectory(lib)
-add_subdirectory(libexec)
-add_subdirectory(share/icons)
-add_subdirectory(test)
-add_subdirectory(examples)
+add_subdirectory(ome/internal)
+add_subdirectory(ome/compat)
+add_subdirectory(ome/common)
+add_subdirectory(ome/test)
