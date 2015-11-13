@@ -154,7 +154,7 @@ install(FILES ${ome_common_xml_dom_static_headers}
 set(LIBRARY_PREFIX OME_COMMON)
 set(LIBRARY_NAME ome-common)
 set(LIBRARY_HEADER ome/common/module.h)
-configure_file(${PROJECT_SOURCE_DIR}/cmake/TemplateConfig.cmake.in
+configure_file(${PROJECT_SOURCE_DIR}/cmake/TemplateLibraryConfig.cmake.in
                ${CMAKE_CURRENT_BINARY_DIR}/ome-common-config.cmake)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/ome-common-config.cmake
         DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-common)
