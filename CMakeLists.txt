@@ -159,7 +159,7 @@ set(OME_TOPLEVEL_INCLUDES
 
 # Add test, making sure it's run with a suitable environment.
 # If updated, make sure to update the wrappers in cmake.
-function(bf_add_test)
+function(ome_add_test)
   add_test(${ARGV})
 endfunction()
 

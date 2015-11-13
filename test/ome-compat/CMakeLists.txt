@@ -40,37 +40,37 @@ if(BUILD_TESTS)
 
   if(extended-tests)
     header_test_from_file(ome-compat ome-compat ome/compat)
-    bf_add_test(ome-compat/headers ome-compat-headers)
+    ome_add_test(ome-compat/headers ome-compat-headers)
   endif(extended-tests)
 
   add_executable(array array.cpp)
   target_link_libraries(array ome-compat)
   target_link_libraries(array ome-test)
 
-  bf_add_test(ome-compat/array array)
+  ome_add_test(ome-compat/array array)
 
   add_executable(cstdint cstdint.cpp)
   target_link_libraries(cstdint ome-compat)
   target_link_libraries(cstdint ome-test)
 
-  bf_add_test(ome-compat/cstdint cstdint)
+  ome_add_test(ome-compat/cstdint cstdint)
 
   add_executable(memory memory.cpp)
   target_link_libraries(memory ome-compat)
   target_link_libraries(memory ome-test)
 
-  bf_add_test(ome-compat/memory memory)
+  ome_add_test(ome-compat/memory memory)
 
   add_executable(regex regex.cpp)
   target_link_libraries(regex ome-compat)
   target_link_libraries(regex ome-test)
 
-  bf_add_test(ome-compat/regex regex)
+  ome_add_test(ome-compat/regex regex)
 
   add_executable(tuple tuple.cpp)
   target_link_libraries(tuple ome-compat)
   target_link_libraries(tuple ome-test)
 
-  bf_add_test(ome-compat/tuple tuple)
+  ome_add_test(ome-compat/tuple tuple)
 
 endif(BUILD_TESTS)

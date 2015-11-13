@@ -41,50 +41,50 @@ if(BUILD_TESTS)
 
   if(extended-tests)
     header_test_from_file(ome-common ome-common ome/common)
-    bf_add_test(ome-common/headers ome-common-headers)
+    ome_add_test(ome-common/headers ome-common-headers)
   endif(extended-tests)
 
   add_executable(boolean boolean.cpp)
   target_link_libraries(boolean ome-common)
   target_link_libraries(boolean ome-test)
 
-  bf_add_test(ome-common/boolean boolean)
+  ome_add_test(ome-common/boolean boolean)
 
   add_executable(endian endian.cpp)
   target_link_libraries(endian ome-common)
   target_link_libraries(endian ome-test)
 
-  bf_add_test(ome-common/endian endian)
+  ome_add_test(ome-common/endian endian)
 
   add_executable(filesystem filesystem.cpp)
   target_link_libraries(filesystem ome-common)
   target_link_libraries(filesystem ome-test)
 
-  bf_add_test(ome-common/filesystem filesystem)
+  ome_add_test(ome-common/filesystem filesystem)
 
   add_executable(module module.cpp)
   target_link_libraries(module ome-common)
   target_link_libraries(module ome-test)
 
-  bf_add_test(ome-common/module module)
+  ome_add_test(ome-common/module module)
 
   add_executable(mstream mstream.cpp)
   target_link_libraries(mstream ome-common)
   target_link_libraries(mstream ome-test)
 
-  bf_add_test(ome-common/mstream mstream)
+  ome_add_test(ome-common/mstream mstream)
 
   add_executable(thread thread.cpp)
   target_link_libraries(thread ome-common ${THREAD_LIBRARY})
   target_link_libraries(thread ome-test)
 
-  bf_add_test(ome-common/thread thread)
+  ome_add_test(ome-common/thread thread)
 
   add_executable(string string.cpp)
   target_link_libraries(string ome-common)
   target_link_libraries(string ome-test)
 
-  bf_add_test(ome-common/string string)
+  ome_add_test(ome-common/string string)
 
   add_executable(units
     units.h
@@ -100,18 +100,18 @@ if(BUILD_TESTS)
   target_link_libraries(units ome-common)
   target_link_libraries(units ome-test ${Boost_IOSTREAMS_LIBRARY_RELEASE})
 
-  bf_add_test(ome-common/units units)
+  ome_add_test(ome-common/units units)
 
   add_executable(variant variant.cpp)
   target_link_libraries(variant ome-common)
   target_link_libraries(variant ome-test)
 
-  bf_add_test(ome-common/variant variant)
+  ome_add_test(ome-common/variant variant)
 
   add_executable(xerces xerces.cpp)
   target_link_libraries(xerces ome-common)
   target_link_libraries(xerces ome-test)
 
-  bf_add_test(ome-common/xerces xerces)
+  ome_add_test(ome-common/xerces xerces)
 
 endif(BUILD_TESTS)
