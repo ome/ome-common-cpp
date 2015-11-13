@@ -151,5 +151,13 @@ install(FILES ${ome_common_xml_static_headers}
 install(FILES ${ome_common_xml_dom_static_headers}
         DESTINATION ${ome_common_includedir}/xml/dom)
 
+set(LIBRARY_PREFIX OME_COMMON)
+set(LIBRARY_NAME ome-common)
+set(LIBRARY_HEADER ome/common/module.h)
+configure_file(${PROJECT_SOURCE_DIR}/cmake/TemplateConfig.cmake.in
+               ${CMAKE_CURRENT_BINARY_DIR}/ome-common-config.cmake)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/ome-common-config.cmake
+        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-common)
+
 # Dump header list for testing
 header_include_list_write(ome_common_static_headers ome_common_generated_headers ome/common ${PROJECT_BINARY_DIR}/test/ome-common)
