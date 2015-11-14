@@ -44,26 +44,22 @@ set(ome_compat_headers
     regex.h
     tuple.h)
 
-# Use INTERFACE for cmake 3.0 and later; earlier versions add regex to ome-common.
-if(CMAKE_MAJOR_VERSION GREATER 2)
-  add_library(ome-compat INTERFACE)
-  target_link_libraries(ome-compat INTERFACE
-                        ${REGEX_LIBRARY})
-endif()
+add_library(ome-compat INTERFACE)
+target_link_libraries(ome-compat INTERFACE
+                      ${REGEX_LIBRARY})
+
+install(TARGETS ome-compat
+        EXPORT ome-compat-config
+        RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
+install(EXPORT ome-compat-config
+        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-compat)
 
 set(ome_compat_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/compat")
 
 install(FILES ${ome_compat_headers}
         DESTINATION ${ome_compat_includedir})
-
-set(LIBRARY_PREFIX OME_COMPAT)
-set(LIBRARY_NAME ome-compat)
-set(LIBRARY_HEADER ome/compat/memory.h)
-set(LIBRARY_DEPENDS ome/compat/memory.h)
-configure_file(${PROJECT_SOURCE_DIR}/cmake/TemplateInterfaceConfig.cmake.in
-               ${CMAKE_CURRENT_BINARY_DIR}/ome-compat-config.cmake)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/ome-compat-config.cmake
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-compat)
 
 # Dump header list for testing
 header_include_list_write(ome_compat_headers "" ome/compat ${PROJECT_BINARY_DIR}/test/ome-compat)

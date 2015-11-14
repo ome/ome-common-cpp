@@ -34,34 +34,14 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-cmake_minimum_required(VERSION 2.8.12)
-
-# Default policy is from 2.8.12
-cmake_policy(VERSION 2.8.12)
-# Set MacOSX @rpath usage globally.
-if (POLICY CMP0020)
-  cmake_policy(SET CMP0020 NEW)
-endif(POLICY CMP0020)
-if (POLICY CMP0042)
-  cmake_policy(SET CMP0042 NEW)
-endif(POLICY CMP0042)
-# Use new variable expansion policy.
-if (POLICY CMP0053)
-  cmake_policy(SET CMP0053 NEW)
-endif(POLICY CMP0053)
-if (POLICY CMP0054)
-  cmake_policy(SET CMP0054 NEW)
-endif(POLICY CMP0054)
+cmake_minimum_required(VERSION 3.2.0)
+cmake_policy(VERSION 3.2.0)
 
 # For MSVC
 enable_language(CXX)
-# For feature tests with CMake 2.8.x
-enable_language(C)
 
 list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/cmake")
-
-include("${CMAKE_CURRENT_LIST_DIR}/cmake/Options.cmake")
 
 project(ome-common)
 message(STATUS "Configuring ${CMAKE_PROJECT_NAME}")
@@ -79,6 +59,7 @@ if(MSVC)
 endif()
 set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_DEFAULT} CACHE BOOL "Use shared libraries")
 
+include(Options)
 include(GNUInstallDirs)
 include(CompilerChecks)
 include(PlatformChecks)

@@ -113,12 +113,7 @@ set(ome_common_sources
 
 add_library(ome-common ${ome_common_sources} ${ome_common_headers})
 
-if(CMAKE_MAJOR_VERSION GREATER 2)
-  target_link_libraries(ome-common ome-compat)
-else()
-  add_library(ome-compat ALIAS ome-common)
-  target_link_libraries(ome-common ${REGEX_LIBRARY})
-endif()
+target_link_libraries(ome-common ome-compat)
 
 target_link_libraries(ome-common
                       ${Boost_LOG_SETUP_LIBRARY_RELEASE}
@@ -132,9 +127,12 @@ set_target_properties(ome-common PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(ome-common PROPERTIES VERSION ${OME_VERSION_SHORT})
 
 install(TARGETS ome-common
+        EXPORT ome-common-config
         RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
+install(EXPORT ome-common-config
+        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-common)
 
 set(ome_common_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/common")
 
@@ -150,14 +148,6 @@ install(FILES ${ome_common_xml_static_headers}
         DESTINATION ${ome_common_includedir}/xml)
 install(FILES ${ome_common_xml_dom_static_headers}
         DESTINATION ${ome_common_includedir}/xml/dom)
-
-set(LIBRARY_PREFIX OME_COMMON)
-set(LIBRARY_NAME ome-common)
-set(LIBRARY_HEADER ome/common/module.h)
-configure_file(${PROJECT_SOURCE_DIR}/cmake/TemplateLibraryConfig.cmake.in
-               ${CMAKE_CURRENT_BINARY_DIR}/ome-common-config.cmake)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/ome-common-config.cmake
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-common)
 
 # Dump header list for testing
 header_include_list_write(ome_common_static_headers ome_common_generated_headers ome/common ${PROJECT_BINARY_DIR}/test/ome-common)
