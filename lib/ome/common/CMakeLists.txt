@@ -35,9 +35,7 @@
 # #L%
 
 include_directories(${OME_TOPLEVEL_INCLUDES}
-                    ${Boost_INCLUDE_DIRS}
-                    ${LibDl_INCLUDE_DIRS}
-                    ${XercesC_INCLUDE_DIRS})
+                    ${LibDl_INCLUDE_DIRS})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/config.h)
@@ -116,12 +114,12 @@ add_library(ome-common ${ome_common_sources} ${ome_common_headers})
 target_link_libraries(ome-common ome-compat)
 
 target_link_libraries(ome-common
-                      ${Boost_LOG_SETUP_LIBRARY_RELEASE}
-                      ${Boost_LOG_LIBRARY_RELEASE}
-                      ${Boost_FILESYSTEM_LIBRARY_RELEASE}
-                      ${Boost_SYSTEM_LIBRARY_RELEASE}
+                      Boost::log_setup
+                      Boost::log
+                      Boost::filesystem
+                      Boost::system
                       ${LibDl_LIBRARIES}
-                      ${XercesC_LIBRARIES})
+                      XercesC::XercesC)
 
 set_target_properties(ome-common PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(ome-common PROPERTIES VERSION ${OME_VERSION_SHORT})

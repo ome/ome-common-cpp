@@ -34,8 +34,7 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-include_directories(${OME_TOPLEVEL_INCLUDES}
-                    ${Boost_INCLUDE_DIRS})
+include_directories(${OME_TOPLEVEL_INCLUDES})
 
 set(ome_compat_headers
     array.h
@@ -46,6 +45,7 @@ set(ome_compat_headers
 
 add_library(ome-compat INTERFACE)
 target_link_libraries(ome-compat INTERFACE
+                      Boost::boost
                       ${REGEX_LIBRARY})
 
 install(TARGETS ome-compat

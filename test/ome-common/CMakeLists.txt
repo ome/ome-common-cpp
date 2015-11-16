@@ -35,9 +35,7 @@
 # #L%
 
 if(BUILD_TESTS)
-  include_directories(${OME_TOPLEVEL_INCLUDES}
-                      ${Boost_INCLUDE_DIRS}
-                      ${XercesC_INCLUDE_DIRS})
+  include_directories(${OME_TOPLEVEL_INCLUDES})
 
   if(extended-tests)
     header_test_from_file(ome-common ome-common ome/common)
@@ -98,7 +96,7 @@ if(BUILD_TESTS)
     units-temperature.cpp
     units-time.cpp)
   target_link_libraries(units ome-common)
-  target_link_libraries(units ome-test ${Boost_IOSTREAMS_LIBRARY_RELEASE})
+  target_link_libraries(units ome-test Boost::iostreams)
 
   ome_add_test(ome-common/units units)
 
