@@ -111,15 +111,18 @@ set(ome_common_sources
 
 add_library(ome-common ${ome_common_sources} ${ome_common_headers})
 
-target_link_libraries(ome-common ome-compat)
+target_link_libraries(ome-common
+                      PUBLIC ome-compat)
 
 target_link_libraries(ome-common
+                      PUBLIC
                       Boost::log_setup
                       Boost::log
                       Boost::filesystem
                       Boost::system
-                      ${LibDl_LIBRARIES}
-                      XercesC::XercesC)
+                      XercesC::XercesC
+                      PRIVATE
+                      ${LibDl_LIBRARIES})
 
 set_target_properties(ome-common PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(ome-common PROPERTIES VERSION ${OME_VERSION_SHORT})
