@@ -49,11 +49,13 @@ target_link_libraries(ome-compat INTERFACE
                       ${REGEX_LIBRARY})
 
 install(TARGETS ome-compat
-        EXPORT ome-compat-config
+        EXPORT ome-compat-internal
         RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
-install(EXPORT ome-compat-config
+install(EXPORT ome-compat-internal
+        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-compat)
+install(FILES ome-compat-config.cmake
         DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-compat)
 
 set(ome_compat_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/compat")

@@ -128,11 +128,13 @@ set_target_properties(ome-common PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(ome-common PROPERTIES VERSION ${OME_VERSION_SHORT})
 
 install(TARGETS ome-common
-        EXPORT ome-common-config
+        EXPORT ome-common-internal
         RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
-install(EXPORT ome-common-config
+install(EXPORT ome-common-internal
+        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-common)
+install(FILES ome-common-config.cmake
         DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/ome-common)
 
 set(ome_common_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/common")
