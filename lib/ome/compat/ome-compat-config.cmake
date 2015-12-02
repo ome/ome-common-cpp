@@ -1,7 +1,5 @@
 include(CMakeFindDependencyMacro)
-find_dependency(Boost 1.46 REQUIRED
-                COMPONENTS date_time filesystem system iostreams
-                program_options regex thread)
+find_dependency(Boost 1.46 REQUIRED COMPONENTS regex)
 find_dependency(XercesC 3.0.0 REQUIRED)
 
 include(${CMAKE_CURRENT_LIST_DIR}/ome-compat-internal.cmake)

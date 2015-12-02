@@ -1,4 +1,5 @@
 include(CMakeFindDependencyMacro)
+find_dependency(ome-compat REQUIRED)
 find_dependency(Boost 1.46 REQUIRED
                 COMPONENTS date_time filesystem system iostreams
                 program_options regex thread)

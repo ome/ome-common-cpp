@@ -34,9 +34,6 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-include_directories(${OME_TOPLEVEL_INCLUDES}
-                    ${LibDl_INCLUDE_DIRS})
-
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-internal.h.in
@@ -111,11 +108,15 @@ set(ome_common_sources
 
 add_library(ome-common ${ome_common_sources} ${ome_common_headers})
 
-target_link_libraries(ome-common
-                      PUBLIC ome-compat)
+target_include_directories(ome-common PUBLIC
+                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
+                           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib>
+                           $<BUILD_INTERFACE:${LibDl_INCLUDE_DIRS}>
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_link_libraries(ome-common
                       PUBLIC
+                      OME::Compat
                       Boost::log_setup
                       Boost::log
                       Boost::filesystem
@@ -126,6 +127,8 @@ target_link_libraries(ome-common
 
 set_target_properties(ome-common PROPERTIES LINKER_LANGUAGE CXX)
 set_target_properties(ome-common PROPERTIES VERSION ${OME_VERSION_SHORT})
+
+add_library(OME::Common ALIAS ome-common)
 
 install(TARGETS ome-common
         EXPORT ome-common-internal

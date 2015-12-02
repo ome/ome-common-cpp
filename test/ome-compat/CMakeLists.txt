@@ -35,40 +35,38 @@
 # #L%
 
 if(BUILD_TESTS)
-  include_directories(${OME_TOPLEVEL_INCLUDES})
-
   if(extended-tests)
-    header_test_from_file(ome-compat ome-compat ome/compat)
+    header_test_from_file(ome-compat OME::Compat ome/compat)
     ome_add_test(ome-compat/headers ome-compat-headers)
   endif(extended-tests)
 
   add_executable(array array.cpp)
-  target_link_libraries(array ome-compat)
-  target_link_libraries(array ome-test)
+  target_link_libraries(array OME::Compat)
+  target_link_libraries(array OME::Test)
 
   ome_add_test(ome-compat/array array)
 
   add_executable(cstdint cstdint.cpp)
-  target_link_libraries(cstdint ome-compat)
-  target_link_libraries(cstdint ome-test)
+  target_link_libraries(cstdint OME::Compat)
+  target_link_libraries(cstdint OME::Test)
 
   ome_add_test(ome-compat/cstdint cstdint)
 
   add_executable(memory memory.cpp)
-  target_link_libraries(memory ome-compat)
-  target_link_libraries(memory ome-test)
+  target_link_libraries(memory OME::Compat)
+  target_link_libraries(memory OME::Test)
 
   ome_add_test(ome-compat/memory memory)
 
   add_executable(regex regex.cpp)
-  target_link_libraries(regex ome-compat)
-  target_link_libraries(regex ome-test)
+  target_link_libraries(regex OME::Compat)
+  target_link_libraries(regex OME::Test)
 
   ome_add_test(ome-compat/regex regex)
 
   add_executable(tuple tuple.cpp)
-  target_link_libraries(tuple ome-compat)
-  target_link_libraries(tuple ome-test)
+  target_link_libraries(tuple OME::Compat)
+  target_link_libraries(tuple OME::Test)
 
   ome_add_test(ome-compat/tuple tuple)
 

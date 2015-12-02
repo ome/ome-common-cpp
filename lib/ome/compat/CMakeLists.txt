@@ -34,8 +34,6 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-include_directories(${OME_TOPLEVEL_INCLUDES})
-
 set(ome_compat_headers
     array.h
     cstdint.h
@@ -44,9 +42,17 @@ set(ome_compat_headers
     tuple.h)
 
 add_library(ome-compat INTERFACE)
+
+target_include_directories(ome-compat INTERFACE
+                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
+                           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib>
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
 target_link_libraries(ome-compat INTERFACE
                       Boost::boost
                       ${REGEX_LIBRARY})
+
+add_library(OME::Compat ALIAS ome-compat)
 
 install(TARGETS ome-compat
         EXPORT ome-compat-internal

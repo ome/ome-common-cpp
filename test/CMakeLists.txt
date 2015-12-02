@@ -34,7 +34,5 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-include_directories(${GTEST_INCLUDE_DIR})
-
 add_subdirectory(ome-compat)
 add_subdirectory(ome-common)

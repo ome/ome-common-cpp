@@ -35,52 +35,50 @@
 # #L%
 
 if(BUILD_TESTS)
-  include_directories(${OME_TOPLEVEL_INCLUDES})
-
   if(extended-tests)
-    header_test_from_file(ome-common ome-common ome/common)
+    header_test_from_file(ome-common OME::Common ome/common)
     ome_add_test(ome-common/headers ome-common-headers)
   endif(extended-tests)
 
   add_executable(boolean boolean.cpp)
-  target_link_libraries(boolean ome-common)
-  target_link_libraries(boolean ome-test)
+  target_link_libraries(boolean OME::Common)
+  target_link_libraries(boolean OME::Test)
 
   ome_add_test(ome-common/boolean boolean)
 
   add_executable(endian endian.cpp)
-  target_link_libraries(endian ome-common)
-  target_link_libraries(endian ome-test)
+  target_link_libraries(endian OME::Common)
+  target_link_libraries(endian OME::Test)
 
   ome_add_test(ome-common/endian endian)
 
   add_executable(filesystem filesystem.cpp)
-  target_link_libraries(filesystem ome-common)
-  target_link_libraries(filesystem ome-test)
+  target_link_libraries(filesystem OME::Common)
+  target_link_libraries(filesystem OME::Test)
 
   ome_add_test(ome-common/filesystem filesystem)
 
   add_executable(module module.cpp)
-  target_link_libraries(module ome-common)
-  target_link_libraries(module ome-test)
+  target_link_libraries(module OME::Common)
+  target_link_libraries(module OME::Test)
 
   ome_add_test(ome-common/module module)
 
   add_executable(mstream mstream.cpp)
-  target_link_libraries(mstream ome-common)
-  target_link_libraries(mstream ome-test)
+  target_link_libraries(mstream OME::Common)
+  target_link_libraries(mstream OME::Test)
 
   ome_add_test(ome-common/mstream mstream)
 
   add_executable(thread thread.cpp)
-  target_link_libraries(thread ome-common ${THREAD_LIBRARY})
-  target_link_libraries(thread ome-test)
+  target_link_libraries(thread OME::Common ${THREAD_LIBRARY})
+  target_link_libraries(thread OME::Test)
 
   ome_add_test(ome-common/thread thread)
 
   add_executable(string string.cpp)
-  target_link_libraries(string ome-common)
-  target_link_libraries(string ome-test)
+  target_link_libraries(string OME::Common)
+  target_link_libraries(string OME::Test)
 
   ome_add_test(ome-common/string string)
 
@@ -95,20 +93,20 @@ if(BUILD_TESTS)
     units-pressure.cpp
     units-temperature.cpp
     units-time.cpp)
-  target_link_libraries(units ome-common)
-  target_link_libraries(units ome-test Boost::iostreams)
+  target_link_libraries(units OME::Common)
+  target_link_libraries(units OME::Test Boost::iostreams)
 
   ome_add_test(ome-common/units units)
 
   add_executable(variant variant.cpp)
-  target_link_libraries(variant ome-common)
-  target_link_libraries(variant ome-test)
+  target_link_libraries(variant OME::Common)
+  target_link_libraries(variant OME::Test)
 
   ome_add_test(ome-common/variant variant)
 
   add_executable(xerces xerces.cpp)
-  target_link_libraries(xerces ome-common)
-  target_link_libraries(xerces ome-test)
+  target_link_libraries(xerces OME::Common)
+  target_link_libraries(xerces OME::Test)
 
   ome_add_test(ome-common/xerces xerces)
 
