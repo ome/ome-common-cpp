@@ -36,4 +36,5 @@
 
 add_subdirectory(ome/compat)
 add_subdirectory(ome/common)
+add_subdirectory(ome/global)
 add_subdirectory(ome/test)

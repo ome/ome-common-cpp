@@ -55,6 +55,8 @@ if(BUILD_TESTS)
               ${ome_test_generated_headers})
 
   target_include_directories(ome-test INTERFACE
+                             $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
+                             $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib>
                              $<BUILD_INTERFACE:${GTEST_INCLUDE_DIR}>)
 
   target_link_libraries(ome-test OME::Common ${GTEST_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

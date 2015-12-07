@@ -34,40 +34,15 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-set(ome_compat_headers
-    array.h
-    cstdint.h
-    memory.h
-    regex.h
-    tuple.h)
+include(CMakePackageConfigHelpers)
 
-add_library(ome-compat INTERFACE)
+configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/OMEConfig.cmake.in"
+                              "${CMAKE_CURRENT_BINARY_DIR}/OMEConfig.cmake"
+                              INSTALL_DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OME")
+write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/OMEConfigVersion.cmake"
+                                 VERSION "${PROJECT_VERSION}"
+                                 COMPATIBILITY SameMajorVersion)
 
-target_include_directories(ome-compat INTERFACE
-                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
-                           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib>
-                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-
-target_link_libraries(ome-compat INTERFACE
-                      Boost::boost
-                      ${REGEX_LIBRARY})
-
-add_library(OME::Compat ALIAS ome-compat)
-
-install(TARGETS ome-compat
-        EXPORT OMECompatInternal
-        RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
-install(EXPORT OMECompatInternal
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OMECompat)
-install(FILES OMECompatConfig.cmake
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OMECompat)
-
-set(ome_compat_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/compat")
-
-install(FILES ${ome_compat_headers}
-        DESTINATION ${ome_compat_includedir})
-
-# Dump header list for testing
-header_include_list_write(ome_compat_headers "" ome/compat ${PROJECT_BINARY_DIR}/test/ome-compat)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/OMEConfig.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/OMEConfigVersion.cmake"
+        DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OME")
