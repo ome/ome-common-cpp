@@ -51,5 +51,5 @@ if(BUILD_DOXYGEN)
   add_custom_target(doc-api ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log doc-check)
 
   install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/ome-common/"
-          DESTINATION "${CMAKE_INSTALL_FULL_DOCDIR}/ome-common")
+          DESTINATION "${CMAKE_INSTALL_DOCDIR}/ome-common")
 endif(BUILD_DOXYGEN)

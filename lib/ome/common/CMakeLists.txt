@@ -132,15 +132,15 @@ add_library(OME::Common ALIAS ome-common)
 
 install(TARGETS ome-common
         EXPORT OMECommonInternal
-        RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(EXPORT OMECommonInternal
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OMECommon)
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECommon)
 install(FILES OMECommonConfig.cmake
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OMECommon)
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECommon)
 
-set(ome_common_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/common")
+set(ome_common_includedir "${CMAKE_INSTALL_INCLUDEDIR}/ome/common")
 
 install(FILES ${ome_common_static_headers} ${ome_common_generated_headers}
         DESTINATION ${ome_common_includedir})

@@ -56,15 +56,15 @@ add_library(OME::Compat ALIAS ome-compat)
 
 install(TARGETS ome-compat
         EXPORT OMECompatInternal
-        RUNTIME DESTINATION ${CMAKE_INSTALL_FULL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR})
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 install(EXPORT OMECompatInternal
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OMECompat)
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECompat)
 install(FILES OMECompatConfig.cmake
-        DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OMECompat)
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECompat)
 
-set(ome_compat_includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}/ome/compat")
+set(ome_compat_includedir "${CMAKE_INSTALL_INCLUDEDIR}/ome/compat")
 
 install(FILES ${ome_compat_headers}
         DESTINATION ${ome_compat_includedir})

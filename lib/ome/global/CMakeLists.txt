@@ -38,11 +38,11 @@ include(CMakePackageConfigHelpers)
 
 configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/OMEConfig.cmake.in"
                               "${CMAKE_CURRENT_BINARY_DIR}/OMEConfig.cmake"
-                              INSTALL_DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OME")
+                              INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/OME")
 write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/OMEConfigVersion.cmake"
                                  VERSION "${PROJECT_VERSION}"
                                  COMPATIBILITY SameMajorVersion)
 
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/OMEConfig.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/OMEConfigVersion.cmake"
-        DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/cmake/OME")
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/OME")
