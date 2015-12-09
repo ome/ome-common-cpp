@@ -43,12 +43,12 @@ enable_language(CXX C)
 list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-project(ome-common
-        VERSION 5.2.0
-        LANGUAGES CXX)
-message(STATUS "Configuring ${CMAKE_PROJECT_NAME}")
-
 include(cmake/Version.cmake)
+ome_project_version("OME Common C++" "${CMAKE_CURRENT_SOURCE_DIR}")
+
+project(ome-common
+        VERSION "${OME_VERSION_MAJOR}.${OME_VERSION_MINOR}.${OME_VERSION_PATCH}"
+        LANGUAGES CXX)
 
 if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
   message(FATAL_ERROR "In-tree builds are not supported; please run cmake from a separate build directory.")
