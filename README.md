@@ -6,9 +6,9 @@ the C++ Standard Library.  This includes basic portability functions,
 to wrapping other libraries to make them usable with Modern C++
 programming practices.
 
-It serves a similar purpose to the OME Common Java library, with some
-shared functionality, though for the most part they are quite
-different.
+It serves a similar purpose to the OME formats-common Java library,
+with some shared functionality, though for the most part they are
+quite different.
 
 
 Purpose
