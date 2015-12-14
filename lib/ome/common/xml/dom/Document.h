@@ -44,6 +44,7 @@
 #include <cassert>
 #include <functional>
 #include <istream>
+#include <memory>
 #include <string>
 #include <ostream>
 
@@ -54,7 +55,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 
-#include <ome/compat/memory.h>
+#include <ome/common/filesystem.h>
 
 #include <ome/common/xml/dom/Element.h>
 #include <ome/common/xml/dom/NodeList.h>

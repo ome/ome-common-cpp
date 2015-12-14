@@ -39,9 +39,9 @@
 #ifndef OME_COMMON_XML_DOM_WRAPPER_H
 #define OME_COMMON_XML_DOM_WRAPPER_H
 
-#include <ome/common/config.h>
+#include <memory>
 
-#include <ome/compat/memory.h>
+#include <ome/common/config.h>
 
 #include <ome/common/xml/dom/Base.h>
 
@@ -113,11 +113,11 @@ namespace ome
             parent_type(),
             wrapped()
           {
-            ome::compat::shared_ptr<base_element_type> pbase;
+            std::shared_ptr<base_element_type> pbase;
             if (base)
-              pbase = ome::compat::shared_ptr<base_element_type>(base, del);
+              pbase = std::shared_ptr<base_element_type>(base, del);
             else
-              pbase = ome::compat::shared_ptr<base_element_type>();
+              pbase = std::shared_ptr<base_element_type>();
             assign(pbase);
           }
 
@@ -131,11 +131,11 @@ namespace ome
             parent_type(),
             wrapped()
           {
-            ome::compat::shared_ptr<base_element_type> pbase;
+            std::shared_ptr<base_element_type> pbase;
             if (base)
-              pbase = ome::compat::shared_ptr<base_element_type>(base, &ome::common::xml::dom::detail::unmanaged<base_element_type>);
+              pbase = std::shared_ptr<base_element_type>(base, &ome::common::xml::dom::detail::unmanaged<base_element_type>);
             else
-              pbase = ome::compat::shared_ptr<base_element_type>();
+              pbase = std::shared_ptr<base_element_type>();
             assign(pbase);
           }
 
@@ -191,7 +191,7 @@ namespace ome
            */
           virtual
           void
-          assign(ome::compat::shared_ptr<base_element_type>& wrapped)
+          assign(std::shared_ptr<base_element_type>& wrapped)
           {
             this->wrapped = this->template assign_check<element_type>(wrapped.get());
             parent_type::assign(wrapped);

@@ -40,13 +40,12 @@
 #define OME_COMMON_XML_ENTITYRESOLVER_H
 
 #include <map>
+#include <memory>
 #include <string>
 
 #include <boost/filesystem/path.hpp>
 
 #include <ome/common/log.h>
-
-#include <ome/compat/memory.h>
 
 #include <xercesc/util/XMLEntityResolver.hpp>
 

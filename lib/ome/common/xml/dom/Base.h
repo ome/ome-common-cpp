@@ -39,9 +39,9 @@
 #ifndef OME_COMMON_XML_DOM_BASE_H
 #define OME_COMMON_XML_DOM_BASE_H
 
-#include <ome/common/config.h>
+#include <memory>
 
-#include <ome/compat/memory.h>
+#include <ome/common/config.h>
 
 #include <iostream>
 #include <stdexcept>
@@ -97,8 +97,8 @@ namespace ome
           Base(base_element_type *wrapped,
                Deleter            del):
             base(wrapped ?
-                 ome::compat::shared_ptr<base_element_type>(wrapped, del) :
-                 ome::compat::shared_ptr<base_element_type>())
+                 std::shared_ptr<base_element_type>(wrapped, del) :
+                 std::shared_ptr<base_element_type>())
           {}
 
           /**
@@ -109,8 +109,8 @@ namespace ome
           explicit
           Base(base_element_type *wrapped):
             base(wrapped ?
-                 ome::compat::shared_ptr<base_element_type>(wrapped, &ome::common::xml::dom::detail::unmanaged<base_element_type>) :
-                 ome::compat::shared_ptr<base_element_type>())
+                 std::shared_ptr<base_element_type>(wrapped, &ome::common::xml::dom::detail::unmanaged<base_element_type>) :
+                 std::shared_ptr<base_element_type>())
           {}
 
           /// Destructor.
@@ -163,7 +163,7 @@ namespace ome
           reset()
           {
             base.reset();
-            ome::compat::shared_ptr<base_element_type> n;
+            std::shared_ptr<base_element_type> n;
             assign(n);
           }
 
@@ -201,7 +201,7 @@ namespace ome
            */
           virtual
           void
-          assign(ome::compat::shared_ptr<base_element_type>& wrapped)
+          assign(std::shared_ptr<base_element_type>& wrapped)
           {
             base = wrapped;
           }
@@ -228,7 +228,7 @@ namespace ome
 
         private:
           /// Wrapped reference.
-          ome::compat::shared_ptr<base_element_type> base;
+          std::shared_ptr<base_element_type> base;
         };
 
       }
