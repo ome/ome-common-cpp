@@ -69,49 +69,49 @@ namespace ome
       typedef quantity<si::power> power_quantity;
 
       /// Unit definition for yoctowatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<-24> > >::type yoctowatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<-24>>>::type yoctowatt_unit;
       /// Unit definition for zeptowatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<-21> > >::type zeptowatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<-21>>>::type zeptowatt_unit;
       /// Unit definition for attowatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<-18> > >::type attowatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<-18>>>::type attowatt_unit;
       /// Unit definition for femtowatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<-15> > >::type femtowatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<-15>>>::type femtowatt_unit;
       /// Unit definition for picowatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<-12> > >::type picowatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<-12>>>::type picowatt_unit;
       /// Unit definition for nanowatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< -9> > >::type nanowatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< -9>>>::type nanowatt_unit;
       /// Unit definition for microwatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< -6> > >::type microwatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< -6>>>::type microwatt_unit;
       /// Unit definition for milliwatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< -3> > >::type milliwatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< -3>>>::type milliwatt_unit;
       /// Unit definition for centiwatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< -2> > >::type centiwatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< -2>>>::type centiwatt_unit;
       /// Unit definition for deciwatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< -1> > >::type deciwatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< -1>>>::type deciwatt_unit;
       /// Unit definition for watt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<  0> > >::type watt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<  0>>>::type watt_unit;
       /// Unit definition for dekawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<  1> > >::type dekawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<  1>>>::type dekawatt_unit;
       /// Unit definition for decawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<  1> > >::type decawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<  1>>>::type decawatt_unit;
       /// Unit definition for hectowatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<  2> > >::type hectowatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<  2>>>::type hectowatt_unit;
       /// Unit definition for kilowatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<  3> > >::type kilowatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<  3>>>::type kilowatt_unit;
       /// Unit definition for megawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<  6> > >::type megawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<  6>>>::type megawatt_unit;
       /// Unit definition for gigawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational<  9> > >::type gigawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational<  9>>>::type gigawatt_unit;
       /// Unit definition for terawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< 12> > >::type terawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< 12>>>::type terawatt_unit;
       /// Unit definition for petawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< 15> > >::type petawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< 15>>>::type petawatt_unit;
       /// Unit definition for exawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< 18> > >::type exawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< 18>>>::type exawatt_unit;
       /// Unit definition for zettawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< 21> > >::type zettawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< 21>>>::type zettawatt_unit;
       /// Unit definition for yottawatt power.
-      typedef make_scaled_unit<si::power,scale<10,static_rational< 24> > >::type yottawatt_unit;
+      typedef make_scaled_unit<si::power,scale<10,static_rational< 24>>>::type yottawatt_unit;
 
       /// Numeric constant for yoctowatt.
       BOOST_UNITS_STATIC_CONSTANT(yoctowatt, yoctowatt_unit);

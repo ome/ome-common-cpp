@@ -114,7 +114,7 @@ TEST_P(Base64Test, DecodeIter)
                              std::back_inserter(result));
   ASSERT_EQ(expected, result);
 
-  std::vector<uint8_t> result2 = ome::common::base64_decode<std::vector<uint8_t> >(params.encoded_data_exact);
+  std::vector<uint8_t> result2 = ome::common::base64_decode<std::vector<uint8_t>>(params.encoded_data_exact);
   ASSERT_EQ(expected, result2);
 }
 
@@ -125,23 +125,23 @@ TEST_P(Base64Test, DecodeVector)
   std::vector<uint8_t> expected(reinterpret_cast<const uint8_t *>(params.data),
                                 reinterpret_cast<const uint8_t *>(params.data + std::strlen(params.data)));
 
-  std::vector<uint8_t> result = ome::common::base64_decode<std::vector<uint8_t> >(params.encoded_data_inexact);
+  std::vector<uint8_t> result = ome::common::base64_decode<std::vector<uint8_t>>(params.encoded_data_inexact);
   ASSERT_EQ(expected, result);
 
-  std::vector<uint8_t> result2 = ome::common::base64_decode<std::vector<uint8_t> >(params.encoded_data_exact);
+  std::vector<uint8_t> result2 = ome::common::base64_decode<std::vector<uint8_t>>(params.encoded_data_exact);
   ASSERT_EQ(expected, result2);
 }
 
 TEST(Base64Test, DecodeFail)
 {
   // Premature end of input.
-  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t> >("Invalid "), std::runtime_error);
+  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t>>("Invalid "), std::runtime_error);
 
   // Invalid characters.
-  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t> >("$#Invalid"), std::runtime_error);
+  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t>>("$#Invalid"), std::runtime_error);
 
   // Data after padding.
-  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t> >("VGVzdCBwYWRkaW5nLQ==VGVzdCBwYWRkaW5nLQ=="), std::runtime_error);
+  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t>>("VGVzdCBwYWRkaW5nLQ==VGVzdCBwYWRkaW5nLQ=="), std::runtime_error);
 }
 
 TEST(Base64Test, LookupRoundTrip)
@@ -153,7 +153,7 @@ TEST(Base64Test, LookupRoundTrip)
       std::vector<uint8_t> input;
       input.push_back(static_cast<uint8_t>(i));
       std::string encoded = ome::common::base64_encode(input.begin(), input.end());
-      std::vector<uint8_t> decoded = ome::common::base64_decode<std::vector<uint8_t> >(encoded);
+      std::vector<uint8_t> decoded = ome::common::base64_decode<std::vector<uint8_t>>(encoded);
 
       ASSERT_EQ(input, decoded);
     }

@@ -78,49 +78,49 @@ namespace ome
       typedef quantity<si::pressure> pressure_quantity;
 
       /// Unit definition for yoctopascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-24> > >::type yoctopascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-24>>>::type yoctopascal_unit;
       /// Unit definition for zeptopascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-21> > >::type zeptopascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-21>>>::type zeptopascal_unit;
       /// Unit definition for attopascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-18> > >::type attopascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-18>>>::type attopascal_unit;
       /// Unit definition for femtopascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-15> > >::type femtopascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-15>>>::type femtopascal_unit;
       /// Unit definition for picopascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-12> > >::type picopascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<-12>>>::type picopascal_unit;
       /// Unit definition for nanopascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -9> > >::type nanopascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -9>>>::type nanopascal_unit;
       /// Unit definition for micropascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -6> > >::type micropascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -6>>>::type micropascal_unit;
       /// Unit definition for millipascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -3> > >::type millipascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -3>>>::type millipascal_unit;
       /// Unit definition for centipascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -2> > >::type centipascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -2>>>::type centipascal_unit;
       /// Unit definition for decipascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -1> > >::type decipascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< -1>>>::type decipascal_unit;
       /// Unit definition for pascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  0> > >::type pascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  0>>>::type pascal_unit;
       /// Unit definition for dekapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  1> > >::type dekapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  1>>>::type dekapascal_unit;
       /// Unit definition for decapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  1> > >::type decapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  1>>>::type decapascal_unit;
       /// Unit definition for hectopascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  2> > >::type hectopascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  2>>>::type hectopascal_unit;
       /// Unit definition for kilopascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  3> > >::type kilopascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  3>>>::type kilopascal_unit;
       /// Unit definition for megapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  6> > >::type megapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  6>>>::type megapascal_unit;
       /// Unit definition for gigapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  9> > >::type gigapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational<  9>>>::type gigapascal_unit;
       /// Unit definition for terapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 12> > >::type terapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 12>>>::type terapascal_unit;
       /// Unit definition for petapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 15> > >::type petapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 15>>>::type petapascal_unit;
       /// Unit definition for exapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 18> > >::type exapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 18>>>::type exapascal_unit;
       /// Unit definition for zettapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 21> > >::type zettapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 21>>>::type zettapascal_unit;
       /// Unit definition for yottapascal pressure.
-      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 24> > >::type yottapascal_unit;
+      typedef make_scaled_unit<si::pressure,scale<10,static_rational< 24>>>::type yottapascal_unit;
 
       /// Numeric constant for yoctopascal.
       BOOST_UNITS_STATIC_CONSTANT(yoctopascal, yoctopascal_unit);
@@ -258,23 +258,23 @@ namespace ome
       typedef quantity<yottapascal_unit> yottapascal_quantity;
 
       /// Unit definition for millibar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational< -3> > >::unit_type millibar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational< -3>>>::unit_type millibar_unit;
       /// Unit definition for centibar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational< -2> > >::unit_type centibar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational< -2>>>::unit_type centibar_unit;
       /// Unit definition for decibar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational< -1> > >::unit_type decibar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational< -1>>>::unit_type decibar_unit;
       /// Unit definition for bar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  0> > >::unit_type bar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  0>>>::unit_type bar_unit;
       /// Unit definition for dekabar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  1> > >::unit_type dekabar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  1>>>::unit_type dekabar_unit;
       /// Unit definition for decabar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  1> > >::unit_type decabar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  1>>>::unit_type decabar_unit;
       /// Unit definition for hectobar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  2> > >::unit_type hectobar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  2>>>::unit_type hectobar_unit;
       /// Unit definition for kilobar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  3> > >::unit_type kilobar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  3>>>::unit_type kilobar_unit;
       /// Unit definition for megabar pressure.
-      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  6> > >::unit_type megabar_unit;
+      typedef scaled_base_unit<boost::units::metric::bar_base_unit,scale<10,static_rational<  6>>>::unit_type megabar_unit;
 
       /// Numeric constant for millibar.
       BOOST_UNITS_STATIC_CONSTANT(millibar, millibar_unit);
@@ -360,7 +360,7 @@ namespace ome
       typedef quantity<torr_unit> torr_quantity;
 
       /// Unit definition for milliTorr pressure.
-      typedef scaled_base_unit<boost::units::metric::torr_base_unit,scale<10,static_rational< -3> > >::unit_type millitorr_unit;
+      typedef scaled_base_unit<boost::units::metric::torr_base_unit,scale<10,static_rational< -3>>>::unit_type millitorr_unit;
       /// Numeric constant for milliTorr.
       BOOST_UNITS_STATIC_CONSTANT(millitorr, millitorr_unit);
       /// Measured quantity in milliTorrs.
