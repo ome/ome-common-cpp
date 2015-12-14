@@ -34,22 +34,5 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-if(BUILD_DOXYGEN)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ome-common.dox.cmake
-                 ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox @ONLY)
-
-  add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log
-                     COMMAND ${CMAKE_COMMAND} -E remove_directory ome-common
-                     COMMAND ${CMAKE_COMMAND} -E make_directory ome-common
-                     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox
-                     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox)
-
-  add_custom_target(doc-check
-                    COMMAND ${CMAKE_COMMAND} -Dlogfile=${CMAKE_CURRENT_BINARY_DIR}/ome-common.log -P ${PROJECT_SOURCE_DIR}/cmake/DoxygenCheck.cmake
-                    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log)
-
-  add_custom_target(doc-api ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log doc-check)
-
-  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/ome-common/"
-          DESTINATION "${CMAKE_INSTALL_DOCDIR}/ome-common")
-endif(BUILD_DOXYGEN)
+add_subdirectory(ome-compat)
+add_subdirectory(ome-common)

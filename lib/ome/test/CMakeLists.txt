@@ -34,22 +34,35 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-if(BUILD_DOXYGEN)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ome-common.dox.cmake
-                 ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox @ONLY)
+if(BUILD_TESTS)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
+                 ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
-  add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log
-                     COMMAND ${CMAKE_COMMAND} -E remove_directory ome-common
-                     COMMAND ${CMAKE_COMMAND} -E make_directory ome-common
-                     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox
-                     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox)
+  set(ome_test_static_headers
+      io.h
+      test.h)
 
-  add_custom_target(doc-check
-                    COMMAND ${CMAKE_COMMAND} -Dlogfile=${CMAKE_CURRENT_BINARY_DIR}/ome-common.log -P ${PROJECT_SOURCE_DIR}/cmake/DoxygenCheck.cmake
-                    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log)
+  set(ome_test_generated_headers
+      ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
-  add_custom_target(doc-api ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log doc-check)
+  set(ome_test_sources
+      io.cpp
+      main.cpp)
 
-  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/ome-common/"
-          DESTINATION "${CMAKE_INSTALL_DOCDIR}/ome-common")
-endif(BUILD_DOXYGEN)
+  add_library(ome-test STATIC
+              ${ome_test_sources}
+              ${ome_test_static_headers}
+              ${ome_test_generated_headers})
+
+  target_include_directories(ome-test INTERFACE
+                             $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
+                             $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib>)
+
+  target_link_libraries(ome-test OME::Common GTest::GTest ${CMAKE_THREAD_LIBS_INIT})
+  set_target_properties(ome-test PROPERTIES LINKER_LANGUAGE CXX)
+
+  add_library(OME::Test ALIAS ome-test)
+
+  # Dump header list for testing
+  header_include_list_write(ome_test_static_headers ome_test_generated_headers ome/test ${PROJECT_BINARY_DIR}/test/ome-test)
+endif(BUILD_TESTS)

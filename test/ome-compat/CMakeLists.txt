@@ -34,22 +34,40 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-if(BUILD_DOXYGEN)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ome-common.dox.cmake
-                 ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox @ONLY)
+if(BUILD_TESTS)
+  if(extended-tests)
+    header_test_from_file(ome-compat OME::Compat ome/compat)
+    ome_add_test(ome-compat/headers ome-compat-headers)
+  endif(extended-tests)
 
-  add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log
-                     COMMAND ${CMAKE_COMMAND} -E remove_directory ome-common
-                     COMMAND ${CMAKE_COMMAND} -E make_directory ome-common
-                     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox
-                     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox)
+  add_executable(array array.cpp)
+  target_link_libraries(array OME::Compat)
+  target_link_libraries(array OME::Test)
 
-  add_custom_target(doc-check
-                    COMMAND ${CMAKE_COMMAND} -Dlogfile=${CMAKE_CURRENT_BINARY_DIR}/ome-common.log -P ${PROJECT_SOURCE_DIR}/cmake/DoxygenCheck.cmake
-                    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log)
+  ome_add_test(ome-compat/array array)
 
-  add_custom_target(doc-api ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log doc-check)
+  add_executable(cstdint cstdint.cpp)
+  target_link_libraries(cstdint OME::Compat)
+  target_link_libraries(cstdint OME::Test)
 
-  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/ome-common/"
-          DESTINATION "${CMAKE_INSTALL_DOCDIR}/ome-common")
-endif(BUILD_DOXYGEN)
+  ome_add_test(ome-compat/cstdint cstdint)
+
+  add_executable(memory memory.cpp)
+  target_link_libraries(memory OME::Compat)
+  target_link_libraries(memory OME::Test)
+
+  ome_add_test(ome-compat/memory memory)
+
+  add_executable(regex regex.cpp)
+  target_link_libraries(regex OME::Compat)
+  target_link_libraries(regex OME::Test)
+
+  ome_add_test(ome-compat/regex regex)
+
+  add_executable(tuple tuple.cpp)
+  target_link_libraries(tuple OME::Compat)
+  target_link_libraries(tuple OME::Test)
+
+  ome_add_test(ome-compat/tuple tuple)
+
+endif(BUILD_TESTS)

@@ -34,22 +34,40 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-if(BUILD_DOXYGEN)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/ome-common.dox.cmake
-                 ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox @ONLY)
+set(ome_compat_headers
+    array.h
+    cstdint.h
+    memory.h
+    regex.h
+    tuple.h)
 
-  add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log
-                     COMMAND ${CMAKE_COMMAND} -E remove_directory ome-common
-                     COMMAND ${CMAKE_COMMAND} -E make_directory ome-common
-                     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox
-                     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.dox)
+add_library(ome-compat INTERFACE)
 
-  add_custom_target(doc-check
-                    COMMAND ${CMAKE_COMMAND} -Dlogfile=${CMAKE_CURRENT_BINARY_DIR}/ome-common.log -P ${PROJECT_SOURCE_DIR}/cmake/DoxygenCheck.cmake
-                    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log)
+target_include_directories(ome-compat INTERFACE
+                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
+                           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib>
+                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-  add_custom_target(doc-api ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/ome-common.log doc-check)
+target_link_libraries(ome-compat INTERFACE
+                      Boost::boost
+                      ${REGEX_LIBRARY})
 
-  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/ome-common/"
-          DESTINATION "${CMAKE_INSTALL_DOCDIR}/ome-common")
-endif(BUILD_DOXYGEN)
+add_library(OME::Compat ALIAS ome-compat)
+
+install(TARGETS ome-compat
+        EXPORT OMECompatInternal
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(EXPORT OMECompatInternal
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECompat)
+install(FILES OMECompatConfig.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECompat)
+
+set(ome_compat_includedir "${CMAKE_INSTALL_INCLUDEDIR}/ome/compat")
+
+install(FILES ${ome_compat_headers}
+        DESTINATION ${ome_compat_includedir})
+
+# Dump header list for testing
+header_include_list_write(ome_compat_headers "" ome/compat ${PROJECT_BINARY_DIR}/test/ome-compat)

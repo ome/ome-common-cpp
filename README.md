@@ -1,48 +1,54 @@
-# Bio-Formats
+# OME Common C++
 
-[![Build Status](https://travis-ci.org/openmicroscopy/bioformats.png)](http://travis-ci.org/openmicroscopy/bioformats)
+OME Common is a standalone C++ library required by other OME C++
+projects for common functionality which is not readily available from
+the C++ Standard Library.  This includes basic portability functions,
+to wrapping other libraries to make them usable with Modern C++
+programming practices.
 
-Bio-Formats is a standalone Java library for reading and writing life sciences
-image file formats. It is capable of parsing both pixels and metadata for a
-large number of formats, as well as writing to several formats.
+It serves a similar purpose to the OME formats-common Java library,
+with some shared functionality, though for the most part they are
+quite different.
 
 
 Purpose
 -------
 
-Bio-Formats' primary purpose is to convert proprietary microscopy data into 
-an open standard called the OME data model, particularly into the OME-TIFF 
-file format. See the [statement of purpose](http://www.openmicroscopy.org/site/support/bio-formats/about/index.html) 
-for a thorough explanation and rationale.
+OME Common's primary purpose is to ensure that a certain level of
+basic functionality is provided for all platforms and compilers
+supported by OME C++ projects.  It currently includes:
 
+- Missing C++ standard library functionality:
 
-Supported formats
------------------
+  * array
+  * cstdint
+  * memory
+  * regex
+  * tuple
 
-Bio-Formats supports [more than a hundred file
-formats](http://www.openmicroscopy.org/site/support/bio-formats/supported-formats.html).
+- Missing Boost functionality:
 
+  * Endian conversions
+  * Filesystem absolute path determination
+  * Variant and MPL set up
+  * Units (extended datatypes for all units used by the OME data
+    model)
 
-For users
----------
+- Extra functionality:
 
-[Many software
-packages](http://www.openmicroscopy.org/site/support/bio-formats/users/index.html)
-use Bio-Formats to read and write microscopy formats.
-
-
-For developers
---------------
-
-You can use Bio-Formats to easily [support these formats in your
-software](http://www.openmicroscopy.org/site/support/bio-formats/developers/java-library.html).
+  * Boolean type for iterable 8-bit mask pixel data
+  * logging
+  * installation path determination
+  * memory streams
+  * string portability and helper functions
+  * XML parsing (Xerces-C++ Modern C++ RAII wrappers)
 
 
 More information
 ----------------
 
-For more information, see the [Bio-Formats web
-site](http://www.openmicroscopy.org/site/products/bio-formats).
+For more information, see the [Bio-Formats C++ web
+site](http://www.openmicroscopy.org/site/support/bio-formats5.2/developers/cpp/overview.html).
 
 
 Pull request testing
@@ -52,16 +58,8 @@ We welcome pull requests from anyone, but ask that you please verify the
 following before submitting a pull request:
 
  * verify that the branch merges cleanly into ```develop```
- * verify that the branch compiles with the ```clean jars tools``` Ant targets
- * verify that the branch compiles using Maven
- * verify that the branch does not use syntax or API specific to Java 1.7+
- * run the unit tests (```ant test```) and correct any failures
- * test at least one file in each affected format, using the ```showinf```
-   command
- * internal developers only: [run the data
-   tests](http://www.openmicroscopy.org/site/support/bio-formats/developers/commit-testing.html).
-   against directories corresponding to the affected format(s), as well as the
-   test_per_commit directory
+ * verify that the branch compiles
+ * run the unit tests (```ctest -V```) and correct any failures
  * make sure that your commits contain the correct authorship information and,
    if necessary, a signed-off-by line
  * make sure that the commit messages or pull request comment contains

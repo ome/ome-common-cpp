@@ -34,51 +34,33 @@
 # policies, either expressed or implied, of any organization.
 # #L%
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.2.0)
+cmake_policy(VERSION 3.2.0)
 
-# Default policy is from 2.8.12
-cmake_policy(VERSION 2.8.12)
-# Set MacOSX @rpath usage globally.
-if (POLICY CMP0020)
-  cmake_policy(SET CMP0020 NEW)
-endif(POLICY CMP0020)
-if (POLICY CMP0042)
-  cmake_policy(SET CMP0042 NEW)
-endif(POLICY CMP0042)
-# Use new variable expansion policy.
-if (POLICY CMP0053)
-  cmake_policy(SET CMP0053 NEW)
-endif(POLICY CMP0053)
-if (POLICY CMP0054)
-  cmake_policy(SET CMP0054 NEW)
-endif(POLICY CMP0054)
-
-# For MSVC
-enable_language(CXX)
-# For feature tests with CMake 2.8.x
-enable_language(C)
+# For MSVC and FindThreads, respectively.
+enable_language(CXX C)
 
 list(APPEND CMAKE_MODULE_PATH
-     "${CMAKE_CURRENT_LIST_DIR}/cpp/cmake")
+     "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-include("${CMAKE_CURRENT_LIST_DIR}/cpp/cmake/BioFormatsCommon.cmake")
+include(cmake/Version.cmake)
+ome_project_version("OME Common C++" "${CMAKE_CURRENT_SOURCE_DIR}")
 
-project(bioformats)
-message(STATUS "Configuring Bio-Formats main build")
-
-include(cpp/cmake/Version.cmake)
+project(ome-common
+        VERSION "${OME_VERSION_MAJOR}.${OME_VERSION_MINOR}.${OME_VERSION_PATCH}"
+        LANGUAGES CXX)
 
 if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
   message(FATAL_ERROR "In-tree builds are not supported; please run cmake from a separate build directory.")
 endif("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 
-enable_language(CXX)
-  set(BUILD_SHARED_LIBS_DEFAULT ON)
+set(BUILD_SHARED_LIBS_DEFAULT ON)
 if(MSVC)
   set(BUILD_SHARED_LIBS_DEFAULT OFF)
 endif()
 set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_DEFAULT} CACHE BOOL "Use shared libraries")
 
+include(Options)
 include(GNUInstallDirs)
 include(CompilerChecks)
 include(PlatformChecks)
@@ -86,9 +68,6 @@ include(BoostChecks)
 include(RegexChecks)
 include(ThreadChecks)
 include(XercesChecks)
-include(ImageLibraries)
-include(QtGLChecks)
-include(XsdFu)
 include(GTest)
 include(Doxygen)
 include(HeaderTest)
@@ -155,34 +134,16 @@ foreach(dir
 endforeach()
 
 add_subdirectory(docs/doxygen)
-add_subdirectory(docs/sphinx)
-add_subdirectory(cpp)
 
-set(LIBRARY_PREFIX OME)
-file(MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/cpp/bin")
-configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateShellConfig.cmake.in
-               ${PROJECT_BINARY_DIR}/config @ONLY)
-configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateInternalShellWrapper.cmake.in
-               ${PROJECT_BINARY_DIR}/cpp/cmake/bf-test @ONLY)
-configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateShellWrapper.cmake.in
-               ${PROJECT_BINARY_DIR}/cpp/bin/bf-test @ONLY)
-file(COPY ${PROJECT_BINARY_DIR}/cpp/cmake/bf-test
-     DESTINATION ${PROJECT_BINARY_DIR}
-     FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ
-     GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-install(PROGRAMS ${PROJECT_BINARY_DIR}/cpp/bin/bf-test
-        DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
-if(WIN32)
-  configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateCmdConfig.cmake.in
-                 ${PROJECT_BINARY_DIR}/config.bat @ONLY)
-  configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateInternalCmdWrapper.cmake.in
-                 ${PROJECT_BINARY_DIR}/bf-test.bat @ONLY)
-  configure_file(${PROJECT_SOURCE_DIR}/cpp/cmake/TemplateCmdWrapper.cmake.in
-                 ${PROJECT_BINARY_DIR}/cpp/bin/bf-test.bat @ONLY)
-  install(PROGRAMS ${PROJECT_BINARY_DIR}/cpp/bin/bf-test.bat
-          DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
-  endif()
-return()
+set(OME_TOPLEVEL_INCLUDES
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib
+    ${CMAKE_CURRENT_BINARY_DIR}/lib)
 
-message("NOTE: The Bio-Formats ${OME_VERSION_SHORT} C++ library is new in version 5.1")
-message("NOTE: API stability will not be guaranteed until version 5.2")
+# Add test, making sure it's run with a suitable environment.
+# If updated, make sure to update the wrappers in cmake.
+function(ome_add_test)
+  add_test(${ARGV})
+endfunction()
+
+add_subdirectory(lib)
+add_subdirectory(test)
