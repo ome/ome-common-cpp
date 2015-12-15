@@ -106,7 +106,7 @@ TEST(Variant, MPLVectorNonNumeric)
   ASSERT_FALSE(boost::get<bool>(v2));
 }
 
-#include <ome/compat/cstdint.h>
+#include <cstdint>
 
 typedef boost::mpl::vector<uint8_t,
                            uint16_t,

@@ -36,9 +36,9 @@
  * #L%
  */
 
-#include <ome/common/endian.h>
+#include <cstdint>
 
-#include <ome/compat/cstdint.h>
+#include <ome/common/endian.h>
 
 #include <ome/test/test.h>
 

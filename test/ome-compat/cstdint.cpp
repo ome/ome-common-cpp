@@ -36,7 +36,7 @@
  * #L%
  */
 
-#include <ome/compat/cstdint.h>
+#include <cstdint>
 
 #include <ome/test/test.h>
 

@@ -39,6 +39,7 @@
 #ifndef OME_COMMON_BOOLEAN_H
 #define OME_COMMON_BOOLEAN_H
 
+#include <cstdint>
 #include <istream>
 #include <limits>
 #include <ostream>

@@ -35,11 +35,8 @@
 # #L%
 
 set(ome_compat_headers
-    array.h
-    cstdint.h
     memory.h
-    regex.h
-    tuple.h)
+    regex.h)
 
 add_library(ome-compat INTERFACE)
 
