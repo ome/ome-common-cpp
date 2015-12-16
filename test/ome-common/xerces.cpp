@@ -619,13 +619,13 @@ TEST_P(XercesTest, NodeWriteStream)
     }
 }
 
-XercesTestParameters params[] =
+const std::vector<XercesTestParameters> params =
   {
-    //    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::NONE),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::FILES, true),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::CATALOG, true),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid.ome", XercesTestParameters::CATALOG, false),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid2.ome", XercesTestParameters::CATALOG, false)
+    // { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::NONE },
+    { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::FILES, true },
+    { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::CATALOG, true },
+    { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid.ome", XercesTestParameters::CATALOG, false },
+    { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid2.ome", XercesTestParameters::CATALOG, false }
   };
 
 // Disable missing-prototypes warning for INSTANTIATE_TEST_CASE_P;

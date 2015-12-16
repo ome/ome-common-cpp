@@ -130,46 +130,47 @@ TEST_P(ModulePathTest, InvalidEnv)
       ASSERT_TRUE(params.logic_error);
     }
 }
-ModulePathTestParameters params[] =
+
+const std::vector<ModulePathTestParameters> params =
   {
-    ModulePathTestParameters("bin",          "OME_BINDIR",         false),
-    ModulePathTestParameters("sbin",         "OME_SBINDIR",        false),
-    ModulePathTestParameters("libexec",      "OME_LIBEXECDIR",     false),
-    ModulePathTestParameters("sysconf",      "OME_SYSCONFDIR",     false),
-    ModulePathTestParameters("sharedstate",  "OME_SHAREDSTATEDIR", false),
-    ModulePathTestParameters("localstate",   "OME_LOCALSTATEDIR",  false),
-    ModulePathTestParameters("lib",          "OME_LIBDIR",         false),
-    ModulePathTestParameters("include",      "OME_INCLUDEDIR",     false),
-    ModulePathTestParameters("oldinclude",   "OME_OLDINCLUDEDIR",  false),
-    ModulePathTestParameters("dataroot",     "OME_DATAROOTDIR",    false),
-    ModulePathTestParameters("data",         "OME_DATADIR",        false),
-    ModulePathTestParameters("info",         "OME_INFODIR",        false),
-    ModulePathTestParameters("locale",       "OME_LOCALEDIR",      false),
-    ModulePathTestParameters("man",          "OME_MANDIR",         false),
-    ModulePathTestParameters("doc",          "OME_DOCDIR",         false),
+    {"bin",             "OME_BINDIR",                false},
+    {"sbin",            "OME_SBINDIR",               false},
+    {"libexec",         "OME_LIBEXECDIR",            false},
+    {"sysconf",         "OME_SYSCONFDIR",            false},
+    {"sharedstate",     "OME_SHAREDSTATEDIR",        false},
+    {"localstate",      "OME_LOCALSTATEDIR",         false},
+    {"lib",             "OME_LIBDIR",                false},
+    {"include",         "OME_INCLUDEDIR",            false},
+    {"oldinclude",      "OME_OLDINCLUDEDIR",         false},
+    {"dataroot",        "OME_DATAROOTDIR",           false},
+    {"data",            "OME_DATADIR",               false},
+    {"info",            "OME_INFODIR",               false},
+    {"locale",          "OME_LOCALEDIR",             false},
+    {"man",             "OME_MANDIR",                false},
+    {"doc",             "OME_DOCDIR",                false},
 
-    ModulePathTestParameters("ome-common-root", "OME_HOME",        false),
+    {"ome-common-root", "OME_HOME",                  false},
 
-    ModulePathTestParameters("bin",          "OME_COMMON_BINDIR",         false),
-    ModulePathTestParameters("sbin",         "OME_COMMON_SBINDIR",        false),
-    ModulePathTestParameters("libexec",      "OME_COMMON_LIBEXECDIR",     false),
-    ModulePathTestParameters("sysconf",      "OME_COMMON_SYSCONFDIR",     false),
-    ModulePathTestParameters("sharedstate",  "OME_COMMON_SHAREDSTATEDIR", false),
-    ModulePathTestParameters("localstate",   "OME_COMMON_LOCALSTATEDIR",  false),
-    ModulePathTestParameters("lib",          "OME_COMMON_LIBDIR",         false),
-    ModulePathTestParameters("include",      "OME_COMMON_INCLUDEDIR",     false),
-    ModulePathTestParameters("oldinclude",   "OME_COMMON_OLDINCLUDEDIR",  false),
-    ModulePathTestParameters("dataroot",     "OME_COMMON_DATAROOTDIR",    false),
-    ModulePathTestParameters("data",         "OME_COMMON_DATADIR",        false),
-    ModulePathTestParameters("info",         "OME_COMMON_INFODIR",        false),
-    ModulePathTestParameters("locale",       "OME_COMMON_LOCALEDIR",      false),
-    ModulePathTestParameters("man",          "OME_COMMON_MANDIR",         false),
-    ModulePathTestParameters("doc",          "OME_COMMON_DOCDIR",         false),
+    {"bin",             "OME_COMMON_BINDIR",         false},
+    {"sbin",            "OME_COMMON_SBINDIR",        false},
+    {"libexec",         "OME_COMMON_LIBEXECDIR",     false},
+    {"sysconf",         "OME_COMMON_SYSCONFDIR",     false},
+    {"sharedstate",     "OME_COMMON_SHAREDSTATEDIR", false},
+    {"localstate",      "OME_COMMON_LOCALSTATEDIR",  false},
+    {"lib",             "OME_COMMON_LIBDIR",         false},
+    {"include",         "OME_COMMON_INCLUDEDIR",     false},
+    {"oldinclude",      "OME_COMMON_OLDINCLUDEDIR",  false},
+    {"dataroot",        "OME_COMMON_DATAROOTDIR",    false},
+    {"data",            "OME_COMMON_DATADIR",        false},
+    {"info",            "OME_COMMON_INFODIR",        false},
+    {"locale",          "OME_COMMON_LOCALEDIR",      false},
+    {"man",             "OME_COMMON_MANDIR",         false},
+    {"doc",             "OME_COMMON_DOCDIR",         false},
 
-    ModulePathTestParameters("ome-common-root", "OME_COMMON_HOME",        false),
+    {"ome-common-root", "OME_COMMON_HOME",           false},
 
     // Invalid dtype throws logic_error
-    ModulePathTestParameters("ome-files-invalid", "OME_INVALID",          true)
+    {"ome-files-invalid", "OME_INVALID",             true}
   };
 
 // Disable missing-prototypes warning for INSTANTIATE_TEST_CASE_P;
