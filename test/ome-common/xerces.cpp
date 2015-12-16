@@ -251,12 +251,12 @@ TEST_P(XercesTest, DocumentFromFile)
   if (params.valid)
     {
       ASSERT_NO_THROW(doc = ome::common::xml::dom::createDocument(boost::filesystem::path(params.filename), resolver));
-      ASSERT_TRUE(doc != 0);
+      ASSERT_TRUE(doc != nullptr);
     }
   else
     {
       ASSERT_THROW(doc = ome::common::xml::dom::createDocument(boost::filesystem::path(params.filename), resolver), std::runtime_error);
-      ASSERT_TRUE(doc == 0);
+      ASSERT_TRUE(doc == nullptr);
     }
 }
 
@@ -271,12 +271,12 @@ TEST_P(XercesTest, DocumentFromStream)
   if (params.valid)
     {
       ASSERT_NO_THROW(doc = ome::common::xml::dom::createDocument(in, resolver));
-      ASSERT_TRUE(doc != 0);
+      ASSERT_TRUE(doc != nullptr);
     }
   else
     {
       ASSERT_THROW(doc = ome::common::xml::dom::createDocument(in, resolver), std::runtime_error);
-      ASSERT_TRUE(doc == 0);
+      ASSERT_TRUE(doc == nullptr);
     }
 }
 
@@ -300,12 +300,12 @@ TEST_P(XercesTest, DocumentFromString)
   if (params.valid)
     {
       ASSERT_NO_THROW(doc = ome::common::xml::dom::createDocument(data, resolver));
-      ASSERT_TRUE(doc != 0);
+      ASSERT_TRUE(doc != nullptr);
     }
   else
     {
       ASSERT_THROW(doc = ome::common::xml::dom::createDocument(data, resolver), std::runtime_error);
-      ASSERT_TRUE(doc == 0);
+      ASSERT_TRUE(doc == nullptr);
     }
 }
 
@@ -318,10 +318,10 @@ TEST_P(XercesTest, ResetDocument)
       xml::dom::Document doc(ome::common::xml::dom::createDocument(boost::filesystem::path(params.filename), resolver));
 
       ASSERT_TRUE(doc);
-      ASSERT_TRUE(doc.get() != 0);
+      ASSERT_TRUE(doc.get() != nullptr);
       ASSERT_NO_THROW(doc.reset());
       ASSERT_FALSE(doc);
-      ASSERT_TRUE(doc.get() == 0);
+      ASSERT_TRUE(doc.get() == nullptr);
     }
 }
 

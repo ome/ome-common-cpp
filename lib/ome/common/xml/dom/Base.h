@@ -151,7 +151,29 @@ namespace ome
            */
           operator bool () const
           {
-            return get() != 0;
+            return get() != nullptr;
+          }
+
+          /**
+           * Check if the wrapped type is NULL.
+           *
+           * @returns true if valid, false if NULL.
+           */
+          bool
+          operator == (std::nullptr_t) const
+          {
+            return get() == nullptr;
+          }
+
+          /**
+           * Check if the wrapped type is NULL.
+           *
+           * @returns true if valid, false if NULL.
+           */
+          bool
+          operator != (std::nullptr_t) const
+          {
+            return get() != nullptr;
           }
 
           /**
