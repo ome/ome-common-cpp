@@ -127,18 +127,16 @@ TYPED_TEST_P(UnitConv, Conversion)
 {
   std::cerr << "Testing unit conversion from " << this->from_name << " to " << this->to_name << " (" << this->ops.size() << " tests, precision=" << this->precision << ")\n";
 
-  for (typename std::vector<test_op>::const_iterator i = this->ops.begin();
-       i != this->ops.end();
-       ++i)
+  for (const auto& op : this->ops)
     {
-      typename TypeParam::to_type obs(TypeParam::from_type::from_value(i->initial));
+      typename TypeParam::to_type obs(TypeParam::from_type::from_value(op.initial));
 
       // Use EXPECT_NEAR rather than EXPECT_DOUBLE_EQUAL due to
       // precision loss with angle conversions and pi, and unit
       // conversions between imperial and metric, and the worst
       // culprits are torr and mmHg conversion to Pa (in the mmHg
       // case, the constant used is of low precision)
-      EXPECT_NEAR(i->expected, quantity_cast<typename TypeParam::value_type>(obs), this->precision);
+      EXPECT_NEAR(op.expected, quantity_cast<typename TypeParam::value_type>(obs), this->precision);
     }
 }
 
@@ -146,11 +144,9 @@ TYPED_TEST_P(UnitConv, StreamOutput)
 {
   std::cerr << "Testing unit stream output from " << this->from_name << " to " << this->to_name << " (" << this->ops.size() << " tests)\n";
 
-  for (typename std::vector<test_op>::const_iterator i = this->ops.begin();
-       i != this->ops.end();
-       ++i)
+  for (const auto& op : this->ops)
     {
-      typename TypeParam::to_type obs(TypeParam::from_type::from_value(i->initial));
+      typename TypeParam::to_type obs(TypeParam::from_type::from_value(op.initial));
 
       std::ostringstream os;
       os.imbue(std::locale::classic());
@@ -168,7 +164,7 @@ TYPED_TEST_P(UnitConv, StreamOutput)
 
       std::string obsstr_fixed(ome::compat::regex_replace(obsstr, repl, "e$1$2"));
 
-      EXPECT_EQ(i->expected_output, obsstr_fixed);
+      EXPECT_EQ(op.expected_output, obsstr_fixed);
     }
 }
 
