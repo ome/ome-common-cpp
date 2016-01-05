@@ -58,7 +58,7 @@ if(BUILD_TESTS)
                              $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/lib>
                              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/lib>)
 
-  target_link_libraries(ome-test OME::Common GTest::GTest ${CMAKE_THREAD_LIBS_INIT})
+  target_link_libraries(ome-test OME::Common GTest::GTest)
   set_target_properties(ome-test PROPERTIES LINKER_LANGUAGE CXX)
 
   add_library(OME::Test ALIAS ome-test)
