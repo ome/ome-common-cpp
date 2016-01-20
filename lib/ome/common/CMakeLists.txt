@@ -102,6 +102,7 @@ set(ome_common_sources
     module.cpp
     xml/EntityResolver.cpp
     xml/ErrorReporter.cpp
+    xml/Platform.cpp
     xml/dom/Document.cpp
     xml/dom/NamedNodeMap.cpp
     xml/dom/NodeList.cpp)

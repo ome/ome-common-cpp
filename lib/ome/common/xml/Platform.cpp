@@ -2,7 +2,7 @@
  * #%L
  * OME-XERCES C++ library for working with Xerces C++.
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -36,74 +36,17 @@
  * #L%
  */
 
-#ifndef OME_COMMON_XML_PLATFORM_H
-#define OME_COMMON_XML_PLATFORM_H
-
-#include <boost/thread.hpp>
-
-#include <xercesc/util/PlatformUtils.hpp>
+#include <ome/common/xml/Platform.h>
 
 namespace ome
 {
   namespace common
   {
-    /**
-     * Xerces-C modern C++ wrapper.  All classes in this namespace wrap
-     * the Xerces-C classes and functions to provide RAII and
-     * exception-safe equivalents, and which also handle memory
-     * management transparently.
-     */
     namespace xml
     {
 
-      /**
-       * XML Platform.  This class wraps calls to the
-       * xercesc::XMLPlatformUtils Initialize() and Terminate()
-       * functions, to allow their use in an exception-safe manner.
-       * Create an instance of this class prior to performing any work
-       * with Xerces, and ensure it will remain in scope for all work to
-       * complete.  When the scope is exited, or an exception is thrown,
-       * Xerces will be automatically terminated.  Any number of
-       * instances of this class may be created; Xerces will only be
-       * terminated when the last instance is destroyed.
-       */
-      class Platform
-      {
-      public:
-        inline
-        /**
-         * Construct a Platform.  Calls xercesc::XMLPlatformUtils::Initialize().
-         */
-        Platform()
-        {
-	  boost::lock_guard<boost::mutex> lock(mutex);
-
-          xercesc::XMLPlatformUtils::Initialize();
-        }
-
-        /**
-         * Destructor. Calls xercesc::XMLPlatformUtils::Terminate().
-         */
-        inline
-        ~Platform()
-        {
-	  boost::lock_guard<boost::mutex> lock(mutex);
-
-          xercesc::XMLPlatformUtils::Terminate();
-        }
-
-	/// Mutex to lock libxerces access.
-        static boost::mutex mutex;
-      };
+      boost::mutex Platform::mutex;
 
     }
   }
 }
-
-#endif // OME_COMMON_XML_PLATFORM_H
-
-/*
- * Local Variables:
- * mode:C++
- * End:
- */
