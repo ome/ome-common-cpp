@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-XERCES C++ library for working with Xerces C++.
+ * OME-XALAN C++ library for working with Xalan C++.
  * %%
  * Copyright © 2006 - 2015 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -50,7 +50,7 @@
 namespace xml = ome::common::xml;
 namespace xsl = ome::common::xsl;
 
-class XercesTest : public ::testing::Test
+class XalanTest : public ::testing::Test
 {
 public:
   xsl::Platform plat;
@@ -62,6 +62,6 @@ public:
   }
 };
 
-TEST_F(XercesTest, Platform)
+TEST_F(XalanTest, Platform)
 {
 }
