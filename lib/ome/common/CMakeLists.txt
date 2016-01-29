@@ -80,7 +80,8 @@ set(ome_common_units_static_headers
     xml/String.h)
 
   set(ome_common_xsl_static_headers
-    xsl/Platform.h)
+    xsl/Platform.h
+    xsl/Transformer.h)
 
 set(ome_common_xml_dom_static_headers
     xml/dom/Base.h
@@ -110,7 +111,8 @@ set(ome_common_sources
     xml/dom/Document.cpp
     xml/dom/NamedNodeMap.cpp
     xml/dom/NodeList.cpp
-    xsl/Platform.cpp)
+    xsl/Platform.cpp
+    xsl/Transformer.cpp)
 
 add_library(ome-common ${ome_common_sources} ${ome_common_headers})
 
@@ -125,6 +127,7 @@ target_link_libraries(ome-common
                       OME::Compat
                       Boost::log_setup
                       Boost::log
+                      Boost::iostreams
                       Boost::filesystem
                       Boost::system
                       XercesC::XercesC

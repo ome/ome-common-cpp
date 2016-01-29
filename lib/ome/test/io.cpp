@@ -36,16 +36,25 @@
  * #L%
  */
 
+#include <stdexcept>
+
 #include <ome/test/test.h>
 #include <ome/test/io.h>
 
 #include <boost/filesystem/fstream.hpp>
+#include <boost/format.hpp>
 
 void
 readFile(const boost::filesystem::path& filename,
          std::string&                   str)
 {
   boost::filesystem::ifstream in(filename);
+  if (!in)
+    {
+      boost::format fmt("test: %1%: Invalid file");
+      fmt % filename;
+      throw std::runtime_error(fmt.str());
+    }
   readFile(in, str);
 }
 

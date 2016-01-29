@@ -47,6 +47,8 @@ namespace ome
 
       boost::mutex Platform::mutex;
 
+      uint32_t Platform::refcount = 0;
+
     }
   }
 }

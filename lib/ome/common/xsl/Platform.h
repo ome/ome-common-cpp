@@ -2,7 +2,7 @@
  * #%L
  * OME-XALAN C++ library for working with Xalan C++.
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -41,6 +41,8 @@
 
 #include <boost/thread.hpp>
 
+#include <ome/compat/cstdint.h>
+
 #include <ome/common/xml/Platform.h>
 
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>
@@ -77,13 +79,23 @@ namespace ome
       public:
         /**
          * Construct a Platform.  Calls xalanc::Transformer::initialize().
+         *
+         * @param skip Skip calls to xalanc::Transformer::initialize
+         * and xalanc::Transformer::terminate.  Use if other code
+         * already called initialize; this will make Platform usage in
+         * other code skip these operations, making it a null
+         * operation.
          */
-        Platform():
-	  xmlplatform()
+        Platform(bool skip = false):
+	  xmlplatform(),
+          skip(skip)
         {
 	  boost::lock_guard<boost::mutex> lock(mutex);
 
-          xalanc::XalanTransformer::initialize();
+          // Only call initialize for first instance.
+          if (refcount == 0 && !skip)
+            xalanc::XalanTransformer::initialize();
+          ++refcount;
         }
 
         /**
@@ -93,14 +105,22 @@ namespace ome
         {
 	  boost::lock_guard<boost::mutex> lock(mutex);
 
-          xalanc::XalanTransformer::terminate();
+          // Only call terminate for last instance.
+          // refcount will never be zero at this point.
+          if (refcount == 1 && !skip)
+            xalanc::XalanTransformer::terminate();
+          --refcount;
         }
 
       private:
 	/// Xerces-C++ platform.
 	xml::Platform xmlplatform;
+        /// Skip initialize and terminate calls.
+        bool skip;
         /// Mutex to lock libxalan access.
         static boost::mutex mutex;
+        /// Reference count.
+        static uint32_t refcount;
       };
 
     }
