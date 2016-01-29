@@ -75,7 +75,6 @@ namespace ome
       class Platform
       {
       public:
-        inline
         /**
          * Construct a Platform.  Calls xalanc::Transformer::initialize().
          */
@@ -84,19 +83,16 @@ namespace ome
         {
 	  boost::lock_guard<boost::mutex> lock(mutex);
 
-	  //	  XALAN_USING_XALAN(XalanTransformer);
           xalanc::XalanTransformer::initialize();
         }
 
         /**
          * Destructor. Calls xalanc::Transformer::terminate().
          */
-        inline
         ~Platform()
         {
 	  boost::lock_guard<boost::mutex> lock(mutex);
 
-	  //	  XALAN_USING_XALAN(XalanTransformer);
           xalanc::XalanTransformer::terminate();
         }
 
