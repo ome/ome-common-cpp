@@ -275,6 +275,24 @@ public:
         std::string reference_text;
         ASSERT_NO_THROW(readFile(this->reference, reference_text));
 
+	bool substitute_cr = false;
+#if defined(XALAN_NEWLINE_IS_CRLF)
+	  substitute_cr = true;
+#endif
+	if (substitute_cr)
+	  {
+	    std::string tmp;
+	    for (std::string::const_iterator i = reference_text.begin();
+		 i != reference_text.end();
+		 ++i)
+	      {
+		if (*i == '\n')
+		  tmp += '\r';
+		tmp += *i;
+	      }
+	    reference_text = tmp;
+	  }
+
         ASSERT_FALSE(transform_text.empty());
         ASSERT_FALSE(reference_text.empty());
         if (comparePass)
