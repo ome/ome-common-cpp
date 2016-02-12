@@ -1,8 +1,8 @@
 /*
  * #%L
- * # Bio-Formats C++ libraries (test infrastructure)
+ * OME-XALAN C++ library for working with Xalan C++.
  * %%
- * Copyright © 2013 - 2015 Open Microscopy Environment:
+ * Copyright © 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -36,37 +36,19 @@
  * #L%
  */
 
-#include <stdexcept>
+#include <ome/common/xsl/Platform.h>
 
-#include <ome/test/test.h>
-#include <ome/test/io.h>
-
-#include <boost/filesystem/fstream.hpp>
-#include <boost/format.hpp>
-
-void
-readFile(const boost::filesystem::path& filename,
-         std::string&                   str)
+namespace ome
 {
-  boost::filesystem::ifstream in(filename);
-  if (!in)
+  namespace common
+  {
+    namespace xsl
     {
-      boost::format fmt("test: %1%: Invalid file");
-      fmt % filename;
-      throw std::runtime_error(fmt.str());
+
+      boost::mutex Platform::mutex;
+
+      uint32_t Platform::refcount = 0;
+
     }
-  readFile(in, str);
-}
-
-void
-readFile(std::istream& stream,
-         std::string&  str)
-{
-  ASSERT_TRUE(!!stream);
-  stream.seekg(0, std::ios::end);
-  str.reserve(stream.tellg());
-  stream.seekg(0, std::ios::beg);
-
-  str.assign(std::istreambuf_iterator<char>(stream),
-             std::istreambuf_iterator<char>());
+  }
 }

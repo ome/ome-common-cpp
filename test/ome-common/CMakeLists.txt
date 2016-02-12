@@ -110,4 +110,10 @@ if(BUILD_TESTS)
 
   ome_add_test(ome-common/xerces xerces)
 
+  add_executable(xalan xalan.cpp)
+  target_link_libraries(xalan OME::Common)
+  target_link_libraries(xalan OME::Test)
+
+  ome_add_test(ome-common/xalan xalan)
+
 endif(BUILD_TESTS)

@@ -225,7 +225,9 @@ namespace ome
             if (in)
               {
                 EntityResolver r; // Does nothing.
-                dom::Document doc(dom::createDocument(in, r));
+                dom::Document doc(dom::createDocument(in, r,
+                                  dom::ParseParameters(),
+                                  current.string()));
                 dom::Element root(doc.getDocumentElement());
                 dom::NodeList nodes(root.getChildNodes());
                 for (dom::NodeList::iterator i = nodes.begin();

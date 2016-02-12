@@ -79,6 +79,10 @@ set(ome_common_units_static_headers
     xml/Platform.h
     xml/String.h)
 
+  set(ome_common_xsl_static_headers
+    xsl/Platform.h
+    xsl/Transformer.h)
+
 set(ome_common_xml_dom_static_headers
     xml/dom/Base.h
     xml/dom/Document.h
@@ -95,6 +99,7 @@ set(ome_common_headers
     ${ome_common_static_headers}
     ${ome_common_xml_static_headers}
     ${ome_common_xml_dom_static_headers}
+    ${ome_common_xsl_static_headers}
     ${ome_common_generated_headers})
 
 set(ome_common_sources
@@ -102,9 +107,12 @@ set(ome_common_sources
     module.cpp
     xml/EntityResolver.cpp
     xml/ErrorReporter.cpp
+    xml/Platform.cpp
     xml/dom/Document.cpp
     xml/dom/NamedNodeMap.cpp
-    xml/dom/NodeList.cpp)
+    xml/dom/NodeList.cpp
+    xsl/Platform.cpp
+    xsl/Transformer.cpp)
 
 add_library(ome-common ${ome_common_sources} ${ome_common_headers})
 
@@ -119,9 +127,11 @@ target_link_libraries(ome-common
                       OME::Compat
                       Boost::log_setup
                       Boost::log
+                      Boost::iostreams
                       Boost::filesystem
                       Boost::system
                       XercesC::XercesC
+                      XalanC::XalanC
                       PRIVATE
                       ${LibDl_LIBRARIES})
 
@@ -154,6 +164,8 @@ install(FILES ${ome_common_xml_static_headers}
         DESTINATION ${ome_common_includedir}/xml)
 install(FILES ${ome_common_xml_dom_static_headers}
         DESTINATION ${ome_common_includedir}/xml/dom)
+install(FILES ${ome_common_xsl_static_headers}
+        DESTINATION ${ome_common_includedir}/xsl)
 
 # Dump header list for testing
 header_include_list_write(ome_common_static_headers ome_common_generated_headers ome/common ${PROJECT_BINARY_DIR}/test/ome-common)

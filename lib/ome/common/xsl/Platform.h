@@ -1,8 +1,8 @@
 /*
  * #%L
- * OME-XERCES C++ library for working with Xerces C++.
+ * OME-XALAN C++ library for working with Xalan C++.
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -36,71 +36,98 @@
  * #L%
  */
 
-#ifndef OME_COMMON_XML_PLATFORM_H
-#define OME_COMMON_XML_PLATFORM_H
+#ifndef OME_COMMON_XSL_PLATFORM_H
+#define OME_COMMON_XSL_PLATFORM_H
 
 #include <boost/thread.hpp>
 
-#include <xercesc/util/PlatformUtils.hpp>
+#include <ome/compat/cstdint.h>
+
+#include <ome/common/xml/Platform.h>
+
+#include <xalanc/XalanTransformer/XalanTransformer.hpp>
 
 namespace ome
 {
   namespace common
   {
     /**
-     * Xerces-C modern C++ wrapper.  All classes in this namespace wrap
-     * the Xerces-C classes and functions to provide RAII and
+     * Xalan-C modern C++ wrapper.  All classes in this namespace wrap
+     * the Xalan-C classes and functions to provide RAII and
      * exception-safe equivalents, and which also handle memory
      * management transparently.
      */
-    namespace xml
+    namespace xsl
     {
 
       /**
-       * XML Platform.  This class wraps calls to the
-       * xercesc::XMLPlatformUtils Initialize() and Terminate()
+       * XSL Platform.  This class wraps calls to the
+       * xalanc::Transformer initialize() and terminate()
        * functions, to allow their use in an exception-safe manner.
        * Create an instance of this class prior to performing any work
-       * with Xerces, and ensure it will remain in scope for all work to
+       * with Xalan, and ensure it will remain in scope for all work to
        * complete.  When the scope is exited, or an exception is thrown,
-       * Xerces will be automatically terminated.  Any number of
-       * instances of this class may be created; Xerces will only be
+       * Xalan will be automatically terminated.  Any number of
+       * instances of this class may be created; Xalan will only be
        * terminated when the last instance is destroyed.
+       *
+       * Internally, it will also initialize and terminate the
+       * Xerces-C++ Platform using the xml::Platform wrapper.
        */
       class Platform
       {
       public:
-        inline
         /**
-         * Construct a Platform.  Calls xercesc::XMLPlatformUtils::Initialize().
+         * Construct a Platform.  Calls xalanc::Transformer::initialize().
+         *
+         * @param skip Skip calls to xalanc::Transformer::initialize
+         * and xalanc::Transformer::terminate.  Use if other code
+         * already called initialize; this will make Platform usage in
+         * other code skip these operations, making it a null
+         * operation.
          */
-        Platform()
+        Platform(bool skip = false):
+	  xmlplatform(),
+          skip(skip)
         {
 	  boost::lock_guard<boost::mutex> lock(mutex);
 
-          xercesc::XMLPlatformUtils::Initialize();
+          // Only call initialize for first instance.
+          if (refcount == 0 && !skip)
+            xalanc::XalanTransformer::initialize();
+          ++refcount;
         }
 
         /**
-         * Destructor. Calls xercesc::XMLPlatformUtils::Terminate().
+         * Destructor. Calls xalanc::Transformer::terminate().
          */
-        inline
         ~Platform()
         {
 	  boost::lock_guard<boost::mutex> lock(mutex);
 
-          xercesc::XMLPlatformUtils::Terminate();
+          // Only call terminate for last instance.
+          // refcount will never be zero at this point.
+          if (refcount == 1 && !skip)
+            xalanc::XalanTransformer::terminate();
+          --refcount;
         }
 
-	/// Mutex to lock libxerces access.
+      private:
+	/// Xerces-C++ platform.
+	xml::Platform xmlplatform;
+        /// Skip initialize and terminate calls.
+        bool skip;
+        /// Mutex to lock libxalan access.
         static boost::mutex mutex;
+        /// Reference count.
+        static uint32_t refcount;
       };
 
     }
   }
 }
 
-#endif // OME_COMMON_XML_PLATFORM_H
+#endif // OME_COMMON_XSL_PLATFORM_H
 
 /*
  * Local Variables:
