@@ -218,7 +218,7 @@ class XalanTest : public ::testing::Test
 {
 public:
   xsl::Platform plat;
-  ome::compat::shared_ptr<xml::EntityResolver> resolver;
+  xml::EntityResolver resolver;
   boost::filesystem::path xsl;
   boost::filesystem::path xsl_invalid;
   boost::filesystem::path xsl_invalid2;
@@ -231,8 +231,7 @@ public:
 
   virtual void SetUp()
   {
-    resolver = ome::compat::make_shared<xml::EntityResolver>();
-    resolver->registerCatalog(boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/catalog.xml"));
+    resolver.registerCatalog(boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/catalog.xml"));
 
     xsl = boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/2012-06-to-2013-06.xsl");
     xsl_invalid = boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/2012-06-to-2013-06-invalid.xsl");
@@ -249,10 +248,12 @@ public:
                      const boost::filesystem::path& infile,
                      const boost::filesystem::path& outfile,
                      bool transformPass,
-                     bool comparePass)
+                     bool comparePass,
+                     bool validate)
   {
     xsl::Transformer t;
-    t.setEntityResolver(this->resolver);
+    t.setUseValidation(validate);
+    t.setEntityResolver(&resolver);
 
     Input<typename T::from_type> input(infile);
     Output<typename T::to_type> output(outfile);
@@ -264,8 +265,11 @@ public:
 
     if (!transformPass)
       {
-        ASSERT_THROW(t.transform(xsl, input.input, output.output),
-                     std::runtime_error);
+        if (validate)
+          {
+            ASSERT_THROW(t.transform(xsl, input.input, output.output),
+                         std::runtime_error);
+          }
       }
     else
       {
@@ -297,11 +301,14 @@ public:
         ASSERT_FALSE(reference_text.empty());
         if (comparePass)
           {
-            ASSERT_EQ(reference_text, transform_text);
+            if (validate)
+              {
+                ASSERT_EQ(reference_text, transform_text);
+              }
           }
         else
           {
-            ASSERT_NE(reference_text, transform_text);
+              ASSERT_NE(reference_text, transform_text);
           }
       }
   }
@@ -330,47 +337,59 @@ TYPED_TEST_P(XalanTest, TransformSetEntityResolver)
 {
   xsl::Transformer t;
 
-  ASSERT_NE(this->resolver, t.getEntityResolver());
+  ASSERT_NE(&this->resolver, t.getEntityResolver());
 
-  t.setEntityResolver(this->resolver);
+  t.setEntityResolver(&this->resolver);
 
-  ASSERT_EQ(this->resolver, t.getEntityResolver());
+  ASSERT_EQ(&this->resolver, t.getEntityResolver());
 }
 
 TYPED_TEST_P(XalanTest, TransformApply)
 {
   this->TestTransform(this->xsl, this->source, this->dest,
-                      true, true);
+                      true, true, true);
+  this->TestTransform(this->xsl, this->source, this->dest,
+                      true, true, false);
 }
 
 TYPED_TEST_P(XalanTest, TransformApplyInvalidInput1)
 {
   this->TestTransform(this->xsl, this->source_invalid1, this->dest,
-                      false, false);
+                      false, false, true);
+  this->TestTransform(this->xsl, this->source_invalid1, this->dest,
+                      false, false, false);
 }
 
 TYPED_TEST_P(XalanTest, TransformApplyInvalidInput2)
 {
   this->TestTransform(this->xsl, this->source_invalid2, this->dest,
-                      false, false);
+                      false, false, true);
+  this->TestTransform(this->xsl, this->source_invalid2, this->dest,
+                      false, false, false);
 }
 
 TYPED_TEST_P(XalanTest, TransformApplyInvalidInput3)
 {
   this->TestTransform(this->xsl, this->source_invalid3, this->dest,
-                      false, false);
+                      false, false, true);
+  this->TestTransform(this->xsl, this->source_invalid3, this->dest,
+                      false, false, false);
 }
 
 TYPED_TEST_P(XalanTest, TransformApplyInvalidXSL1)
 {
   this->TestTransform(this->xsl_invalid, this->source, this->dest,
-                      false, false);
+                      false, false, true);
+  this->TestTransform(this->xsl_invalid, this->source, this->dest,
+                      false, false, false);
 }
 
 TYPED_TEST_P(XalanTest, TransformApplyInvalidXSL2)
 {
   this->TestTransform(this->xsl_invalid2, this->source, this->dest,
-                      false, false);
+                      false, false, true);
+  this->TestTransform(this->xsl_invalid2, this->source, this->dest,
+                      false, false, false);
 }
 
 // Xalan initialised externally.

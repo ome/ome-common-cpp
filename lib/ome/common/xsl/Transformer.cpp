@@ -183,8 +183,8 @@ namespace
   template<>
   struct XSLInput<boost::filesystem::path> : public Input<boost::filesystem::path>
   {
-    XSLInput(const boost::filesystem::path&                             path,
-             ome::compat::shared_ptr<ome::common::xml::EntityResolver>& resolver):
+    XSLInput(const boost::filesystem::path&    path,
+             ome::common::xml::EntityResolver *resolver):
       Input<boost::filesystem::path>(path)
     {
       if (resolver)
@@ -196,6 +196,10 @@ namespace
           pp.doSchema = false;
           ome::common::xml::dom::Document
             (ome::common::xml::dom::createDocument(path, *resolver, pp));
+        }
+      else
+        {
+          throw std::runtime_error("No entity resolver registered");
         }
     }
   };
@@ -213,27 +217,35 @@ namespace ome
         transformer(),
         resolver()
       {
-        transformer.setUseValidation(true);
       }
 
       Transformer::~Transformer()
       {
       }
 
-      ome::compat::shared_ptr<xml::EntityResolver>
+      xml::EntityResolver *
       Transformer::getEntityResolver() const
       {
         return resolver;
       }
 
       void
-      Transformer::setEntityResolver(ome::compat::shared_ptr<xml::EntityResolver> resolver)
+      Transformer::setEntityResolver(xml::EntityResolver *resolver)
       {
         this->resolver = resolver;
-        if (this->resolver)
-          transformer.setXMLEntityResolver(&*this->resolver);
-        else
-          transformer.setXMLEntityResolver(0);
+        transformer.setXMLEntityResolver(&*this->resolver);
+      }
+
+      bool
+      Transformer::getUseValidation() const
+      {
+        return transformer.getUseValidation();
+      }
+
+      void
+      Transformer::setUseValidation(bool validate)
+      {
+        transformer.setUseValidation(validate);
       }
 
       void
