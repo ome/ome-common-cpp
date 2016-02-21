@@ -71,6 +71,7 @@ namespace
           fmt % path;
           throw std::runtime_error(fmt.str());
         }
+      source.setSystemId(ome::common::xml::String(path.string()));
     }
   };
 
