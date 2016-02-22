@@ -145,14 +145,9 @@ ModulePathTestParameters params[] =
     ModulePathTestParameters("doc",          "BIOFORMATS_DOCDIR",         false),
 
     ModulePathTestParameters("bf-root",      "BIOFORMATS_HOME",           false),
-    ModulePathTestParameters("bf-data",      "BIOFORMATS_DATADIR",        false),
-    ModulePathTestParameters("bf-icon",      "BIOFORMATS_ICONDIR",        false),
-    ModulePathTestParameters("bf-libexec",   "BIOFORMATS_LIBEXECDIR",     false),
-    ModulePathTestParameters("bf-schema",    "BIOFORMATS_SCHEMADIR",      false),
-    ModulePathTestParameters("bf-transform", "BIOFORMATS_TRANSFORMDIR",   false),
 
     // Invalid dtype throws logic_error
-    ModulePathTestParameters("bf-invalid",   "BIOFORMATS_INVALID",        true),
+    ModulePathTestParameters("bf-invalid",   "BIOFORMATS_INVALID",        true)
   };
 
 // Disable missing-prototypes warning for INSTANTIATE_TEST_CASE_P;

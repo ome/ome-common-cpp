@@ -2,7 +2,7 @@
  * #%L
  * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -41,6 +41,8 @@
 
 #include <ome/common/config-internal.h>
 #include <ome/common/filesystem.h>
+
+#define OME_COMMON_MODULE_INTROSPECTION 1
 #include <ome/common/module.h>
 
 #include <cstring>
@@ -49,81 +51,19 @@
 
 namespace fs = boost::filesystem;
 
-#ifdef OME_HAVE_DLADDR
-#ifndef _GNU_SOURCE
-# define _GNU_SOURCE 1
-#endif
-#include <dlfcn.h>
-#include <stdio.h>
-#endif // OME_HAVE_DLADDR
-
-#ifdef _MSC_VER
-# include <windows.h>
-#endif
-
 namespace
 {
+  using ome::common::RegisterModule;
 
-#ifdef OME_HAVE_DLADDR
-  Dl_info this_module;
+  typedef std::map<std::string, ome::common::Module> path_map;
 
-  __attribute__((constructor))
-  void
-  find_module(void)
+  path_map&
+  module_paths()
   {
-    if(!dladdr(reinterpret_cast<void *>(find_module), &this_module))
-      {
-        this_module.dli_fname = 0;
-      }
-  }
+    static path_map pmap;
 
-  fs::path
-  module_path()
-  {
-    if (this_module.dli_fname)
-      return canonical(fs::path(this_module.dli_fname));
-    return fs::path();
+    return pmap;
   }
-#elif _MSC_VER
-  HMODULE
-  find_module(void)
-  {
-    static bool found_module = false;
-    static HMODULE this_module;
-
-    if (!found_module)
-      {
-        if (!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
-                                GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-                                reinterpret_cast<LPCWSTR>(&find_module),
-                                &this_module))
-          {
-            this_module = 0;
-          }
-        found_module = true;
-      }
-    return this_module;
-  }
-
-  fs::path
-  module_path()
-  {
-    HMODULE this_module = find_module();
-    if (this_module)
-      {
-        WCHAR win_wide_path[MAX_PATH];
-        GetModuleFileNameW(this_module, win_wide_path, sizeof(win_wide_path));
-        return fs::path(win_wide_path);
-      }
-    return fs::path();
-  }
-#else // No introspection available
-  fs::path
-  module_path()
-  {
-    return fs::path();
-  }
-#endif // _MSC_VER
 
   bool
   validate_root_path(const fs::path& path)
@@ -139,69 +79,70 @@ namespace
     return (fs::exists(path) && fs::is_directory(path));
   }
 
-  struct internalpath
-  {
-    std::string envvar;
-    boost::filesystem::path abspath;
-    boost::filesystem::path relpath;
+  // Global paths (not specific to any component)
+  RegisterModule bin("bin", "BIOFORMATS_BINDIR", INSTALL_FULL_BINDIR, INSTALL_BINDIR, module_path);
+  RegisterModule sbin("sbin", "BIOFORMATS_SBINDIR", INSTALL_FULL_SBINDIR, INSTALL_SBINDIR, module_path);
+  // Note envvar SYS prefix to avoid clash with package path.
+  RegisterModule libexec("libexec", "BIOFORMATS_SYSLIBEXECDIR", INSTALL_FULL_LIBEXECDIR, INSTALL_LIBEXECDIR, module_path);
+  RegisterModule sysconf("sysconf", "BIOFORMATS_SYSCONFDIR", INSTALL_FULL_SYSCONFDIR, INSTALL_SYSCONFDIR, module_path);
+  RegisterModule sharedstate("sharedstate", "BIOFORMATS_SHAREDSTATEDIR", INSTALL_FULL_SHAREDSTATEDIR, INSTALL_SHAREDSTATEDIR, module_path);
+  RegisterModule localstate("localstate", "BIOFORMATS_LOCALSTATEDIR", INSTALL_FULL_LOCALSTATEDIR, INSTALL_LOCALSTATEDIR, module_path);
+  RegisterModule lib("lib", "BIOFORMATS_LIBDIR", INSTALL_FULL_LIBDIR, INSTALL_LIBDIR, module_path);
+  RegisterModule include("include", "BIOFORMATS_INCLUDEDIR", INSTALL_FULL_INCLUDEDIR, INSTALL_INCLUDEDIR, module_path);
+  RegisterModule oldinclude("oldinclude", "BIOFORMATS_OLDINCLUDEDIR", INSTALL_FULL_OLDINCLUDEDIR, INSTALL_OLDINCLUDEDIR, module_path);
+  RegisterModule dataroot("dataroot", "BIOFORMATS_DATAROOTDIR", INSTALL_FULL_DATAROOTDIR, INSTALL_DATAROOTDIR, module_path);
+  // Note envvar SYS prefix to avoid clash with package path.
+  RegisterModule data("data", "BIOFORMATS_SYSDATADIR", INSTALL_FULL_DATADIR, INSTALL_DATADIR, module_path);
+  RegisterModule info("info", "BIOFORMATS_INFODIR", INSTALL_FULL_INFODIR, INSTALL_INFODIR, module_path);
+  RegisterModule locale("locale", "BIOFORMATS_LOCALEDIR", INSTALL_FULL_LOCALEDIR, INSTALL_LOCALEDIR, module_path);
+  RegisterModule man("man", "BIOFORMATS_MANDIR", INSTALL_FULL_MANDIR, INSTALL_MANDIR, module_path);
+  RegisterModule doc("doc", "BIOFORMATS_DOCDIR", INSTALL_FULL_DOCDIR, INSTALL_DOCDIR, module_path);
 
-    internalpath(const char *const envvar,
-                 const char *const abspath,
-                 const char *const relpath):
-      envvar(envvar),
-      abspath(std::string(abspath)),
-      relpath(std::string(relpath))
-    {}
-  };
-
-  typedef std::map<std::string, internalpath> path_map;
-  typedef path_map::value_type pm;
-  typedef boost::filesystem::path path;
-
-  const path_map&
-  internalpaths()
-  {
-    static const pm paths[] =
-      {
-        // Standard GNU paths.
-        pm("bin", internalpath("BIOFORMATS_BINDIR", INSTALL_FULL_BINDIR, INSTALL_BINDIR)),
-        pm("sbin", internalpath("BIOFORMATS_SBINDIR", INSTALL_FULL_SBINDIR, INSTALL_SBINDIR)),
-        // Note envvar SYS prefix to avoid clash with package path.
-        pm("libexec", internalpath("BIOFORMATS_SYSLIBEXECDIR", INSTALL_FULL_LIBEXECDIR, INSTALL_LIBEXECDIR)),
-        pm("sysconf", internalpath("BIOFORMATS_SYSCONFDIR", INSTALL_FULL_SYSCONFDIR, INSTALL_SYSCONFDIR)),
-        pm("sharedstate", internalpath("BIOFORMATS_SHAREDSTATEDIR", INSTALL_FULL_SHAREDSTATEDIR, INSTALL_SHAREDSTATEDIR)),
-        pm("localstate", internalpath("BIOFORMATS_LOCALSTATEDIR", INSTALL_FULL_LOCALSTATEDIR, INSTALL_LOCALSTATEDIR)),
-        pm("lib", internalpath("BIOFORMATS_LIBDIR", INSTALL_FULL_LIBDIR, INSTALL_LIBDIR)),
-        pm("include", internalpath("BIOFORMATS_INCLUDEDIR", INSTALL_FULL_INCLUDEDIR, INSTALL_INCLUDEDIR)),
-        pm("oldinclude", internalpath("BIOFORMATS_OLDINCLUDEDIR", INSTALL_FULL_OLDINCLUDEDIR, INSTALL_OLDINCLUDEDIR)),
-        pm("dataroot", internalpath("BIOFORMATS_DATAROOTDIR", INSTALL_FULL_DATAROOTDIR, INSTALL_DATAROOTDIR)),
-        // Note envvar SYS prefix to avoid clash with package path.
-        pm("data", internalpath("BIOFORMATS_SYSDATADIR", INSTALL_FULL_DATADIR, INSTALL_DATADIR)),
-        pm("info", internalpath("BIOFORMATS_INFODIR", INSTALL_FULL_INFODIR, INSTALL_INFODIR)),
-        pm("locale", internalpath("BIOFORMATS_LOCALEDIR", INSTALL_FULL_LOCALEDIR, INSTALL_LOCALEDIR)),
-        pm("man", internalpath("BIOFORMATS_MANDIR", INSTALL_FULL_MANDIR, INSTALL_MANDIR)),
-        pm("doc", internalpath("BIOFORMATS_DOCDIR", INSTALL_FULL_DOCDIR, INSTALL_DOCDIR)),
-
-        // Bio-Formats package-specific paths.
-        pm("bf-root", internalpath("BIOFORMATS_HOME", INSTALL_PREFIX, "")),
-        pm("bf-data", internalpath("BIOFORMATS_DATADIR", OME_BIOFORMATS_INSTALL_FULL_DATADIR, OME_BIOFORMATS_INSTALL_DATADIR)),
-        pm("bf-icon", internalpath("BIOFORMATS_ICONDIR", OME_BIOFORMATS_INSTALL_FULL_ICONDIR, OME_BIOFORMATS_INSTALL_ICONDIR)),
-        pm("bf-libexec", internalpath("BIOFORMATS_LIBEXECDIR", OME_BIOFORMATS_INSTALL_FULL_LIBEXECDIR, OME_BIOFORMATS_INSTALL_LIBEXECDIR)),
-        pm("bf-schema", internalpath("BIOFORMATS_SCHEMADIR", OME_BIOFORMATS_INSTALL_FULL_SCHEMADIR, OME_BIOFORMATS_INSTALL_SCHEMADIR)),
-        pm("bf-transform", internalpath("BIOFORMATS_TRANSFORMDIR", OME_BIOFORMATS_INSTALL_FULL_TRANSFORMDIR, OME_BIOFORMATS_INSTALL_TRANSFORMDIR))
-      };
-
-    static path_map pmap(paths,
-                         paths + boost::size(paths));
-
-    return pmap;
-  }
+  // OME-Common package-specific paths.
+  RegisterModule bf_root("bf-root", "BIOFORMATS_HOME", INSTALL_PREFIX, "", module_path);
 }
 
 namespace ome
 {
   namespace common
   {
+
+    Module::Module(const std::string&               name,
+                   const std::string&               envvar,
+                   const boost::filesystem::path&   abspath,
+                   const boost::filesystem::path&   relpath,
+                   boost::filesystem::path        (*module_path)()):
+      name(name),
+      envvar(envvar),
+      abspath(abspath),
+      relpath(relpath),
+      realpath(),
+      module_path(module_path)
+    {
+    }
+
+    RegisterModule::RegisterModule(const std::string&               name,
+                                   const std::string&               envvar,
+                                   const boost::filesystem::path&   abspath,
+                                   const boost::filesystem::path&   relpath,
+                                   boost::filesystem::path        (*module_path)()):
+      name(name),
+      registered(false)
+    {
+      Module m(name, envvar, abspath, relpath, module_path);
+      path_map& map = module_paths();
+
+      registered = map.insert(std::make_pair(name, m)).second;
+    }
+
+    RegisterModule::~RegisterModule()
+    {
+      if (registered)
+        {
+          path_map& map = module_paths();
+          map.erase(name);
+        }
+    }
 
     /* TESTING NOTE
      * ────────────
@@ -246,11 +187,11 @@ namespace ome
      * - throw exception
      */
 
-    fs::path
+    const fs::path&
     module_runtime_path(const std::string& dtype)
     {
-      const path_map& paths(internalpaths());
-      path_map::const_iterator ipath(paths.find(dtype));
+      path_map& paths(module_paths());
+      path_map::iterator ipath(paths.find(dtype));
 
       // Is this a valid dtype?
       if (ipath == paths.end())
@@ -260,12 +201,21 @@ namespace ome
           throw std::logic_error(fmt.str());
         }
 
+      Module& module = ipath->second;
+
+      // Return cached result if previously determined.
+      if(!module.realpath.empty())
+        return module.realpath;
+
       // dtype set explicitly in environment.
-      if (getenv(ipath->second.envvar.c_str()))
+      if (getenv(module.envvar.c_str()))
         {
-          fs::path dir(getenv(ipath->second.envvar.c_str()));
+          fs::path dir(getenv(module.envvar.c_str()));
           if (validate_path(dir))
-            return ome::common::canonical(dir);
+            {
+              module.realpath = ome::common::canonical(dir);
+              return module.realpath;
+            }
         }
 
       // Full root path in environment + relative component
@@ -274,9 +224,12 @@ namespace ome
           fs::path home(getenv("BIOFORMATS_HOME"));
           if (validate_root_path(home))
             {
-              home /= ipath->second.relpath;
+              home /= module.relpath;
               if (validate_path(home))
-                return ome::common::canonical(home);
+                {
+                  module.realpath = ome::common::canonical(home);
+                  return module.realpath;
+                }
             }
         }
 
@@ -284,24 +237,34 @@ namespace ome
       if (strlen(INSTALL_PREFIX) > 0)
         {
           // Full specific path.
-          if (validate_path(ipath->second.abspath))
-            return ome::common::canonical(ipath->second.abspath);
+          if (validate_path(module.abspath))
+            {
+              module.realpath = ome::common::canonical(module.abspath);
+              return module.realpath;
+            }
 
           // Full root path + relative component
           fs::path home(INSTALL_PREFIX);
           if (validate_root_path(home))
             {
-              home /= ipath->second.relpath;
+              home /= module.relpath;
               if (validate_path(home))
-                return ome::common::canonical(home);
+                {
+                  module.realpath = ome::common::canonical(home);
+                  return module.realpath;
+                }
             }
         }
       else
         {
-          fs::path module(module_path());
-          if (module.has_parent_path())
+          fs::path module_lib_path;
+          if (module.module_path)
             {
-              fs::path moduledir(module.parent_path());
+              module_lib_path = module.module_path();
+            }
+          if (module_lib_path.has_parent_path())
+            {
+              fs::path moduledir(module_lib_path.parent_path());
               bool match = true;
 
 #ifdef _MSC_VER
@@ -325,9 +288,12 @@ namespace ome
                 }
               if (match && validate_path(moduledir))
                 {
-                  moduledir /= ipath->second.relpath;
+                  moduledir /= module.relpath;
                   if (validate_path(moduledir))
-                    return ome::common::canonical(moduledir);
+                    {
+                      module.realpath = ome::common::canonical(moduledir);
+                      return module.realpath;
+                    }
                 }
             }
         }

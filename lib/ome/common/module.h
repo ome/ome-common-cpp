@@ -55,21 +55,187 @@ namespace ome
   {
 
     /**
-     * Get the runtime installation prefix path for this module.
+     * Get the runtime installation prefix path for a module.
      *
      * This is intended primarily for internal use, to allow discovery
-     * of the location of datafiles, loadable modules, etc.
+     * of the location of datafiles, loadable modules, etc.  However,
+     * it may be freely used by additional components, both OME and
+     * third-party, to register paths.
      *
      * @param dtype the directory type to query.
      * @returns the installation prefix path.
      * @throws a @c std::runtime_error if the path could not be
      * determined.
      */
-    boost::filesystem::path
+    const boost::filesystem::path&
     module_runtime_path(const std::string& dtype);
 
+    /**
+     * A run-time path for a given module.
+     *
+     * This is used to find the location of in installation path at
+     * runtime, handling relocatable installs by introspecting the
+     * installation prefix and also by allowing overriding of the path
+     * by an environment variable.
+     */
+    struct Module
+    {
+      /// Name of the path, e.g. "bin" or "ome-xml-schema".
+      std::string name;
+      /// Name of the environment variable used to override the
+      /// autodetected path.
+      std::string envvar;
+      /// Absolute path (used when configured to use an absolute
+      /// install path).
+      boost::filesystem::path abspath;
+      /// Relative path (used for relocatable installs).
+      boost::filesystem::path relpath;
+      /// The detected patch (used to cache search result).
+      boost::filesystem::path realpath;
+      /// Function to obtain the absolute path of the module providing
+      /// the path (from the shared library or DLL); this won't work
+      /// when static libraries are in use.  Used to introspect the
+      /// installation path.
+      boost::filesystem::path (*module_path)();
+
+      /**
+       * Constructor.
+       *
+       * @param name the name of the module path.
+       * @param envvar the environment variable to override the path.
+       * @param abspath the absolute path.
+       * @param relpath the relative path.
+       * @param module_path a function pointer to provide the module
+       * installation path, or null to skip introspection.
+       */
+      Module(const std::string&               name,
+             const std::string&               envvar,
+             const boost::filesystem::path&   abspath,
+             const boost::filesystem::path&   relpath,
+             boost::filesystem::path        (*module_path)());
+    };
+
+    /**
+     * Register a module to make it available to module_runtime_path().
+     *
+     * The arguments are used to construct a Module object and insert
+     * it into a map for module lookups.
+     */
+    struct RegisterModule
+    {
+      /// Name of the path, e.g. "bin" or "ome-xml-schema".
+      std::string name;
+      /// Is the path registered in the path map?
+      bool registered;
+
+      /**
+       * Constructor.
+       *
+       * Register the named module.
+       *
+       * @param name the name of the module path.
+       * @param envvar the environment variable to override the path.
+       * @param abspath the absolute path.
+       * @param relpath the relative path.
+       * @param module_path a function pointer to provide the module
+       * installation path.
+       */
+      RegisterModule(const std::string&               name,
+                     const std::string&               envvar,
+                     const boost::filesystem::path&   abspath,
+                     const boost::filesystem::path&   relpath,
+                     boost::filesystem::path        (*module_path)());
+
+      /**
+       * Destructor.
+       *
+       * Unregister the named module.
+       */
+      ~RegisterModule();
+    };
   }
 }
+
+// Set to include introspection functionality (used for registering
+// paths; not for normal use).
+#ifdef OME_COMMON_MODULE_INTROSPECTION
+
+#ifdef OME_HAVE_DLADDR
+#ifndef _GNU_SOURCE
+# define _GNU_SOURCE 1
+#endif
+#include <dlfcn.h>
+#endif // OME_HAVE_DLADDR
+
+#ifdef _MSC_VER
+# include <windows.h>
+#endif
+
+namespace
+{
+
+#ifdef OME_HAVE_DLADDR
+  Dl_info this_module;
+
+  __attribute__((constructor))
+  void
+  find_module(void)
+  {
+    if(!dladdr(reinterpret_cast<void *>(find_module), &this_module))
+      {
+        this_module.dli_fname = 0;
+      }
+  }
+
+  boost::filesystem::path
+  module_path()
+  {
+    if (this_module.dli_fname)
+      return canonical(boost::filesystem::path(this_module.dli_fname));
+    return boost::filesystem::path();
+  }
+#elif _MSC_VER
+  HMODULE
+  find_module(void)
+  {
+    static bool found_module = false;
+    static HMODULE this_module;
+
+    if (!found_module)
+      {
+        if (!GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
+                                GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+                                reinterpret_cast<LPCWSTR>(&find_module),
+                                &this_module))
+          {
+            this_module = 0;
+          }
+        found_module = true;
+      }
+    return this_module;
+  }
+
+  boost::filesystem::path
+  module_path()
+  {
+    HMODULE this_module = find_module();
+    if (this_module)
+      {
+        WCHAR win_wide_path[MAX_PATH];
+        GetModuleFileNameW(this_module, win_wide_path, sizeof(win_wide_path));
+        return boost::filesystem::path(win_wide_path);
+      }
+    return boost::filesystem::path();
+  }
+#else // No introspection available
+  boost::filesystem::path
+  module_path()
+  {
+    return boost::filesystem::path();
+  }
+#endif // _MSC_VER
+}
+#endif // OME_COMMON_MODULE_INTROSPECTION
 
 #endif // OME_COMMON_MODULE_H
 
