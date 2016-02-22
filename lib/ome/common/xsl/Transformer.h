@@ -82,7 +82,7 @@ namespace ome
          *
          * @returns the entity resolver.
          */
-        ome::compat::shared_ptr<xml::EntityResolver>
+        xml::EntityResolver *
         getEntityResolver() const;
 
         /**
@@ -94,7 +94,26 @@ namespace ome
          * @param resolver the EntityResolver to use.
          */
         void
-        setEntityResolver(ome::compat::shared_ptr<xml::EntityResolver> resolver);
+        setEntityResolver(xml::EntityResolver *resolver);
+
+        /**
+         * Check if validation is enabled.
+         *
+         * @returns @c true if enabled, @c false if disabled.
+         */
+        bool
+        getUseValidation() const;
+
+        /**
+         * Enable or disable validation.
+         *
+         * Validation is disabled by default.
+         *
+         * @param validate @c true to enable validation, @c false to
+         * disable.
+         */
+        void
+        setUseValidation(bool validate);
 
         /**
          * Apply transform (XSLT abstract input and output).
@@ -235,7 +254,7 @@ namespace ome
         /// Xalan-C transformer being wrapped.
         xalanc::XalanTransformer transformer;
         /// EntityResolver to use with the transformer.
-        ome::compat::shared_ptr<xml::EntityResolver> resolver;
+        xml::EntityResolver *resolver;
       };
 
     }
