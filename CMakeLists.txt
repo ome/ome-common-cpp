@@ -83,57 +83,6 @@ if(MSVC)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
 endif()
 
-
-if(NOT DEFINED OME_BIOFORMATS_INSTALL_DATADIR)
-  set(OME_BIOFORMATS_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}/ome/bioformats"
-      CACHE PATH "Bio-Formats-specific datadir")
-endif()
-
-# Use standard path if using a prefix.
-if(CMAKE_INSTALL_PREFIX)
-  if (NOT DEFINED OME_BIOFORMATS_INSTALL_LIBEXECDIR)
-    set(OME_BIOFORMATS_INSTALL_LIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}/ome/bioformats"
-        CACHE PATH "Bio-Formats-specific libexecdir")
-  endif()
-  if (NOT DEFINED OME_BIOFORMATS_INSTALL_ICONDIR)
-    set(OME_BIOFORMATS_INSTALL_ICONDIR "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable"
-        CACHE PATH "Icon directory")
-  endif()
-else()
-  if (NOT DEFINED OME_BIOFORMATS_INSTALL_LIBEXECDIR)
-    set(OME_BIOFORMATS_INSTALL_LIBEXECDIR "${CMAKE_INSTALL_LIBEXECDIR}"
-        CACHE PATH "Bio-Formats-specific libexecdir")
-  endif()
-  if (NOT DEFINED OME_BIOFORMATS_INSTALL_ICONDIR)
-    set(OME_BIOFORMATS_INSTALL_ICONDIR "${CMAKE_INSTALL_DATADIR}/icons"
-        CACHE PATH "Icon directory")
-  endif()
-endif()
-
-if (NOT DEFINED OME_BIOFORMATS_INSTALL_SCHEMADIR)
-  set(OME_BIOFORMATS_INSTALL_SCHEMADIR "${CMAKE_INSTALL_DATADIR}/xml/ome"
-      CACHE PATH "Bio-Formats schema directory")
-endif()
-if (NOT DEFINED OME_BIOFORMATS_INSTALL_TRANSFORMDIR)
-  set(OME_BIOFORMATS_INSTALL_TRANSFORMDIR "${CMAKE_INSTALL_DATADIR}/xsl/ome"
-      CACHE PATH "Bio-Formats transform directory")
-endif()
-
-foreach(dir
-    DATADIR
-    LIBEXECDIR
-    ICONDIR
-    SCHEMADIR
-    TRANSFORMDIR
-    )
-  mark_as_advanced(OME_BIOFORMATS_INSTALL_${dir})
-  if(NOT IS_ABSOLUTE ${OME_BIOFORMATS_INSTALL_${dir}})
-    set(OME_BIOFORMATS_INSTALL_FULL_${dir} "${CMAKE_INSTALL_PREFIX}/${OME_BIOFORMATS_INSTALL_${dir}}")
-  else()
-    set(OME_BIOFORMATS_INSTALL_FULL_${dir} "${OME_BIOFORMATS_INSTALL_${dir}}")
-  endif()
-endforeach()
-
 add_subdirectory(docs/doxygen)
 
 set(OME_TOPLEVEL_INCLUDES

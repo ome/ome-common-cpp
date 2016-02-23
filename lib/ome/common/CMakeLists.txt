@@ -35,9 +35,9 @@
 # #L%
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+               ${CMAKE_CURRENT_BINARY_DIR}/config.h @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-internal.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/config-internal.h)
+               ${CMAKE_CURRENT_BINARY_DIR}/config-internal.h @ONLY)
 
 set(ome_common_static_headers
     boolean.h

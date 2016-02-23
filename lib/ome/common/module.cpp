@@ -66,40 +66,32 @@ namespace
   }
 
   bool
-  validate_root_path(const fs::path& path)
-  {
-    fs::path schema(path / fs::path(OME_BIOFORMATS_INSTALL_SCHEMADIR));
-    return (fs::exists(path) && fs::is_directory(path) &&
-            fs::exists(schema) && fs::is_directory(schema));
-  }
-
-  bool
   validate_path(const fs::path& path)
   {
     return (fs::exists(path) && fs::is_directory(path));
   }
 
   // Global paths (not specific to any component)
-  RegisterModule bin("bin", "BIOFORMATS_BINDIR", INSTALL_FULL_BINDIR, INSTALL_BINDIR, module_path);
-  RegisterModule sbin("sbin", "BIOFORMATS_SBINDIR", INSTALL_FULL_SBINDIR, INSTALL_SBINDIR, module_path);
+  RegisterModule bin("bin", "BIOFORMATS_BINDIR", OME_COMMON_INSTALL_FULL_BINDIR, OME_COMMON_INSTALL_BINDIR, module_path);
+  RegisterModule sbin("sbin", "BIOFORMATS_SBINDIR", OME_COMMON_INSTALL_FULL_SBINDIR, OME_COMMON_INSTALL_SBINDIR, module_path);
   // Note envvar SYS prefix to avoid clash with package path.
-  RegisterModule libexec("libexec", "BIOFORMATS_SYSLIBEXECDIR", INSTALL_FULL_LIBEXECDIR, INSTALL_LIBEXECDIR, module_path);
-  RegisterModule sysconf("sysconf", "BIOFORMATS_SYSCONFDIR", INSTALL_FULL_SYSCONFDIR, INSTALL_SYSCONFDIR, module_path);
-  RegisterModule sharedstate("sharedstate", "BIOFORMATS_SHAREDSTATEDIR", INSTALL_FULL_SHAREDSTATEDIR, INSTALL_SHAREDSTATEDIR, module_path);
-  RegisterModule localstate("localstate", "BIOFORMATS_LOCALSTATEDIR", INSTALL_FULL_LOCALSTATEDIR, INSTALL_LOCALSTATEDIR, module_path);
-  RegisterModule lib("lib", "BIOFORMATS_LIBDIR", INSTALL_FULL_LIBDIR, INSTALL_LIBDIR, module_path);
-  RegisterModule include("include", "BIOFORMATS_INCLUDEDIR", INSTALL_FULL_INCLUDEDIR, INSTALL_INCLUDEDIR, module_path);
-  RegisterModule oldinclude("oldinclude", "BIOFORMATS_OLDINCLUDEDIR", INSTALL_FULL_OLDINCLUDEDIR, INSTALL_OLDINCLUDEDIR, module_path);
-  RegisterModule dataroot("dataroot", "BIOFORMATS_DATAROOTDIR", INSTALL_FULL_DATAROOTDIR, INSTALL_DATAROOTDIR, module_path);
+  RegisterModule libexec("libexec", "BIOFORMATS_SYSLIBEXECDIR", OME_COMMON_INSTALL_FULL_LIBEXECDIR, OME_COMMON_INSTALL_LIBEXECDIR, module_path);
+  RegisterModule sysconf("sysconf", "BIOFORMATS_SYSCONFDIR", OME_COMMON_INSTALL_FULL_SYSCONFDIR, OME_COMMON_INSTALL_SYSCONFDIR, module_path);
+  RegisterModule sharedstate("sharedstate", "BIOFORMATS_SHAREDSTATEDIR", OME_COMMON_INSTALL_FULL_SHAREDSTATEDIR, OME_COMMON_INSTALL_SHAREDSTATEDIR, module_path);
+  RegisterModule localstate("localstate", "BIOFORMATS_LOCALSTATEDIR", OME_COMMON_INSTALL_FULL_LOCALSTATEDIR, OME_COMMON_INSTALL_LOCALSTATEDIR, module_path);
+  RegisterModule lib("lib", "BIOFORMATS_LIBDIR", OME_COMMON_INSTALL_FULL_LIBDIR, OME_COMMON_INSTALL_LIBDIR, module_path);
+  RegisterModule include("include", "BIOFORMATS_INCLUDEDIR", OME_COMMON_INSTALL_FULL_INCLUDEDIR, OME_COMMON_INSTALL_INCLUDEDIR, module_path);
+  RegisterModule oldinclude("oldinclude", "BIOFORMATS_OLDINCLUDEDIR", OME_COMMON_INSTALL_FULL_OLDINCLUDEDIR, OME_COMMON_INSTALL_OLDINCLUDEDIR, module_path);
+  RegisterModule dataroot("dataroot", "BIOFORMATS_DATAROOTDIR", OME_COMMON_INSTALL_FULL_DATAROOTDIR, OME_COMMON_INSTALL_DATAROOTDIR, module_path);
   // Note envvar SYS prefix to avoid clash with package path.
-  RegisterModule data("data", "BIOFORMATS_SYSDATADIR", INSTALL_FULL_DATADIR, INSTALL_DATADIR, module_path);
-  RegisterModule info("info", "BIOFORMATS_INFODIR", INSTALL_FULL_INFODIR, INSTALL_INFODIR, module_path);
-  RegisterModule locale("locale", "BIOFORMATS_LOCALEDIR", INSTALL_FULL_LOCALEDIR, INSTALL_LOCALEDIR, module_path);
-  RegisterModule man("man", "BIOFORMATS_MANDIR", INSTALL_FULL_MANDIR, INSTALL_MANDIR, module_path);
-  RegisterModule doc("doc", "BIOFORMATS_DOCDIR", INSTALL_FULL_DOCDIR, INSTALL_DOCDIR, module_path);
+  RegisterModule data("data", "BIOFORMATS_SYSDATADIR", OME_COMMON_INSTALL_FULL_DATADIR, OME_COMMON_INSTALL_DATADIR, module_path);
+  RegisterModule info("info", "BIOFORMATS_INFODIR", OME_COMMON_INSTALL_FULL_INFODIR, OME_COMMON_INSTALL_INFODIR, module_path);
+  RegisterModule locale("locale", "BIOFORMATS_LOCALEDIR", OME_COMMON_INSTALL_FULL_LOCALEDIR, OME_COMMON_INSTALL_LOCALEDIR, module_path);
+  RegisterModule man("man", "BIOFORMATS_MANDIR", OME_COMMON_INSTALL_FULL_MANDIR, OME_COMMON_INSTALL_MANDIR, module_path);
+  RegisterModule doc("doc", "BIOFORMATS_DOCDIR", OME_COMMON_INSTALL_FULL_DOCDIR, OME_COMMON_INSTALL_DOCDIR, module_path);
 
   // OME-Common package-specific paths.
-  RegisterModule bf_root("bf-root", "BIOFORMATS_HOME", INSTALL_PREFIX, "", module_path);
+  RegisterModule bf_root("bf-root", "BIOFORMATS_HOME", OME_COMMON_INSTALL_PREFIX, "", module_path);
 }
 
 namespace ome
@@ -182,7 +174,7 @@ namespace ome
      * - BIOFORMATS_$FOO env var
      * - BIOFORMATS_HOME env var [if set] + FOO_RELATIVE_PATH
      * - FOO_ABSOLUTE_PATH
-     * - INSTALL_PREFIX [if set] + FOO_RELATIVE_PATH
+     * - OME_COMMON_INSTALL_PREFIX [if set] + FOO_RELATIVE_PATH
      * - introspection [if possible] + FOO_RELATIVE_PATH
      * - throw exception
      */
@@ -222,19 +214,16 @@ namespace ome
       if (getenv("BIOFORMATS_HOME"))
         {
           fs::path home(getenv("BIOFORMATS_HOME"));
-          if (validate_root_path(home))
+          home /= module.relpath;
+          if (validate_path(home))
             {
-              home /= module.relpath;
-              if (validate_path(home))
-                {
-                  module.realpath = ome::common::canonical(home);
-                  return module.realpath;
-                }
+              module.realpath = ome::common::canonical(home);
+              return module.realpath;
             }
         }
 
       // Full prefix is available only when configured explicitly.
-      if (strlen(INSTALL_PREFIX) > 0)
+      if (strlen(OME_COMMON_INSTALL_PREFIX) > 0)
         {
           // Full specific path.
           if (validate_path(module.abspath))
@@ -244,15 +233,12 @@ namespace ome
             }
 
           // Full root path + relative component
-          fs::path home(INSTALL_PREFIX);
-          if (validate_root_path(home))
+          fs::path home(OME_COMMON_INSTALL_PREFIX);
+          home /= module.relpath;
+          if (validate_path(home))
             {
-              home /= module.relpath;
-              if (validate_path(home))
-                {
-                  module.realpath = ome::common::canonical(home);
-                  return module.realpath;
-                }
+              module.realpath = ome::common::canonical(home);
+              return module.realpath;
             }
         }
       else
@@ -268,9 +254,9 @@ namespace ome
               bool match = true;
 
 #ifdef _MSC_VER
-              fs::path libdir(INSTALL_BINDIR);
+              fs::path libdir(OME_COMMON_INSTALL_BINDIR);
 #else
-              fs::path libdir(INSTALL_LIBDIR);
+              fs::path libdir(OME_COMMON_INSTALL_LIBDIR);
 #endif
 
               while(!libdir.empty())
