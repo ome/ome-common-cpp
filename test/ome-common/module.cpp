@@ -119,10 +119,14 @@ TEST_P(ModulePathTest, InvalidEnv)
     }
   catch (const std::runtime_error& e)
     {
+      if (verbose())
+        std::cout << params.dtype << " threw a runtime_error: " << e.what() << '\n';
       ASSERT_FALSE(params.logic_error);
     }
   catch (const std::logic_error& e)
     {
+      if (verbose())
+        std::cout << params.dtype << " threw a logic_error: " << e.what() << '\n';
       ASSERT_TRUE(params.logic_error);
     }
 }
