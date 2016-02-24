@@ -71,27 +71,41 @@ namespace
     return (fs::exists(path) && fs::is_directory(path));
   }
 
-  // Global paths (not specific to any component)
-  RegisterModule bin("bin", "BIOFORMATS_BINDIR", OME_COMMON_INSTALL_FULL_BINDIR, OME_COMMON_INSTALL_BINDIR, module_path);
-  RegisterModule sbin("sbin", "BIOFORMATS_SBINDIR", OME_COMMON_INSTALL_FULL_SBINDIR, OME_COMMON_INSTALL_SBINDIR, module_path);
-  // Note envvar SYS prefix to avoid clash with package path.
-  RegisterModule libexec("libexec", "BIOFORMATS_SYSLIBEXECDIR", OME_COMMON_INSTALL_FULL_LIBEXECDIR, OME_COMMON_INSTALL_LIBEXECDIR, module_path);
-  RegisterModule sysconf("sysconf", "BIOFORMATS_SYSCONFDIR", OME_COMMON_INSTALL_FULL_SYSCONFDIR, OME_COMMON_INSTALL_SYSCONFDIR, module_path);
-  RegisterModule sharedstate("sharedstate", "BIOFORMATS_SHAREDSTATEDIR", OME_COMMON_INSTALL_FULL_SHAREDSTATEDIR, OME_COMMON_INSTALL_SHAREDSTATEDIR, module_path);
-  RegisterModule localstate("localstate", "BIOFORMATS_LOCALSTATEDIR", OME_COMMON_INSTALL_FULL_LOCALSTATEDIR, OME_COMMON_INSTALL_LOCALSTATEDIR, module_path);
-  RegisterModule lib("lib", "BIOFORMATS_LIBDIR", OME_COMMON_INSTALL_FULL_LIBDIR, OME_COMMON_INSTALL_LIBDIR, module_path);
-  RegisterModule include("include", "BIOFORMATS_INCLUDEDIR", OME_COMMON_INSTALL_FULL_INCLUDEDIR, OME_COMMON_INSTALL_INCLUDEDIR, module_path);
-  RegisterModule oldinclude("oldinclude", "BIOFORMATS_OLDINCLUDEDIR", OME_COMMON_INSTALL_FULL_OLDINCLUDEDIR, OME_COMMON_INSTALL_OLDINCLUDEDIR, module_path);
-  RegisterModule dataroot("dataroot", "BIOFORMATS_DATAROOTDIR", OME_COMMON_INSTALL_FULL_DATAROOTDIR, OME_COMMON_INSTALL_DATAROOTDIR, module_path);
-  // Note envvar SYS prefix to avoid clash with package path.
-  RegisterModule data("data", "BIOFORMATS_SYSDATADIR", OME_COMMON_INSTALL_FULL_DATADIR, OME_COMMON_INSTALL_DATADIR, module_path);
-  RegisterModule info("info", "BIOFORMATS_INFODIR", OME_COMMON_INSTALL_FULL_INFODIR, OME_COMMON_INSTALL_INFODIR, module_path);
-  RegisterModule locale("locale", "BIOFORMATS_LOCALEDIR", OME_COMMON_INSTALL_FULL_LOCALEDIR, OME_COMMON_INSTALL_LOCALEDIR, module_path);
-  RegisterModule man("man", "BIOFORMATS_MANDIR", OME_COMMON_INSTALL_FULL_MANDIR, OME_COMMON_INSTALL_MANDIR, module_path);
-  RegisterModule doc("doc", "BIOFORMATS_DOCDIR", OME_COMMON_INSTALL_FULL_DOCDIR, OME_COMMON_INSTALL_DOCDIR, module_path);
+  void register_paths()
+  {
+    // Global paths (not specific to any component)
+    static RegisterModule bin("bin", "BIOFORMATS_BINDIR", OME_COMMON_INSTALL_FULL_BINDIR, OME_COMMON_INSTALL_BINDIR, module_path);
+    static RegisterModule sbin("sbin", "BIOFORMATS_SBINDIR", OME_COMMON_INSTALL_FULL_SBINDIR, OME_COMMON_INSTALL_SBINDIR, module_path);
+    // Note envvar SYS prefix to avoid clash with package path.
+    static RegisterModule libexec("libexec", "BIOFORMATS_SYSLIBEXECDIR", OME_COMMON_INSTALL_FULL_LIBEXECDIR, OME_COMMON_INSTALL_LIBEXECDIR, module_path);
+    static RegisterModule sysconf("sysconf", "BIOFORMATS_SYSCONFDIR", OME_COMMON_INSTALL_FULL_SYSCONFDIR, OME_COMMON_INSTALL_SYSCONFDIR, module_path);
+    static RegisterModule sharedstate("sharedstate", "BIOFORMATS_SHAREDSTATEDIR", OME_COMMON_INSTALL_FULL_SHAREDSTATEDIR, OME_COMMON_INSTALL_SHAREDSTATEDIR, module_path);
+    static RegisterModule localstate("localstate", "BIOFORMATS_LOCALSTATEDIR", OME_COMMON_INSTALL_FULL_LOCALSTATEDIR, OME_COMMON_INSTALL_LOCALSTATEDIR, module_path);
+    static RegisterModule lib("lib", "BIOFORMATS_LIBDIR", OME_COMMON_INSTALL_FULL_LIBDIR, OME_COMMON_INSTALL_LIBDIR, module_path);
+    static RegisterModule include("include", "BIOFORMATS_INCLUDEDIR", OME_COMMON_INSTALL_FULL_INCLUDEDIR, OME_COMMON_INSTALL_INCLUDEDIR, module_path);
+    static RegisterModule oldinclude("oldinclude", "BIOFORMATS_OLDINCLUDEDIR", OME_COMMON_INSTALL_FULL_OLDINCLUDEDIR, OME_COMMON_INSTALL_OLDINCLUDEDIR, module_path);
+    static RegisterModule dataroot("dataroot", "BIOFORMATS_DATAROOTDIR", OME_COMMON_INSTALL_FULL_DATAROOTDIR, OME_COMMON_INSTALL_DATAROOTDIR, module_path);
+    // Note envvar SYS prefix to avoid clash with package path.
+    static RegisterModule data("data", "BIOFORMATS_SYSDATADIR", OME_COMMON_INSTALL_FULL_DATADIR, OME_COMMON_INSTALL_DATADIR, module_path);
+    static RegisterModule info("info", "BIOFORMATS_INFODIR", OME_COMMON_INSTALL_FULL_INFODIR, OME_COMMON_INSTALL_INFODIR, module_path);
+    static RegisterModule locale("locale", "BIOFORMATS_LOCALEDIR", OME_COMMON_INSTALL_FULL_LOCALEDIR, OME_COMMON_INSTALL_LOCALEDIR, module_path);
+    static RegisterModule man("man", "BIOFORMATS_MANDIR", OME_COMMON_INSTALL_FULL_MANDIR, OME_COMMON_INSTALL_MANDIR, module_path);
+    static RegisterModule doc("doc", "BIOFORMATS_DOCDIR", OME_COMMON_INSTALL_FULL_DOCDIR, OME_COMMON_INSTALL_DOCDIR, module_path);
 
-  // OME-Common package-specific paths.
-  RegisterModule bf_root("bf-root", "BIOFORMATS_HOME", OME_COMMON_INSTALL_PREFIX, "", module_path);
+    // OME-Common package-specific paths.
+    static RegisterModule bf_root("bf-root", "BIOFORMATS_HOME", OME_COMMON_INSTALL_PREFIX, "", module_path);
+  }
+
+  struct AutoRegister
+  {
+    AutoRegister()
+    {
+      register_paths();
+    }
+  };
+
+  AutoRegister path_register;
+
 }
 
 namespace ome
@@ -286,6 +300,12 @@ namespace ome
       boost::format fmt("Could not determine Bio-Formats runtime path for “%1%” directory");
       fmt % dtype;
       throw std::runtime_error(fmt.str());
+    }
+
+    void
+    register_module_paths()
+    {
+      register_paths();
     }
 
   }

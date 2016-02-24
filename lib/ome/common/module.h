@@ -71,6 +71,23 @@ namespace ome
     module_runtime_path(const std::string& dtype);
 
     /**
+     * Register OME-Common module paths.
+     *
+     * This function forces path registration.
+     *
+     * @note This is a hack to allow static linking to work on
+     * Windows; without this, the module object is omitted and the
+     * paths aren't automatically registered.  This will no longer be
+     * required once it is built as a DLL.  Its only purpose is to
+     * force object inclusion when static linking, and ensure that the
+     * registration happens independently of object static
+     * construction order to allow use prior to main() entry.  You
+     * should not use this.
+     */
+    void
+    register_module_paths();
+
+    /**
      * A run-time path for a given module.
      *
      * This is used to find the location of in installation path at
