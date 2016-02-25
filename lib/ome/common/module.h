@@ -102,12 +102,22 @@ namespace ome
       /// Name of the environment variable used to override the
       /// autodetected path.
       std::string envvar;
+      /// Name of the environment variable used to specify the
+      /// module installation root.
+      std::string module_envvar;
+      /// Name of the environment variable used to specify the
+      /// installation root.
+      std::string root_envvar;
       /// Absolute path (used when configured to use an absolute
       /// install path).
       boost::filesystem::path abspath;
       /// Relative path (used for relocatable installs).
       boost::filesystem::path relpath;
-      /// The detected patch (used to cache search result).
+      /// Absolute installation path (used for non-relocatable installs).
+      boost::filesystem::path install_prefix;
+      /// Shared library path (used for relocatable installs).
+      boost::filesystem::path shlibpath;
+      /// The detected path (used to cache search result).
       boost::filesystem::path realpath;
       /// Function to obtain the absolute path of the module providing
       /// the path (from the shared library or DLL); this won't work
@@ -120,15 +130,25 @@ namespace ome
        *
        * @param name the name of the module path.
        * @param envvar the environment variable to override the path.
+       * @param module_envvar the environment variable to override the
+       * module installation path.
+       * @param root_envvar the environment variable to override the
+       * root installation path.
        * @param abspath the absolute path.
        * @param relpath the relative path.
+       * @param install_prefix the absolute installation path.
+       * @param shlibpath the absolute path to the shared library.
        * @param module_path a function pointer to provide the module
        * installation path, or null to skip introspection.
        */
       Module(const std::string&               name,
              const std::string&               envvar,
+             const std::string&               module_envvar,
+             const std::string&               root_envvar,
              const boost::filesystem::path&   abspath,
              const boost::filesystem::path&   relpath,
+             const boost::filesystem::path&   install_prefix,
+             const boost::filesystem::path&   shlibpath,
              boost::filesystem::path        (*module_path)());
     };
 
@@ -152,15 +172,25 @@ namespace ome
        *
        * @param name the name of the module path.
        * @param envvar the environment variable to override the path.
+       * @param module_envvar the environment variable to override the
+       * module installation path.
+       * @param root_envvar the environment variable to override the
+       * root path.
        * @param abspath the absolute path.
        * @param relpath the relative path.
+       * @param install_prefix the absolute installation path.
+       * @param shlibpath the absolute path to the shared library.
        * @param module_path a function pointer to provide the module
        * installation path.
        */
       RegisterModule(const std::string&               name,
                      const std::string&               envvar,
+                     const std::string&               module_envvar,
+                     const std::string&               root_envvar,
                      const boost::filesystem::path&   abspath,
                      const boost::filesystem::path&   relpath,
+                     const boost::filesystem::path&   install_prefix,
+                     const boost::filesystem::path&   shlibpath,
                      boost::filesystem::path        (*module_path)());
 
       /**
