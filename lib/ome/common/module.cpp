@@ -2,7 +2,7 @@
  * #%L
  * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -41,6 +41,8 @@
 
 #include <ome/common/config-internal.h>
 #include <ome/common/filesystem.h>
+
+#define OME_COMMON_MODULE_INTROSPECTION 1
 #include <ome/common/module.h>
 
 #include <cstring>
@@ -49,34 +51,18 @@
 
 namespace fs = boost::filesystem;
 
-#ifdef OME_HAVE_DLADDR
-#ifndef _GNU_SOURCE
-# define _GNU_SOURCE 1
-#endif
-#include <dlfcn.h>
-#include <stdio.h>
-#endif // OME_HAVE_DLADDR
-
 namespace
 {
+  using ome::common::RegisterModule;
 
-#ifdef OME_HAVE_DLADDR
-  Dl_info this_module;
+  typedef std::map<std::string, ome::common::Module> path_map;
 
-  __attribute__((constructor))
-  void
-  find_module(void)
+  path_map&
+  module_paths()
   {
-    dladdr(reinterpret_cast<void *>(find_module), &this_module);
-  }
-#endif // OME_HAVE_DLADDR
+    static path_map pmap;
 
-  bool
-  validate_root_path(const fs::path& path)
-  {
-    fs::path schema(path / fs::path(OME_BIOFORMATS_INSTALL_SCHEMADIR));
-    return (fs::exists(path) && fs::is_directory(path) &&
-            fs::exists(schema) && fs::is_directory(schema));
+    return pmap;
   }
 
   bool
@@ -85,70 +71,255 @@ namespace
     return (fs::exists(path) && fs::is_directory(path));
   }
 
-  struct internalpath
+  void register_paths()
   {
-    std::string envvar;
-    boost::filesystem::path abspath;
-    boost::filesystem::path relpath;
+    // Global paths (not specific to any component)
+    static RegisterModule bin
+      ("bin",
+       "BIOFORMATS_BINDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_BINDIR,
+       OME_COMMON_INSTALL_BINDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
 
-    internalpath(const char *const envvar,
-                 const char *const abspath,
-                 const char *const relpath):
-      envvar(envvar),
-      abspath(std::string(abspath)),
-      relpath(std::string(relpath))
-    {}
+    static RegisterModule sbin
+      ("sbin",
+       "BIOFORMATS_SBINDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_SBINDIR,
+       OME_COMMON_INSTALL_SBINDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule libexec
+      ("libexec",
+       "BIOFORMATS_LIBEXECDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_LIBEXECDIR,
+       OME_COMMON_INSTALL_LIBEXECDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule sysconf
+      ("sysconf",
+       "BIOFORMATS_SYSCONFDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_SYSCONFDIR,
+       OME_COMMON_INSTALL_SYSCONFDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule sharedstate
+      ("sharedstate",
+       "BIOFORMATS_SHAREDSTATEDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_SHAREDSTATEDIR,
+       OME_COMMON_INSTALL_SHAREDSTATEDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule localstate
+      ("localstate",
+       "BIOFORMATS_LOCALSTATEDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_LOCALSTATEDIR,
+       OME_COMMON_INSTALL_LOCALSTATEDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule lib
+      ("lib",
+       "BIOFORMATS_LIBDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_LIBDIR,
+       OME_COMMON_INSTALL_LIBDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule include
+      ("include",
+       "BIOFORMATS_INCLUDEDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_INCLUDEDIR,
+       OME_COMMON_INSTALL_INCLUDEDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule oldinclude
+      ("oldinclude",
+       "BIOFORMATS_OLDINCLUDEDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_OLDINCLUDEDIR,
+       OME_COMMON_INSTALL_OLDINCLUDEDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule dataroot
+      ("dataroot",
+       "BIOFORMATS_DATAROOTDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_DATAROOTDIR,
+       OME_COMMON_INSTALL_DATAROOTDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule data
+      ("data",
+       "BIOFORMATS_DATADIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_DATADIR,
+       OME_COMMON_INSTALL_DATADIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule info
+      ("info",
+       "BIOFORMATS_INFODIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_INFODIR,
+       OME_COMMON_INSTALL_INFODIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule locale
+      ("locale",
+       "BIOFORMATS_LOCALEDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_LOCALEDIR,
+       OME_COMMON_INSTALL_LOCALEDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule man
+      ("man",
+       "BIOFORMATS_MANDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_MANDIR,
+       OME_COMMON_INSTALL_MANDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    static RegisterModule doc
+      ("doc",
+       "BIOFORMATS_DOCDIR",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_FULL_DOCDIR,
+       OME_COMMON_INSTALL_DOCDIR,
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+
+    // OME-Common package-specific paths.
+    static RegisterModule bf_root
+      ("bf-root",
+       "OME_COMMON_HOME",
+       "OME_COMMON_HOME",
+       "BIOFORMATS_HOME",
+       OME_COMMON_INSTALL_PREFIX,
+       "",
+       OME_COMMON_INSTALL_PREFIX,
+       OME_COMMON_SHLIBDIR,
+       module_path);
+  }
+
+  struct AutoRegister
+  {
+    AutoRegister()
+    {
+      register_paths();
+    }
   };
 
-  typedef std::map<std::string, internalpath> path_map;
-  typedef path_map::value_type pm;
-  typedef boost::filesystem::path path;
+  AutoRegister path_register;
 
-  const path_map&
-  internalpaths()
-  {
-    static const pm paths[] =
-      {
-        // Standard GNU paths.
-        pm("bin", internalpath("BIOFORMATS_BINDIR", INSTALL_FULL_BINDIR, INSTALL_BINDIR)),
-        pm("sbin", internalpath("BIOFORMATS_SBINDIR", INSTALL_FULL_SBINDIR, INSTALL_SBINDIR)),
-        // Note envvar SYS prefix to avoid clash with package path.
-        pm("libexec", internalpath("BIOFORMATS_SYSLIBEXECDIR", INSTALL_FULL_LIBEXECDIR, INSTALL_LIBEXECDIR)),
-        pm("sysconf", internalpath("BIOFORMATS_SYSCONFDIR", INSTALL_FULL_SYSCONFDIR, INSTALL_SYSCONFDIR)),
-        pm("sharedstate", internalpath("BIOFORMATS_SHAREDSTATEDIR", INSTALL_FULL_SHAREDSTATEDIR, INSTALL_SHAREDSTATEDIR)),
-        pm("localstate", internalpath("BIOFORMATS_LOCALSTATEDIR", INSTALL_FULL_LOCALSTATEDIR, INSTALL_LOCALSTATEDIR)),
-        pm("lib", internalpath("BIOFORMATS_LIBDIR", INSTALL_FULL_LIBDIR, INSTALL_LIBDIR)),
-        pm("include", internalpath("BIOFORMATS_INCLUDEDIR", INSTALL_FULL_INCLUDEDIR, INSTALL_INCLUDEDIR)),
-        pm("oldinclude", internalpath("BIOFORMATS_OLDINCLUDEDIR", INSTALL_FULL_OLDINCLUDEDIR, INSTALL_OLDINCLUDEDIR)),
-        pm("dataroot", internalpath("BIOFORMATS_DATAROOTDIR", INSTALL_FULL_DATAROOTDIR, INSTALL_DATAROOTDIR)),
-        // Note envvar SYS prefix to avoid clash with package path.
-        pm("data", internalpath("BIOFORMATS_SYSDATADIR", INSTALL_FULL_DATADIR, INSTALL_DATADIR)),
-        pm("info", internalpath("BIOFORMATS_INFODIR", INSTALL_FULL_INFODIR, INSTALL_INFODIR)),
-        pm("locale", internalpath("BIOFORMATS_LOCALEDIR", INSTALL_FULL_LOCALEDIR, INSTALL_LOCALEDIR)),
-        pm("man", internalpath("BIOFORMATS_MANDIR", INSTALL_FULL_MANDIR, INSTALL_MANDIR)),
-        pm("doc", internalpath("BIOFORMATS_DOCDIR", INSTALL_FULL_DOCDIR, INSTALL_DOCDIR)),
-
-        // Bio-Formats package-specific paths.
-        pm("bf-root", internalpath("BIOFORMATS_HOME", INSTALL_PREFIX, "")),
-        pm("bf-data", internalpath("BIOFORMATS_DATADIR", OME_BIOFORMATS_INSTALL_FULL_DATADIR, OME_BIOFORMATS_INSTALL_DATADIR)),
-        pm("bf-icon", internalpath("BIOFORMATS_ICONDIR", OME_BIOFORMATS_INSTALL_FULL_ICONDIR, OME_BIOFORMATS_INSTALL_ICONDIR)),
-        pm("bf-libexec", internalpath("BIOFORMATS_LIBEXECDIR", OME_BIOFORMATS_INSTALL_FULL_LIBEXECDIR, OME_BIOFORMATS_INSTALL_LIBEXECDIR)),
-        pm("bf-schema", internalpath("BIOFORMATS_SCHEMADIR", OME_BIOFORMATS_INSTALL_FULL_SCHEMADIR, OME_BIOFORMATS_INSTALL_SCHEMADIR)),
-        pm("bf-transform", internalpath("BIOFORMATS_TRANSFORMDIR", OME_BIOFORMATS_INSTALL_FULL_TRANSFORMDIR, OME_BIOFORMATS_INSTALL_TRANSFORMDIR))
-      };
-
-    static path_map pmap(paths,
-                         paths + boost::size(paths));
-
-    return pmap;
-  }
 }
-
 
 namespace ome
 {
   namespace common
   {
+
+    Module::Module(const std::string&               name,
+                   const std::string&               envvar,
+                   const std::string&               module_envvar,
+                   const std::string&               root_envvar,
+                   const boost::filesystem::path&   abspath,
+                   const boost::filesystem::path&   relpath,
+                   const boost::filesystem::path&   install_prefix,
+                   const boost::filesystem::path&   shlibpath,
+                   boost::filesystem::path        (*module_path)()):
+      name(name),
+      envvar(envvar),
+      module_envvar(module_envvar),
+      root_envvar(root_envvar),
+      abspath(abspath),
+      relpath(relpath),
+      install_prefix(install_prefix),
+      shlibpath(shlibpath),
+      realpath(),
+      module_path(module_path)
+    {
+    }
+
+    RegisterModule::RegisterModule(const std::string&               name,
+                                   const std::string&               envvar,
+                                   const std::string&               module_envvar,
+                                   const std::string&               root_envvar,
+                                   const boost::filesystem::path&   abspath,
+                                   const boost::filesystem::path&   relpath,
+                                   const boost::filesystem::path&   install_prefix,
+                                   const boost::filesystem::path&   shlibpath,
+                                   boost::filesystem::path        (*module_path)()):
+      name(name),
+      registered(false)
+    {
+      Module m(name,
+               envvar, module_envvar, root_envvar,
+               abspath, relpath, install_prefix, shlibpath,
+               module_path);
+      path_map& map = module_paths();
+
+      registered = map.insert(std::make_pair(name, m)).second;
+    }
+
+    RegisterModule::~RegisterModule()
+    {
+      if (registered)
+        {
+          path_map& map = module_paths();
+          map.erase(name);
+        }
+    }
 
     /* TESTING NOTE
      * ────────────
@@ -159,42 +330,48 @@ namespace ome
      *
      * CMAKE_INSTALL_PREFIX=$install_path
      * - will fail unless "make install" has run and the install tree
-     *   is present.
+     *   is present and relocatable-install is OFF.
      * - will work in the install tree and build tree if "make"
      *   install has run.
-     * - BIOFORMATS_HOME can override the hardcoded install prefix,
-     *   but only if the new path contains an install tree.
+     * - OME_COMMON_HOME or BIOFORMATS_HOME can override the hardcoded
+     *   install prefix, but only if the new path contains an install
+     *   tree.
      *
-     * CMAKE_INSTALL_PREFIX=  [no install prefix for self-contained distributions]
-     * - used for prepackaged zips
+     * [install prefix ignored for self-contained distributions]
+     * - used for prepackaged builds
      * - will fail in the build tree since there is no valid install
      * - will work in the install tree since it will introspect the
-     *   correct path
-     * - BIOFORMATS_HOME can override the hardcoded install prefix,
-     *   but only if the new path contains an install tree.
+     *   correct path if relocatable-install is OFF or ON and dladdr
+     *   or GetModuleFileNameW are available (required to determine
+     *   the library path)
+     * - OME_COMMON_HOME or BIOFORMATS_HOME can override the
+     *   autodetected install prefix, but only if the new path
+     *   contains an install tree.
      *
      * Testing:
      * - With and without CMAKE_INSTALL_PREFIX set [default is /usr/local]
+     * - With relocatable-install set to OFF and ON
      * - In the install and build trees
-     * - With and without BIOFORMATS_HOME
-     * - With and without BIOFORMATS_HOME set to a valid path
+     * - With and without OME_COMMON_HOME or BIOFORMATS_HOME
+     * - With and without OME_COMMON_HOME or BIOFORMATS_HOME set to a
+     *   valid path
      *
      * Testing in the build tree verifies it fails correctly.
      *
      * The sequence of checking dtype "foo" is:
      * - BIOFORMATS_$FOO env var
-     * - BIOFORMATS_HOME env var [if set] + FOO_RELATIVE_PATH
+     * - OME_COMMON_HOME or BIOFORMATS_HOME env var [if set] + FOO_RELATIVE_PATH
      * - FOO_ABSOLUTE_PATH
-     * - INSTALL_PREFIX [if set] + FOO_RELATIVE_PATH
+     * - OME_COMMON_INSTALL_PREFIX [if set] + FOO_RELATIVE_PATH
      * - introspection [if possible] + FOO_RELATIVE_PATH
      * - throw exception
      */
 
-    fs::path
+    const fs::path&
     module_runtime_path(const std::string& dtype)
     {
-      const path_map& paths(internalpaths());
-      path_map::const_iterator ipath(paths.find(dtype));
+      path_map& paths(module_paths());
+      path_map::iterator ipath(paths.find(dtype));
 
       // Is this a valid dtype?
       if (ipath == paths.end())
@@ -204,76 +381,113 @@ namespace ome
           throw std::logic_error(fmt.str());
         }
 
+      Module& module = ipath->second;
+
+      // Return cached result if previously determined.
+      if(!module.realpath.empty())
+        return module.realpath;
+
       // dtype set explicitly in environment.
-      if (getenv(ipath->second.envvar.c_str()))
+      if (getenv(module.envvar.c_str()))
         {
-          fs::path dir(getenv(ipath->second.envvar.c_str()));
+          fs::path dir(getenv(module.envvar.c_str()));
           if (validate_path(dir))
-            return ome::common::canonical(dir);
+            {
+              module.realpath = ome::common::canonical(dir);
+              return module.realpath;
+            }
+        }
+
+      // Full module path in environment + relative component
+      if (getenv(module.module_envvar.c_str()))
+        {
+          fs::path home(getenv(module.module_envvar.c_str()));
+          home /= module.relpath;
+          if (validate_path(home))
+            {
+              module.realpath = ome::common::canonical(home);
+              return module.realpath;
+            }
         }
 
       // Full root path in environment + relative component
-      if (getenv("BIOFORMATS_HOME"))
+      if (getenv(module.root_envvar.c_str()))
         {
-          fs::path home(getenv("BIOFORMATS_HOME"));
-          if (validate_root_path(home))
+          fs::path home(getenv(module.root_envvar.c_str()));
+          home /= module.relpath;
+          if (validate_path(home))
             {
-              home /= ipath->second.relpath;
-              if (validate_path(home))
-                return ome::common::canonical(home);
+              module.realpath = ome::common::canonical(home);
+              return module.realpath;
             }
         }
 
       // Full prefix is available only when configured explicitly.
-      if (strlen(INSTALL_PREFIX) > 0)
+      if (validate_path(module.install_prefix))
         {
           // Full specific path.
-          if (validate_path(ipath->second.abspath))
-            return ome::common::canonical(ipath->second.abspath);
+          if (validate_path(module.abspath))
+            {
+              module.realpath = ome::common::canonical(module.abspath);
+              return module.realpath;
+            }
 
           // Full root path + relative component
-          fs::path home(INSTALL_PREFIX);
-          if (validate_root_path(home))
+          fs::path home(module.install_prefix);
+          home /= module.relpath;
+          if (validate_path(home))
             {
-              home /= ipath->second.relpath;
-              if (validate_path(home))
-                return ome::common::canonical(home);
+              module.realpath = ome::common::canonical(home);
+              return module.realpath;
             }
         }
       else
         {
-#ifdef OME_HAVE_DLADDR
-          // Introspect root with dladdr(3) + relative component
-          fs::path module(canonical(fs::path(this_module.dli_fname)));
-          fs::path moduledir(module.parent_path());
-
-          bool match = true;
-          fs::path libdir(INSTALL_LIBDIR);
-
-          while(!libdir.empty())
+          fs::path module_lib_path;
+          if (module.module_path)
             {
-              if (libdir.filename() == moduledir.filename())
+              module_lib_path = module.module_path();
+            }
+          if (module_lib_path.has_parent_path())
+            {
+              fs::path moduledir(module_lib_path.parent_path());
+              bool match = true;
+
+              fs::path libdir(module.shlibpath);
+
+              while(!libdir.empty())
                 {
-                  libdir = libdir.parent_path();
-                  moduledir = moduledir.parent_path();
+                  if (libdir.filename() == moduledir.filename())
+                    {
+                      libdir = libdir.parent_path();
+                      moduledir = moduledir.parent_path();
+                    }
+                  else
+                    {
+                      match = false;
+                      break;
+                    }
                 }
-              else
+              if (match && validate_path(moduledir))
                 {
-                  match = false;
-                  break;
+                  moduledir /= module.relpath;
+                  if (validate_path(moduledir))
+                    {
+                      module.realpath = ome::common::canonical(moduledir);
+                      return module.realpath;
+                    }
                 }
             }
-          if (match && validate_path(moduledir))
-            {
-              moduledir /= ipath->second.relpath;
-              if (validate_path(moduledir))
-                return ome::common::canonical(moduledir);
-            }
-#endif // OME_HAVE_DLADDR
         }
       boost::format fmt("Could not determine Bio-Formats runtime path for “%1%” directory");
       fmt % dtype;
       throw std::runtime_error(fmt.str());
+    }
+
+    void
+    register_module_paths()
+    {
+      register_paths();
     }
 
   }

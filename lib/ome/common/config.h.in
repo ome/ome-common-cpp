@@ -64,6 +64,7 @@
 #cmakedefine OME_HAVE_NOEXCEPT 1
 #cmakedefine OME_HAVE_SNPRINTF 1
 #cmakedefine OME_VARIANT_LIMIT 1
+#cmakedefine OME_HAVE_DLADDR 1
 
 #ifndef OME_VARIANT_LIMIT
 #  ifndef BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS

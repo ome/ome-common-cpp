@@ -35,9 +35,9 @@
 # #L%
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+               ${CMAKE_CURRENT_BINARY_DIR}/config.h @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-internal.h.in
-               ${CMAKE_CURRENT_BINARY_DIR}/config-internal.h)
+               ${CMAKE_CURRENT_BINARY_DIR}/config-internal.h @ONLY)
 
 set(ome_common_static_headers
     boolean.h
@@ -73,13 +73,13 @@ set(ome_common_units_static_headers
     units/time.h
     units/types.h)
 
-  set(ome_common_xml_static_headers
+set(ome_common_xml_static_headers
     xml/EntityResolver.h
     xml/ErrorReporter.h
     xml/Platform.h
     xml/String.h)
 
-  set(ome_common_xsl_static_headers
+set(ome_common_xsl_static_headers
     xsl/Platform.h
     xsl/Transformer.h)
 
@@ -92,15 +92,19 @@ set(ome_common_xml_dom_static_headers
     xml/dom/NodeList.h
     xml/dom/Wrapper.h)
 
+set(ome_common_generated_private_headers
+   ${CMAKE_CURRENT_BINARY_DIR}/config-internal.h)
+
 set(ome_common_generated_headers
-   ${CMAKE_CURRENT_BINARY_DIR}/config.h)
+    ${CMAKE_CURRENT_BINARY_DIR}/config.h)
 
 set(ome_common_headers
     ${ome_common_static_headers}
     ${ome_common_xml_static_headers}
     ${ome_common_xml_dom_static_headers}
     ${ome_common_xsl_static_headers}
-    ${ome_common_generated_headers})
+    ${ome_common_generated_headers}
+    ${ome_common_generated_private_headers})
 
 set(ome_common_sources
     log.cpp

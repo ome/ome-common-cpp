@@ -119,10 +119,14 @@ TEST_P(ModulePathTest, InvalidEnv)
     }
   catch (const std::runtime_error& e)
     {
+      if (verbose())
+        std::cout << params.dtype << " threw a runtime_error: " << e.what() << '\n';
       ASSERT_FALSE(params.logic_error);
     }
   catch (const std::logic_error& e)
     {
+      if (verbose())
+        std::cout << params.dtype << " threw a logic_error: " << e.what() << '\n';
       ASSERT_TRUE(params.logic_error);
     }
 }
@@ -130,7 +134,7 @@ ModulePathTestParameters params[] =
   {
     ModulePathTestParameters("bin",          "BIOFORMATS_BINDIR",         false),
     ModulePathTestParameters("sbin",         "BIOFORMATS_SBINDIR",        false),
-    ModulePathTestParameters("libexec",      "BIOFORMATS_SYSLIBEXECDIR",  false),
+    ModulePathTestParameters("libexec",      "BIOFORMATS_LIBEXECDIR",     false),
     ModulePathTestParameters("sysconf",      "BIOFORMATS_SYSCONFDIR",     false),
     ModulePathTestParameters("sharedstate",  "BIOFORMATS_SHAREDSTATEDIR", false),
     ModulePathTestParameters("localstate",   "BIOFORMATS_LOCALSTATEDIR",  false),
@@ -138,21 +142,34 @@ ModulePathTestParameters params[] =
     ModulePathTestParameters("include",      "BIOFORMATS_INCLUDEDIR",     false),
     ModulePathTestParameters("oldinclude",   "BIOFORMATS_OLDINCLUDEDIR",  false),
     ModulePathTestParameters("dataroot",     "BIOFORMATS_DATAROOTDIR",    false),
-    ModulePathTestParameters("data",         "BIOFORMATS_SYSDATADIR",     false),
+    ModulePathTestParameters("data",         "BIOFORMATS_DATADIR",        false),
     ModulePathTestParameters("info",         "BIOFORMATS_INFODIR",        false),
     ModulePathTestParameters("locale",       "BIOFORMATS_LOCALEDIR",      false),
     ModulePathTestParameters("man",          "BIOFORMATS_MANDIR",         false),
     ModulePathTestParameters("doc",          "BIOFORMATS_DOCDIR",         false),
 
     ModulePathTestParameters("bf-root",      "BIOFORMATS_HOME",           false),
-    ModulePathTestParameters("bf-data",      "BIOFORMATS_DATADIR",        false),
-    ModulePathTestParameters("bf-icon",      "BIOFORMATS_ICONDIR",        false),
-    ModulePathTestParameters("bf-libexec",   "BIOFORMATS_LIBEXECDIR",     false),
-    ModulePathTestParameters("bf-schema",    "BIOFORMATS_SCHEMADIR",      false),
-    ModulePathTestParameters("bf-transform", "BIOFORMATS_TRANSFORMDIR",   false),
+
+    ModulePathTestParameters("bin",          "OME_COMMON_BINDIR",         false),
+    ModulePathTestParameters("sbin",         "OME_COMMON_SBINDIR",        false),
+    ModulePathTestParameters("libexec",      "OME_COMMON_LIBEXECDIR",     false),
+    ModulePathTestParameters("sysconf",      "OME_COMMON_SYSCONFDIR",     false),
+    ModulePathTestParameters("sharedstate",  "OME_COMMON_SHAREDSTATEDIR", false),
+    ModulePathTestParameters("localstate",   "OME_COMMON_LOCALSTATEDIR",  false),
+    ModulePathTestParameters("lib",          "OME_COMMON_LIBDIR",         false),
+    ModulePathTestParameters("include",      "OME_COMMON_INCLUDEDIR",     false),
+    ModulePathTestParameters("oldinclude",   "OME_COMMON_OLDINCLUDEDIR",  false),
+    ModulePathTestParameters("dataroot",     "OME_COMMON_DATAROOTDIR",    false),
+    ModulePathTestParameters("data",         "OME_COMMON_DATADIR",        false),
+    ModulePathTestParameters("info",         "OME_COMMON_INFODIR",        false),
+    ModulePathTestParameters("locale",       "OME_COMMON_LOCALEDIR",      false),
+    ModulePathTestParameters("man",          "OME_COMMON_MANDIR",         false),
+    ModulePathTestParameters("doc",          "OME_COMMON_DOCDIR",         false),
+
+    ModulePathTestParameters("bf-root",      "OME_COMMON_HOME",           false),
 
     // Invalid dtype throws logic_error
-    ModulePathTestParameters("bf-invalid",   "BIOFORMATS_INVALID",        true),
+    ModulePathTestParameters("bf-invalid",   "BIOFORMATS_INVALID",        true)
   };
 
 // Disable missing-prototypes warning for INSTANTIATE_TEST_CASE_P;
