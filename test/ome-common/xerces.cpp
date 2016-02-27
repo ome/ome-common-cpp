@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-XERCES C++ library for working with Xerces C++.
+ * OME-COMMON C++ library for C++ compatibility/portability
  * %%
  * Copyright © 2006 - 2015 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
