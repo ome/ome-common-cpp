@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-XALAN C++ library for working with Xalan C++.
+ * OME-COMMON C++ library for C++ compatibility/portability
  * %%
  * Copyright © 2006 - 2015 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology

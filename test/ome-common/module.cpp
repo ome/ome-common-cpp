@@ -1,6 +1,6 @@
 /*
  * #%L
- * OME-BIOFORMATS C++ library for image IO.
+ * OME-COMMON C++ library for C++ compatibility/portability
  * %%
  * Copyright © 2006 - 2015 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
@@ -132,23 +132,23 @@ TEST_P(ModulePathTest, InvalidEnv)
 }
 ModulePathTestParameters params[] =
   {
-    ModulePathTestParameters("bin",          "BIOFORMATS_BINDIR",         false),
-    ModulePathTestParameters("sbin",         "BIOFORMATS_SBINDIR",        false),
-    ModulePathTestParameters("libexec",      "BIOFORMATS_LIBEXECDIR",     false),
-    ModulePathTestParameters("sysconf",      "BIOFORMATS_SYSCONFDIR",     false),
-    ModulePathTestParameters("sharedstate",  "BIOFORMATS_SHAREDSTATEDIR", false),
-    ModulePathTestParameters("localstate",   "BIOFORMATS_LOCALSTATEDIR",  false),
-    ModulePathTestParameters("lib",          "BIOFORMATS_LIBDIR",         false),
-    ModulePathTestParameters("include",      "BIOFORMATS_INCLUDEDIR",     false),
-    ModulePathTestParameters("oldinclude",   "BIOFORMATS_OLDINCLUDEDIR",  false),
-    ModulePathTestParameters("dataroot",     "BIOFORMATS_DATAROOTDIR",    false),
-    ModulePathTestParameters("data",         "BIOFORMATS_DATADIR",        false),
-    ModulePathTestParameters("info",         "BIOFORMATS_INFODIR",        false),
-    ModulePathTestParameters("locale",       "BIOFORMATS_LOCALEDIR",      false),
-    ModulePathTestParameters("man",          "BIOFORMATS_MANDIR",         false),
-    ModulePathTestParameters("doc",          "BIOFORMATS_DOCDIR",         false),
+    ModulePathTestParameters("bin",          "OME_FILES_BINDIR",         false),
+    ModulePathTestParameters("sbin",         "OME_FILES_SBINDIR",        false),
+    ModulePathTestParameters("libexec",      "OME_FILES_LIBEXECDIR",     false),
+    ModulePathTestParameters("sysconf",      "OME_FILES_SYSCONFDIR",     false),
+    ModulePathTestParameters("sharedstate",  "OME_FILES_SHAREDSTATEDIR", false),
+    ModulePathTestParameters("localstate",   "OME_FILES_LOCALSTATEDIR",  false),
+    ModulePathTestParameters("lib",          "OME_FILES_LIBDIR",         false),
+    ModulePathTestParameters("include",      "OME_FILES_INCLUDEDIR",     false),
+    ModulePathTestParameters("oldinclude",   "OME_FILES_OLDINCLUDEDIR",  false),
+    ModulePathTestParameters("dataroot",     "OME_FILES_DATAROOTDIR",    false),
+    ModulePathTestParameters("data",         "OME_FILES_DATADIR",        false),
+    ModulePathTestParameters("info",         "OME_FILES_INFODIR",        false),
+    ModulePathTestParameters("locale",       "OME_FILES_LOCALEDIR",      false),
+    ModulePathTestParameters("man",          "OME_FILES_MANDIR",         false),
+    ModulePathTestParameters("doc",          "OME_FILES_DOCDIR",         false),
 
-    ModulePathTestParameters("bf-root",      "BIOFORMATS_HOME",           false),
+    ModulePathTestParameters("ome-files-root",      "OME_FILES_HOME",           false),
 
     ModulePathTestParameters("bin",          "OME_COMMON_BINDIR",         false),
     ModulePathTestParameters("sbin",         "OME_COMMON_SBINDIR",        false),
@@ -166,10 +166,10 @@ ModulePathTestParameters params[] =
     ModulePathTestParameters("man",          "OME_COMMON_MANDIR",         false),
     ModulePathTestParameters("doc",          "OME_COMMON_DOCDIR",         false),
 
-    ModulePathTestParameters("bf-root",      "OME_COMMON_HOME",           false),
+    ModulePathTestParameters("ome-files-root",      "OME_COMMON_HOME",           false),
 
     // Invalid dtype throws logic_error
-    ModulePathTestParameters("bf-invalid",   "BIOFORMATS_INVALID",        true)
+    ModulePathTestParameters("ome-files-invalid",   "OME_FILES_INVALID",        true)
   };
 
 // Disable missing-prototypes warning for INSTANTIATE_TEST_CASE_P;
