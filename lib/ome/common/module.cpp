@@ -76,9 +76,9 @@ namespace
     // Global paths (not specific to any component)
     static RegisterModule bin
       ("bin",
-       "OME_FILES_BINDIR",
+       "OME_BINDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_BINDIR,
        OME_COMMON_INSTALL_BINDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -87,9 +87,9 @@ namespace
 
     static RegisterModule sbin
       ("sbin",
-       "OME_FILES_SBINDIR",
+       "OME_SBINDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_SBINDIR,
        OME_COMMON_INSTALL_SBINDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -98,9 +98,9 @@ namespace
 
     static RegisterModule libexec
       ("libexec",
-       "OME_FILES_LIBEXECDIR",
+       "OME_LIBEXECDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_LIBEXECDIR,
        OME_COMMON_INSTALL_LIBEXECDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -109,9 +109,9 @@ namespace
 
     static RegisterModule sysconf
       ("sysconf",
-       "OME_FILES_SYSCONFDIR",
+       "OME_SYSCONFDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_SYSCONFDIR,
        OME_COMMON_INSTALL_SYSCONFDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -120,9 +120,9 @@ namespace
 
     static RegisterModule sharedstate
       ("sharedstate",
-       "OME_FILES_SHAREDSTATEDIR",
+       "OME_SHAREDSTATEDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_SHAREDSTATEDIR,
        OME_COMMON_INSTALL_SHAREDSTATEDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -131,9 +131,9 @@ namespace
 
     static RegisterModule localstate
       ("localstate",
-       "OME_FILES_LOCALSTATEDIR",
+       "OME_LOCALSTATEDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_LOCALSTATEDIR,
        OME_COMMON_INSTALL_LOCALSTATEDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -142,9 +142,9 @@ namespace
 
     static RegisterModule lib
       ("lib",
-       "OME_FILES_LIBDIR",
+       "OME_LIBDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_LIBDIR,
        OME_COMMON_INSTALL_LIBDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -153,9 +153,9 @@ namespace
 
     static RegisterModule include
       ("include",
-       "OME_FILES_INCLUDEDIR",
+       "OME_INCLUDEDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_INCLUDEDIR,
        OME_COMMON_INSTALL_INCLUDEDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -164,9 +164,9 @@ namespace
 
     static RegisterModule oldinclude
       ("oldinclude",
-       "OME_FILES_OLDINCLUDEDIR",
+       "OME_OLDINCLUDEDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_OLDINCLUDEDIR,
        OME_COMMON_INSTALL_OLDINCLUDEDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -175,9 +175,9 @@ namespace
 
     static RegisterModule dataroot
       ("dataroot",
-       "OME_FILES_DATAROOTDIR",
+       "OME_DATAROOTDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_DATAROOTDIR,
        OME_COMMON_INSTALL_DATAROOTDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -186,9 +186,9 @@ namespace
 
     static RegisterModule data
       ("data",
-       "OME_FILES_DATADIR",
+       "OME_DATADIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_DATADIR,
        OME_COMMON_INSTALL_DATADIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -197,9 +197,9 @@ namespace
 
     static RegisterModule info
       ("info",
-       "OME_FILES_INFODIR",
+       "OME_INFODIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_INFODIR,
        OME_COMMON_INSTALL_INFODIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -208,9 +208,9 @@ namespace
 
     static RegisterModule locale
       ("locale",
-       "OME_FILES_LOCALEDIR",
+       "OME_LOCALEDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_LOCALEDIR,
        OME_COMMON_INSTALL_LOCALEDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -219,9 +219,9 @@ namespace
 
     static RegisterModule man
       ("man",
-       "OME_FILES_MANDIR",
+       "OME_MANDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_MANDIR,
        OME_COMMON_INSTALL_MANDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -230,9 +230,9 @@ namespace
 
     static RegisterModule doc
       ("doc",
-       "OME_FILES_DOCDIR",
+       "OME_DOCDIR",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_FULL_DOCDIR,
        OME_COMMON_INSTALL_DOCDIR,
        OME_COMMON_INSTALL_PREFIX,
@@ -241,10 +241,10 @@ namespace
 
     // OME-Common package-specific paths.
     static RegisterModule bf_root
-      ("ome-files-root",
+      ("ome-common-root",
        "OME_COMMON_HOME",
        "OME_COMMON_HOME",
-       "OME_FILES_HOME",
+       "OME_HOME",
        OME_COMMON_INSTALL_PREFIX,
        "",
        OME_COMMON_INSTALL_PREFIX,
@@ -333,7 +333,7 @@ namespace ome
      *   is present and relocatable-install is OFF.
      * - will work in the install tree and build tree if "make"
      *   install has run.
-     * - OME_COMMON_HOME or OME_FILES_HOME can override the hardcoded
+     * - OME_COMMON_HOME or OME_HOME can override the hardcoded
      *   install prefix, but only if the new path contains an install
      *   tree.
      *
@@ -344,7 +344,7 @@ namespace ome
      *   correct path if relocatable-install is OFF or ON and dladdr
      *   or GetModuleFileNameW are available (required to determine
      *   the library path)
-     * - OME_COMMON_HOME or OME_FILES_HOME can override the
+     * - OME_COMMON_HOME or OME_HOME can override the
      *   autodetected install prefix, but only if the new path
      *   contains an install tree.
      *
@@ -352,15 +352,15 @@ namespace ome
      * - With and without CMAKE_INSTALL_PREFIX set [default is /usr/local]
      * - With relocatable-install set to OFF and ON
      * - In the install and build trees
-     * - With and without OME_COMMON_HOME or OME_FILES_HOME
-     * - With and without OME_COMMON_HOME or OME_FILES_HOME set to a
+     * - With and without OME_COMMON_HOME or OME_HOME
+     * - With and without OME_COMMON_HOME or OME_HOME set to a
      *   valid path
      *
      * Testing in the build tree verifies it fails correctly.
      *
      * The sequence of checking dtype "foo" is:
-     * - OME_FILES_$FOO env var
-     * - OME_COMMON_HOME or OME_FILES_HOME env var [if set] + FOO_RELATIVE_PATH
+     * - OME_$FOO env var
+     * - OME_COMMON_HOME or OME_HOME env var [if set] + FOO_RELATIVE_PATH
      * - FOO_ABSOLUTE_PATH
      * - OME_COMMON_INSTALL_PREFIX [if set] + FOO_RELATIVE_PATH
      * - introspection [if possible] + FOO_RELATIVE_PATH
