@@ -83,8 +83,8 @@ if __name__ == "__main__":
     prefix = "%s-%s" % (options.release, version)
 
     if options.list:
-        print("%s/%s-base.zip" % (options.target, prefix))
-        print("%s/%s-base.tar.xz" % (options.target, prefix))
+        print("%s/%s.zip" % (options.target, prefix))
+        print("%s/%s.tar.xz" % (options.target, prefix))
         sys.exit(0)
 
     print("Releasing tag %s as %s" % (options.tag, prefix))
