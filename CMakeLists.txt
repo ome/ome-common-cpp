@@ -54,6 +54,8 @@ if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
   message(FATAL_ERROR "In-tree builds are not supported; please run cmake from a separate build directory.")
 endif("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 
+include(cmake/SourceArchive.cmake)
+
 set(BUILD_SHARED_LIBS_DEFAULT ON)
 if(MSVC)
   set(BUILD_SHARED_LIBS_DEFAULT OFF)
