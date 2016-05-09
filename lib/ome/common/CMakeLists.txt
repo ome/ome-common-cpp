@@ -40,6 +40,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-internal.h.in
                ${CMAKE_CURRENT_BINARY_DIR}/config-internal.h @ONLY)
 
 set(ome_common_static_headers
+    base64.h
     boolean.h
     filesystem.h
     endian.h

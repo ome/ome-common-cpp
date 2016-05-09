@@ -40,6 +40,12 @@ if(BUILD_TESTS)
     ome_add_test(ome-common/headers ome-common-headers)
   endif(extended-tests)
 
+  add_executable(base64 base64.cpp)
+  target_link_libraries(base64 OME::Common)
+  target_link_libraries(base64 OME::Test)
+
+  ome_add_test(ome-common/base64 base64)
+
   add_executable(boolean boolean.cpp)
   target_link_libraries(boolean OME::Common)
   target_link_libraries(boolean OME::Test)
