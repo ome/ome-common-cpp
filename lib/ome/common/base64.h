@@ -102,9 +102,13 @@ namespace ome
     /**
      * Decode a Base64-encoded string.
      *
+     * Note that trailing whitespace is counted as invalid input, but
+     * newlines and other whitespace breaking up the input is
+     * permitted.
+     *
      * @param base64 the Base64-encoded string.
      * @returns a container filled with the decoded bytes.
-     * @throws on error.
+     * @throws boost::archive::iterators::dataflow_exception on invalid input.
      */
     template<typename Container>
     Container

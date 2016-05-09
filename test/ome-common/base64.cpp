@@ -101,6 +101,11 @@ TEST_P(Base64Test, DecodeVector)
   ASSERT_EQ(expected, result2);
 }
 
+TEST(Base64Test, DecodeFail)
+{
+  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t> >("Invalid "), boost::archive::iterators::dataflow_exception);
+}
+
 Base64TestParameters params[] =
   {
     Base64TestParameters("Test Base64 Encoding",
