@@ -36,6 +36,7 @@
  * #L%
  */
 
+#include <algorithm>
 #include <cstring>
 #include <vector>
 
@@ -74,6 +75,20 @@ TEST_P(Base64Test, EncodeRaw)
   ASSERT_EQ(std::string(params.encoded_data_exact), result);
 }
 
+TEST_P(Base64Test, EncodeRawNoBreaks)
+{
+  const Base64TestParameters& params = GetParam();
+
+  std::string result = ome::common::base64_encode(reinterpret_cast<const uint8_t *>(params.data),
+                                                  reinterpret_cast<const uint8_t *>(params.data + std::strlen(params.data)),
+                                                  0);
+
+  std::string expected(params.encoded_data_exact);
+  expected.erase(std::remove(expected.begin(), expected.end(), '\n'), expected.end());
+
+  ASSERT_EQ(expected, result);
+}
+
 TEST_P(Base64Test, EncodeVector)
 {
   const Base64TestParameters& params = GetParam();
@@ -103,7 +118,29 @@ TEST_P(Base64Test, DecodeVector)
 
 TEST(Base64Test, DecodeFail)
 {
-  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t> >("Invalid "), boost::archive::iterators::dataflow_exception);
+  // Premature end of input.
+  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t> >("Invalid "), std::runtime_error);
+
+  // Invalid characters.
+  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t> >("$#Invalid"), std::runtime_error);
+
+  // Data after padding.
+  ASSERT_THROW(ome::common::base64_decode<std::vector<uint8_t> >("VGVzdCBwYWRkaW5nLQ==VGVzdCBwYWRkaW5nLQ=="), std::runtime_error);
+}
+
+TEST(Base64Test, LookupRoundTrip)
+{
+  // Checks consistency of lookup tables to ensure encode and decode behaviour matches.
+
+  for (int i = 0; i < 256; ++i)
+    {
+      std::vector<uint8_t> input;
+      input.push_back(static_cast<uint8_t>(i));
+      std::string encoded = ome::common::base64_encode(input.begin(), input.end());
+      std::vector<uint8_t> decoded = ome::common::base64_decode<std::vector<uint8_t> >(encoded);
+
+      ASSERT_EQ(input, decoded);
+    }
 }
 
 Base64TestParameters params[] =
