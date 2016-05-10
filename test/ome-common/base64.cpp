@@ -102,6 +102,22 @@ TEST_P(Base64Test, EncodeVector)
 }
 
 
+TEST_P(Base64Test, DecodeIter)
+{
+  const Base64TestParameters& params = GetParam();
+
+  std::vector<uint8_t> expected(reinterpret_cast<const uint8_t *>(params.data),
+                                reinterpret_cast<const uint8_t *>(params.data + std::strlen(params.data)));
+
+  std::vector<uint8_t> result;
+  ome::common::base64_decode(params.encoded_data_inexact,
+                             std::back_inserter(result));
+  ASSERT_EQ(expected, result);
+
+  std::vector<uint8_t> result2 = ome::common::base64_decode<std::vector<uint8_t> >(params.encoded_data_exact);
+  ASSERT_EQ(expected, result2);
+}
+
 TEST_P(Base64Test, DecodeVector)
 {
   const Base64TestParameters& params = GetParam();

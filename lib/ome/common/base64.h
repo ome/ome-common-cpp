@@ -225,17 +225,14 @@ namespace ome
      * permitted.
      *
      * @param base64 the Base64-encoded string.
-     * @returns a container filled with the decoded bytes.
+     * @param dest the insert iterator for the destination
      * @throws std::runtime_error on invalid input.
      */
-    template<typename Container>
-    Container
-    base64_decode(std::string base64)
+    template<typename InsertIterator>
+    void
+    base64_decode(std::string    base64,
+                  InsertIterator dest)
     {
-      Container decoded;
-
-      decoded.reserve((base64.size() * 3) / 4);
-
       bool pad_seen = false;
       uint8_t bytes[4];
       uint8_t output;
@@ -263,15 +260,15 @@ namespace ome
                 throw std::runtime_error("Invalid Base64 input: padding only permitted at end of input");
 
               output = bytes[0] << 2 | bytes[1] >> 4;
-              decoded.push_back(output); // Byte 1
+              *dest = output; // Byte 1
               if (bytes[2] < 64) // Skip if padded
                 {
                   output = bytes[1] << 4 | bytes[2] >> 2;
-                  decoded.push_back(output); // Byte 2
+                  *dest = output; // Byte 2
                   if (bytes[3] < 64) // Skip if padded
                     {
                       output = bytes[2] << 6 | bytes[3];
-                      decoded.push_back(output); // Byte 3
+                      *dest = output; // Byte 3
                     }
                   else
                     {
@@ -288,6 +285,27 @@ namespace ome
               throw(std::runtime_error("Invalid Base64 input: padding encountered unexpectedly"));
             }
         }
+    }
+
+    /**
+     * Decode a Base64-encoded string into a container.
+     *
+     * Newlines and other whitespace breaking up the input are
+     * permitted.
+     *
+     * @param base64 the Base64-encoded string.
+     * @returns a container filled with the decoded bytes.
+     * @throws std::runtime_error on invalid input.
+     */
+    template<typename Container>
+    Container
+    base64_decode(const std::string& base64)
+    {
+      Container decoded;
+
+      decoded.reserve((base64.size() * 3) / 4);
+
+      base64_decode(base64, std::back_inserter(decoded));
 
       return decoded;
     }
