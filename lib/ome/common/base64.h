@@ -41,6 +41,7 @@
 
 #include <cctype>
 #include <iterator>
+#include <stdexcept>
 #include <string>
 
 #include <ome/compat/cstdint.h>
