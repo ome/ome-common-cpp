@@ -50,7 +50,11 @@ typedef ::testing::Types<
   UnitConversion<rankine_absolute_quantity,    kelvin_absolute_quantity,      -5>,
   UnitConversion<kelvin_absolute_quantity,     rankine_absolute_quantity,    -10>,
   UnitConversion<celsius_absolute_quantity,    fahrenheit_absolute_quantity, -10>,
-  UnitConversion<fahrenheit_absolute_quantity, celsius_absolute_quantity,     -3>
+  UnitConversion<fahrenheit_absolute_quantity, celsius_absolute_quantity,     -3>,
+  UnitConversion<rankine_absolute_quantity,    fahrenheit_absolute_quantity, -10>,
+  UnitConversion<fahrenheit_absolute_quantity, rankine_absolute_quantity,    -10>,
+  UnitConversion<rankine_absolute_quantity,    celsius_absolute_quantity,     -5>,
+  UnitConversion<celsius_absolute_quantity,    rankine_absolute_quantity,    -10>
   > TemperatureTestTypes;
 
 INSTANTIATE_TYPED_TEST_CASE_P(TemperatureTest, UnitConv, TemperatureTestTypes);
