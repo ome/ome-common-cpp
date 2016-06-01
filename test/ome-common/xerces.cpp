@@ -2,7 +2,7 @@
  * #%L
  * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -115,6 +115,44 @@ public:
 
   }
 };
+
+TEST(XercesStringTest, NativeUTF8)
+{
+  xml::Platform plat;
+
+  std::string utf8("µ");
+
+  ASSERT_EQ(2UL, utf8.size());
+  ASSERT_EQ('\xC2', utf8[0]);
+  ASSERT_EQ('\xB5', utf8[1]);
+}
+
+TEST(XercesStringTest, StringNarrow)
+{
+  xml::Platform plat;
+
+  const XMLCh src[] = { 0x00B5, 0x0 };
+
+  xml::String s(src);
+  std::string utf8(s.str());
+
+  ASSERT_EQ(2UL, utf8.size());
+  ASSERT_EQ('\xC2', utf8[0]);
+  ASSERT_EQ('\xB5', utf8[1]);
+}
+
+TEST(XercesStringTest, StringWide)
+{
+  xml::Platform plat;
+
+  const char src[] = { '\xC2', '\xB5', '\0' };
+
+  xml::String s(src);
+  const XMLCh *utf16 = s;
+
+  ASSERT_EQ(0xB5, utf16[0]);
+  ASSERT_EQ(0x0, utf16[1]);
+}
 
 TEST_P(XercesTest, Node)
 {

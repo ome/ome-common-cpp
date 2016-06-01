@@ -2,7 +2,7 @@
  * #%L
  * OME-XERCES C++ library for working with Xerces C++.
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -84,7 +84,7 @@ namespace ome
          */
         inline
         String(const XMLCh *str):
-          narrow(xercesc::XMLString::transcode(str)),
+          narrow(transcode(str)),
           wide(xercesc::XMLString::replicate(str))
         {
           assert(this->wide != 0);
@@ -101,7 +101,7 @@ namespace ome
         inline
         String(const char *str):
           narrow(xercesc::XMLString::replicate(str)),
-          wide(xercesc::XMLString::transcode(str))
+          wide(transcode(str))
         {
           assert(this->narrow != 0);
           assert(this->wide != 0);
@@ -117,7 +117,7 @@ namespace ome
         inline
         String(std::string const& str):
           narrow(xercesc::XMLString::replicate(str.c_str())),
-          wide(xercesc::XMLString::transcode(str.c_str()))
+          wide(transcode(str.c_str()))
         {
           assert(this->narrow != 0);
           assert(this->wide != 0);
@@ -247,6 +247,28 @@ namespace ome
         {
           return !(*this == rhs);
         }
+
+        /**
+         * Transcode UTF-16 string to UTF-8 string.
+         *
+         * @param str a UTF-16 string.
+         * @returns a UTF-8 string (must be freed by caller with
+         * xercesc::XMLString::release).
+         */
+        static
+        char *
+        transcode(const XMLCh *str);
+        
+        /**
+         * Transcode UTF-8 string to UTF-16 string.
+         *
+         * @param str a UTF-8 string.
+         * @returns a UTF-16 string (must be freed by caller with
+         * xercesc::XMLString::release).
+         */
+        static
+        XMLCh *
+        transcode(const char *str);
 
       private:
         /// The char * string representation.
