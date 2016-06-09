@@ -655,6 +655,10 @@ rankine	kelvin	400.0	222.22222	222.2 absolute K	absolute K	222.2 absolute K
 kelvin	rankine	200.0	360.0	360 absolute R	absolute R	360 absolute R
 celsius	fahrenheit	50.0	122.0	122 absolute F	absolute F	122 absolute F
 fahrenheit	celsius	250.0	121.1111	121.1 absolute C	absolute C	121.1 absolute C
+rankine	fahrenheit	459.67	0.0	0 absolute F	absolute F	0 absolute F
+fahrenheit	rankine	100.0	559.67	559.7 absolute R	absolute R	559.67 absolute R
+rankine	celsius	500	4.62778	4.628 absolute C	absolute C	4.6 absolute C
+celsius	rankine	-273.15	0.0	0 absolute R	absolute R	0 absolute R
 
 ## TIME
 
