@@ -141,6 +141,18 @@ TEST(XercesStringTest, StringNarrow)
   ASSERT_EQ('\xB5', utf8[1]);
 }
 
+TEST(XercesStringTest, StringNarrowEmpty)
+{
+  xml::Platform plat;
+
+  const XMLCh src[] = { 0x0 };
+
+  xml::String s(src);
+  std::string utf8(s.str());
+
+  ASSERT_EQ(0UL, utf8.size());
+}
+
 TEST(XercesStringTest, StringWide)
 {
   xml::Platform plat;
@@ -152,6 +164,18 @@ TEST(XercesStringTest, StringWide)
 
   ASSERT_EQ(0xB5, utf16[0]);
   ASSERT_EQ(0x0, utf16[1]);
+}
+
+TEST(XercesStringTest, StringWideEmpty)
+{
+  xml::Platform plat;
+
+  const char src[] = { '\0' };
+
+  xml::String s(src);
+  const XMLCh *utf16 = s;
+
+  ASSERT_EQ(0x0, utf16[0]);
 }
 
 TEST(XercesStringTest, StringWideFail)
