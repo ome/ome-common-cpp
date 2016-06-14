@@ -154,6 +154,17 @@ TEST(XercesStringTest, StringWide)
   ASSERT_EQ(0x0, utf16[1]);
 }
 
+TEST(XercesStringTest, StringWideFail)
+{
+  xml::Platform plat;
+
+  // Invalid UTF-8; second char in multibyte sequence is lacking the
+  // high bit.
+  const char src[] = { '\xC2', '\x28', '\0' };
+
+  ASSERT_THROW(xml::String s(src), std::runtime_error);
+}
+
 TEST_P(XercesTest, Node)
 {
   xml::dom::Node node;

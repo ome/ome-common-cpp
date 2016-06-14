@@ -52,15 +52,29 @@ namespace ome
       char *
       String::transcode(const XMLCh *str)
       {
-        xercesc::TranscodeToStr tc(str, "UTF-8");
-        return reinterpret_cast<char *>(tc.adopt());
+        try
+          {
+            xercesc::TranscodeToStr tc(str, "UTF-8");
+            return reinterpret_cast<char *>(tc.adopt());
+          }
+        catch (const xercesc::XMLException& e)
+          {
+            throw std::runtime_error("XML UTF-16 to UTF-8 transcoding failure");
+          }
       }
 
       XMLCh *
       String::transcode(const char *str)
       {
-        xercesc::TranscodeFromStr tc(reinterpret_cast<const XMLByte *>(str), std::strlen(str), "UTF-8");
-        return tc.adopt();
+        try
+          {
+            xercesc::TranscodeFromStr tc(reinterpret_cast<const XMLByte *>(str), std::strlen(str), "UTF-8");
+            return tc.adopt();
+          }
+        catch (const xercesc::XMLException& e)
+          {
+            throw std::runtime_error("XML UTF-8 to UTF-16 transcoding failure");
+          }
       }
 
     }
