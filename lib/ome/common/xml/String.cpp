@@ -37,6 +37,7 @@
  */
 
 #include <cstring>
+#include <stdexcept>
 
 #include <ome/common/xml/String.h>
 
@@ -52,15 +53,48 @@ namespace ome
       char *
       String::transcode(const XMLCh *str)
       {
-        xercesc::TranscodeToStr tc(str, "UTF-8");
-        return reinterpret_cast<char *>(tc.adopt());
-      }
+        if (str)
+          {
+            if (xercesc::XMLString::stringLen(str) == 0)
+              return xercesc::XMLString::replicate("");
+
+            try
+              {
+                xercesc::TranscodeToStr tc(str, "UTF-8");
+                return reinterpret_cast<char *>(tc.adopt());
+              }
+            catch (const xercesc::XMLException& e)
+              {
+                throw std::runtime_error("XML UTF-16 to UTF-8 transcoding failure");
+              }
+          }
+
+      return 0;
+    }
 
       XMLCh *
       String::transcode(const char *str)
       {
-        xercesc::TranscodeFromStr tc(reinterpret_cast<const XMLByte *>(str), std::strlen(str), "UTF-8");
-        return tc.adopt();
+        if (str)
+          {
+            if (strlen(str) == 0)
+              {
+                const XMLCh src[] = { 0x0 };
+                return xercesc::XMLString::replicate(src);
+              }
+
+            try
+              {
+                xercesc::TranscodeFromStr tc(reinterpret_cast<const XMLByte *>(str), std::strlen(str), "UTF-8");
+                return tc.adopt();
+              }
+            catch (const xercesc::XMLException& e)
+              {
+                throw std::runtime_error("XML UTF-8 to UTF-16 transcoding failure");
+              }
+          }
+
+        return 0;
       }
 
     }
