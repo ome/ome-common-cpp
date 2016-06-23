@@ -146,32 +146,61 @@ set_target_properties(ome-common PROPERTIES VERSION ${OME_VERSION_SHORT})
 
 add_library(OME::Common ALIAS ome-common)
 
+if(WIN32)
+  set(ome_common_config_dir "cmake")
+else()
+  set(ome_common_config_dir "${CMAKE_INSTALL_LIBDIR}/cmake/OMECommon")
+endif()
+
 install(TARGETS ome-common
         EXPORT OMECommonInternal
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT "runtime"
+        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
 install(EXPORT OMECommonInternal
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECommon)
-install(FILES OMECommonConfig.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECommon)
+        DESTINATION "${ome_common_config_dir}"
+        NAMESPACE "ome_common_"
+        COMPONENT "development")
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/OMECommonConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/OMECommonConfig.cmake"
+  INSTALL_DESTINATION "${ome_common_config_dir}")
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/OMECommonConfigVersion.cmake
+  VERSION "${PROJECT_VERSION}"
+  COMPATIBILITY SameMajorVersion)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/OMECommonConfig.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/OMECommonConfigVersion.cmake
+        DESTINATION "${ome_common_config_dir}"
+        COMPONENT "development")
 
 set(ome_common_includedir "${CMAKE_INSTALL_INCLUDEDIR}/ome/common")
 
 install(FILES ${ome_common_static_headers} ${ome_common_generated_headers}
-        DESTINATION ${ome_common_includedir})
+        DESTINATION ${ome_common_includedir}
+        COMPONENT "development")
 install(FILES ${ome_common_endian_static_headers}
-        DESTINATION ${ome_common_includedir}/endian)
+        DESTINATION ${ome_common_includedir}/endian
+        COMPONENT "development")
 install(FILES ${ome_common_endian_detail_static_headers}
-        DESTINATION ${ome_common_includedir}/endian/detail)
+        DESTINATION ${ome_common_includedir}/endian/detail
+        COMPONENT "development")
 install(FILES ${ome_common_units_static_headers}
-        DESTINATION ${ome_common_includedir}/units)
+        DESTINATION ${ome_common_includedir}/units
+        COMPONENT "development")
 install(FILES ${ome_common_xml_static_headers}
-        DESTINATION ${ome_common_includedir}/xml)
+        DESTINATION ${ome_common_includedir}/xml
+        COMPONENT "development")
 install(FILES ${ome_common_xml_dom_static_headers}
-        DESTINATION ${ome_common_includedir}/xml/dom)
+        DESTINATION ${ome_common_includedir}/xml/dom
+        COMPONENT "development")
 install(FILES ${ome_common_xsl_static_headers}
-        DESTINATION ${ome_common_includedir}/xsl)
+        DESTINATION ${ome_common_includedir}/xsl
+        COMPONENT "development")
 
 # Dump header list for testing
 header_include_list_write(ome_common_static_headers ome_common_generated_headers ome/common ${PROJECT_BINARY_DIR}/test/ome-common)
