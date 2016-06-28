@@ -54,20 +54,43 @@ target_link_libraries(ome-compat INTERFACE
 
 add_library(OME::Compat ALIAS ome-compat)
 
+if(WIN32)
+  set(ome_compat_config_dir "cmake")
+else()
+  set(ome_compat_config_dir "${CMAKE_INSTALL_LIBDIR}/cmake/OMECompat")
+endif()
+
 install(TARGETS ome-compat
         EXPORT OMECompatInternal
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT "runtime"
+        INCLUDES DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
 install(EXPORT OMECompatInternal
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECompat)
-install(FILES OMECompatConfig.cmake
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/OMECompat)
+        DESTINATION "${ome_compat_config_dir}"
+        NAMESPACE "ome_compat_"
+        COMPONENT "development")
+
+include(CMakePackageConfigHelpers)
+configure_package_config_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/OMECompatConfig.cmake.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/OMECompatConfig.cmake"
+  INSTALL_DESTINATION "${ome_compat_config_dir}")
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/OMECompatConfigVersion.cmake
+  VERSION "${PROJECT_VERSION}"
+  COMPATIBILITY SameMajorVersion)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/OMECompatConfig.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/OMECompatConfigVersion.cmake
+        DESTINATION "${ome_compat_config_dir}"
+        COMPONENT "development")
 
 set(ome_compat_includedir "${CMAKE_INSTALL_INCLUDEDIR}/ome/compat")
 
 install(FILES ${ome_compat_headers}
-        DESTINATION ${ome_compat_includedir})
+        DESTINATION ${ome_compat_includedir}
+        COMPONENT "development")
 
 # Dump header list for testing
 header_include_list_write(ome_compat_headers "" ome/compat ${PROJECT_BINARY_DIR}/test/ome-compat)
