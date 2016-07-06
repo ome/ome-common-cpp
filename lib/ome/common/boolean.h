@@ -45,6 +45,13 @@
 
 #include <ome/compat/cstdint.h>
 
+#ifdef _MSC_VER
+#pragma push_macro("min")
+#undef min
+#pragma push_macro("max")
+#undef max
+#endif
+
 namespace ome
 {
   namespace common
@@ -275,6 +282,11 @@ namespace ome
 
   }
 }
+
+#ifdef _MSC_VER
+#pragma pop_macro("min")
+#pragma pop_macro("max")
+#endif
 
 #endif // OME_COMMON_BOOLEAN_H
 

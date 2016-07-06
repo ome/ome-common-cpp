@@ -58,6 +58,11 @@
 #include <boost/units/quantity.hpp>
 #include <boost/units/systems/si.hpp>
 
+#ifdef _MSC_VER
+#pragma push_macro("pascal")
+#undef pascal
+#endif
+
 namespace ome
 {
   namespace common
@@ -393,6 +398,10 @@ namespace boost
 
   }
 }
+
+#ifdef _MSC_VER
+#pragma pop_macro("pascal")
+#endif
 
 #endif // OME_COMMON_UNITS_PRESSURE_H
 
