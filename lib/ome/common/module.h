@@ -49,6 +49,9 @@
 # include <ome/common/config.h>
 # include <ome/common/filesystem.h>
 
+/**
+ * Open Microscopy Environment C++.
+ */
 namespace ome
 {
   namespace common

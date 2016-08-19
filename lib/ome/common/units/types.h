@@ -56,6 +56,9 @@ namespace ome
 {
   namespace common
   {
+    /**
+     * Units of measurement.
+     */
     namespace units
     {
 
