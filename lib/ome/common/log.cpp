@@ -2,7 +2,7 @@
  * #%L
  * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2015 Open Microscopy Environment:
+ * Copyright © 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -63,12 +63,10 @@ namespace ome
     setLogLevel(logging::trivial::severity_level severity)
     {
       globalSeverity = severity;
-#ifdef OME_HAVE_BOOST_LOG
       ome::logging::core::get()->set_filter
         (
          ome::logging::trivial::severity >= severity
          );
-#endif // OME_HAVE_BOOST_LOG
     }
 
     logging::trivial::severity_level
