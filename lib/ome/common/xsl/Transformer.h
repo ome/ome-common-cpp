@@ -39,9 +39,10 @@
 #ifndef OME_COMMON_XSL_TRANSFORMER_H
 #define OME_COMMON_XSL_TRANSFORMER_H
 
+#include <boost/filesystem/path.hpp>
+
 #include <ome/compat/memory.h>
 
-#include <ome/common/filesystem.h>
 #include <ome/common/xml/EntityResolver.h>
 
 #include <xalanc/XalanTransformer/XalanTransformer.hpp>

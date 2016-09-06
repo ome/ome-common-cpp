@@ -36,11 +36,12 @@
  * #L%
  */
 
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/format.hpp>
 #include <boost/range/size.hpp>
 
 #include <ome/common/config-internal.h>
-#include <ome/common/filesystem.h>
 
 #define OME_COMMON_MODULE_INTROSPECTION 1
 #include <ome/common/module.h>
@@ -393,7 +394,7 @@ namespace ome
           fs::path dir(getenv(module.envvar.c_str()));
           if (validate_path(dir))
             {
-              module.realpath = ome::common::canonical(dir);
+              module.realpath = boost::filesystem::canonical(dir);
               return module.realpath;
             }
         }
@@ -405,7 +406,7 @@ namespace ome
           home /= module.relpath;
           if (validate_path(home))
             {
-              module.realpath = ome::common::canonical(home);
+              module.realpath = boost::filesystem::canonical(home);
               return module.realpath;
             }
         }
@@ -417,7 +418,7 @@ namespace ome
           home /= module.relpath;
           if (validate_path(home))
             {
-              module.realpath = ome::common::canonical(home);
+              module.realpath = boost::filesystem::canonical(home);
               return module.realpath;
             }
         }
@@ -428,7 +429,7 @@ namespace ome
           // Full specific path.
           if (validate_path(module.abspath))
             {
-              module.realpath = ome::common::canonical(module.abspath);
+              module.realpath = boost::filesystem::canonical(module.abspath);
               return module.realpath;
             }
 
@@ -437,7 +438,7 @@ namespace ome
           home /= module.relpath;
           if (validate_path(home))
             {
-              module.realpath = ome::common::canonical(home);
+              module.realpath = boost::filesystem::canonical(home);
               return module.realpath;
             }
         }
@@ -473,7 +474,7 @@ namespace ome
                   moduledir /= module.relpath;
                   if (validate_path(moduledir))
                     {
-                      module.realpath = ome::common::canonical(moduledir);
+                      module.realpath = boost::filesystem::canonical(moduledir);
                       return module.realpath;
                     }
                 }

@@ -2,7 +2,7 @@
  * #%L
  * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -44,10 +44,12 @@
  */
 
 #ifndef OME_COMMON_MODULE_H
-# define OME_COMMON_MODULE_H
+#define OME_COMMON_MODULE_H
 
-# include <ome/common/config.h>
-# include <ome/common/filesystem.h>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+
+#include <ome/common/config.h>
 
 /**
  * Open Microscopy Environment C++.
@@ -241,7 +243,7 @@ namespace
   module_path()
   {
     if (this_module.dli_fname)
-      return canonical(boost::filesystem::path(this_module.dli_fname));
+      return boost::filesystem::canonical(boost::filesystem::path(this_module.dli_fname));
     return boost::filesystem::path();
   }
 #elif _MSC_VER

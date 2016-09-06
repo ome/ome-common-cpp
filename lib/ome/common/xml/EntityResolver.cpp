@@ -2,7 +2,7 @@
  * #%L
  * OME-XERCES C++ library for working with Xerces C++.
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -43,9 +43,9 @@
 #include <set>
 #include <utility>
 
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/format.hpp>
-
-#include <ome/common/filesystem.h>
 
 #include <ome/common/xml/EntityResolver.h>
 #include <ome/common/xml/String.h>
@@ -202,7 +202,7 @@ namespace ome
 
 	ome::common::xml::Platform platform;
 
-        pending.push_back(ome::common::canonical(catalog));
+        pending.push_back(boost::filesystem::canonical(catalog));
 
         while(!pending.empty())
           {
@@ -248,9 +248,9 @@ namespace ome
                                     BOOST_LOG_SEV(logger, ome::logging::trivial::debug)
 
                                       << "Registering " << static_cast<std::string>(e.getAttribute("name"))
-                                      << " as " << ome::common::canonical(newid);
+                                      << " as " << boost::filesystem::canonical(newid);
                                     registerEntity(static_cast<std::string>(e.getAttribute("name")),
-                                                   ome::common::canonical(newid));
+                                                   boost::filesystem::canonical(newid));
                                   }
                               }
                             if (e.getTagName() == "nextCatalog")
@@ -258,7 +258,7 @@ namespace ome
                                 if (e.hasAttribute("catalog"))
                                   {
                                     boost::filesystem::path newcatalog(currentdir / static_cast<std::string>(e.getAttribute("catalog")));
-                                    pending.push_back(ome::common::canonical(newcatalog));
+                                    pending.push_back(boost::filesystem::canonical(newcatalog));
                                   }
                               }
                           }

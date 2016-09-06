@@ -2,7 +2,7 @@
  * #%L
  * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2015 Open Microscopy Environment:
+ * Copyright © 2015 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -41,6 +41,7 @@
 #include <string>
 
 #include <boost/algorithm/string.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/iostreams/device/file_descriptor.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/math/constants/constants.hpp>
@@ -49,7 +50,6 @@
 #include <boost/units/systems/si/io.hpp>
 
 #include <ome/common/units.h>
-#include <ome/common/filesystem.h>
 
 #include <ome/test/test.h>
 
