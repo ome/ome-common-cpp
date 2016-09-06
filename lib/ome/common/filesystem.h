@@ -2,7 +2,7 @@
  * #%L
  * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -51,15 +51,6 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 
-// Older versions use get_generic_category() in place of the new
-// generic_category()
-# ifdef OME_HAVE_BOOST_FILESYSTEM_CANONICAL
-#  ifdef BOOST_SYSTEM_NO_DEPRECATED
-#   undef BOOST_SYSTEM_NO_DEPRECATED
-#  endif // BOOST_SYSTEM_NO_DEPRECATED
-#  include <boost/system/error_code.hpp>
-# endif // OME_HAVE_BOOST_FILESYSTEM_CANONICAL
-
 namespace ome
 {
 
@@ -69,70 +60,10 @@ namespace ome
   namespace common
   {
 
-# ifdef OME_HAVE_BOOST_FILESYSTEM_ABSOLUTE
+    /// @deprecated Use boost::filesystem::absolute.
     using boost::filesystem::absolute;
-# else // OME_HAVE_BOOST_FILESYSTEM_ABSOLUTE not defined
-    /**
-     * Get an absolute path.
-     *
-     * @param p the path to make absolute.
-     * @param base the base directory, defaulting to the current path.
-     * @returns the absolute path.
-     */
-    inline
-    boost::filesystem::path
-    absolute(const boost::filesystem::path& p,
-             const boost::filesystem::path& base = boost::filesystem::current_path())
-    {
-      return boost::filesystem::complete(p, base);
-    }
-# endif // OME_HAVE_BOOST_FILESYSTEM_ABSOLUTE
-
-# ifdef OME_HAVE_BOOST_FILESYSTEM_CANONICAL
+    /// @deprecated Use boost::filesystem::canonical.
     using boost::filesystem::canonical;
-# else // OME_HAVE_BOOST_FILESYSTEM_CANONICAL not defined
-    // Implementation derived from boost 1.55.
-    /**
-     * Get a canonical path.
-     *
-     * @param p the path to make canonical.
-     * @param base the base directory, defaulting to the current path.
-     * @param ec pointer to storage for an error code (optional).
-     * @returns the canonical path.
-     */
-    inline
-    boost::filesystem::path
-    canonical(const boost::filesystem::path& p,
-              const boost::filesystem::path& base = boost::filesystem::current_path(),
-              boost::system::error_code* ec = 0)
-    {
-      boost::filesystem::path source (absolute(p, base));
-      boost::filesystem::path result;
-
-      boost::system::error_code local_ec;
-      boost::filesystem::file_status stat (status(source, local_ec));
-
-      if (stat.type() == boost::filesystem::file_not_found)
-        {
-          if (ec == 0)
-            throw boost::filesystem::filesystem_error
-              ("boost::filesystem::canonical", source,
-               boost::system::error_code(boost::system::errc::no_such_file_or_directory,
-                                         boost::system::get_generic_category()));
-          ec->assign(boost::system::errc::no_such_file_or_directory,
-                     boost::system::get_generic_category());
-          return result;
-        }
-      else if (local_ec)
-        {
-          if (ec == 0)
-            throw(boost::filesystem::filesystem_error
-                  ("boost::filesystem::canonical", source, local_ec));
-          *ec = local_ec;
-          return result;
-        }
-    }
-# endif // OME_HAVE_BOOST_FILESYSTEM_CANONICAL
 
     /**
      * Make a relative path.
