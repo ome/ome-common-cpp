@@ -2,7 +2,7 @@
  * #%L
  * OME-INTERNAL C++ headers for internal use only
  * %%
- * Copyright © 2013 - 2015 Open Microscopy Environment:
+ * Copyright © 2013 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -42,7 +42,7 @@
 #include <istream>
 #include <string>
 
-#include <ome/common/filesystem.h>
+#include <boost/filesystem/path.hpp>
 
 /**
  * Read file into string.

@@ -2,7 +2,7 @@
  * #%L
  * OME-COMMON C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -54,13 +54,9 @@
 #cmakedefine OME_HAVE_REGEX 1
 #cmakedefine OME_HAVE_TR1_REGEX 1
 #cmakedefine OME_HAVE_BOOST_REGEX 1
-#cmakedefine OME_HAVE_BOOST_LOG 1
 #cmakedefine OME_HAVE_BOOST_THREAD 1
 #cmakedefine OME_HAVE_BOOST_FORMAT 1
-#cmakedefine OME_HAVE_BOOST_FILESYSTEM_ABSOLUTE 1
-#cmakedefine OME_HAVE_BOOST_FILESYSTEM_CANONICAL 1
 #cmakedefine OME_HAVE_BOOST_TYPE_TRAITS_HPP 1
-#cmakedefine OME_HAVE_BOOST_GEOMETRY_INDEX_RTREE_HPP 1
 #cmakedefine OME_HAVE_NOEXCEPT 1
 #cmakedefine OME_HAVE_SNPRINTF 1
 #cmakedefine OME_VARIANT_LIMIT 1

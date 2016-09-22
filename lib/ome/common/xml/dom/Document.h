@@ -2,7 +2,7 @@
  * #%L
  * OME-XERCES C++ library for working with Xerces C++.
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2016 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -46,12 +46,12 @@
 #include <string>
 #include <ostream>
 
+#include <boost/filesystem/path.hpp>
+
 #include <xercesc/dom/DOMComment.hpp>
 #include <xercesc/dom/DOMDocument.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
-
-#include <ome/common/filesystem.h>
 
 #include <ome/compat/memory.h>
 
