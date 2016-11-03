@@ -58,6 +58,7 @@ endif()
 list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
+set(release-name "ome-common-cpp")
 set(release-version "5.3.3")
 project(ome-common
         VERSION "${release-version}"
@@ -71,6 +72,7 @@ if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 endif("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
 
 include(cmake/SourceArchive.cmake)
+source_archive("${release-name}" "${PROJECT_VERSION}${OME_VCS_DEV}")
 
 set(BUILD_SHARED_LIBS_DEFAULT ON)
 if(MSVC)
