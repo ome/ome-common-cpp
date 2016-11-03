@@ -58,12 +58,13 @@ endif()
 list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-include(cmake/Version.cmake)
-ome_project_version("OME Common C++" "${CMAKE_CURRENT_SOURCE_DIR}")
-
+set(release-version "5.3.3")
 project(ome-common
-        VERSION "${OME_VERSION_MAJOR}.${OME_VERSION_MINOR}.${OME_VERSION_PATCH}"
+        VERSION "${release-version}"
         LANGUAGES CXX)
+
+include(cmake/Version.cmake)
+git_version_info("OME Common C++" "${CMAKE_CURRENT_SOURCE_DIR}")
 
 if("${PROJECT_SOURCE_DIR}" STREQUAL "${PROJECT_BINARY_DIR}")
   message(FATAL_ERROR "In-tree builds are not supported; please run cmake from a separate build directory.")

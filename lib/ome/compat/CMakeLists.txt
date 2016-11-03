@@ -79,7 +79,7 @@ configure_package_config_file(
   INSTALL_DESTINATION "${ome_compat_config_dir}")
 write_basic_package_version_file(
   ${CMAKE_CURRENT_BINARY_DIR}/OMECompatConfigVersion.cmake
-  VERSION "${PROJECT_VERSION}"
+  VERSION "${ome-common_VERSION}"
   COMPATIBILITY SameMajorVersion)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/OMECompatConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/OMECompatConfigVersion.cmake
