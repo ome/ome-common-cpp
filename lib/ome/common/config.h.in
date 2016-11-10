@@ -49,7 +49,9 @@
 #cmakedefine OME_VARIANT_LIMIT 1
 #cmakedefine OME_HAVE_DLADDR 1
 
-#ifndef OME_VARIANT_LIMIT
+// MSVC doesn't do variadic MPL templates as transparently as GCC and
+// Clang.
+#ifdef _MSC_VER
 #  ifndef BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
 /// Disable MPL header preprocessing (to allow the following macros to be modified).
 #    define BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
