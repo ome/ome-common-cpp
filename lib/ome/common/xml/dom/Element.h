@@ -39,6 +39,7 @@
 #ifndef OME_COMMON_XML_DOM_ELEMENT_H
 #define OME_COMMON_XML_DOM_ELEMENT_H
 
+#include <functional>
 #include <string>
 
 #include <xercesc/dom/DOMElement.hpp>

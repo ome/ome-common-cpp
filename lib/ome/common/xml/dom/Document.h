@@ -42,6 +42,7 @@
 #include <ome/common/config.h>
 
 #include <cassert>
+#include <functional>
 #include <istream>
 #include <string>
 #include <ostream>

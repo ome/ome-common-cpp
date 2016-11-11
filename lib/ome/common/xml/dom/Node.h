@@ -39,6 +39,8 @@
 #ifndef OME_COMMON_XML_DOM_NODE_H
 #define OME_COMMON_XML_DOM_NODE_H
 
+#include <functional>
+
 #include <ome/common/config.h>
 
 #include <ome/common/xml/String.h>
