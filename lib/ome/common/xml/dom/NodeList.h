@@ -111,7 +111,7 @@ namespace ome
              * @return a reference to the Node at this position.
              */
             Node&
-            operator* () noexcept;
+            operator* ();
 
             /**
              * Dereference the iterator.
@@ -119,7 +119,7 @@ namespace ome
              * @return a pointer to the Node at this position.
              */
             Node *
-            operator-> () noexcept;
+            operator-> ();
 
             /**
              * Move the iterator backward one element.
@@ -144,7 +144,7 @@ namespace ome
              * @returns true if equal, otherwise false.
              */
             bool
-            operator == (const iterator& rhs) const noexcept;
+            operator == (const iterator& rhs) const;
 
             /**
              * Check the non-equality of two iterators.
@@ -153,7 +153,7 @@ namespace ome
              * @returns true if not equal, otherwise false.
              */
             bool
-            operator != (const iterator& rhs) const noexcept
+            operator != (const iterator& rhs) const
             {
               return !(*this == rhs);
             }

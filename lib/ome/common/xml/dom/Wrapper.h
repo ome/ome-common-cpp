@@ -217,7 +217,7 @@ namespace ome
            * @returns the wrapped element_type.
            */
           element_type&
-          operator* () noexcept
+          operator* ()
           {
             this->null_check();
             return *wrapped;
@@ -229,7 +229,7 @@ namespace ome
            * @returns the wrapped element_type.
            */
           const element_type&
-          operator* () const noexcept
+          operator* () const
           {
             this->null_check();
             return *wrapped;
@@ -241,7 +241,7 @@ namespace ome
            * @returns the wrapped element_type.
            */
           element_type *
-          operator-> () noexcept
+          operator-> ()
           {
             this->null_check();
             return wrapped;
@@ -253,7 +253,7 @@ namespace ome
            * @returns the wrapped element_type.
            */
           const element_type *
-          operator-> () const noexcept
+          operator-> () const
           {
             this->null_check();
             return wrapped;
