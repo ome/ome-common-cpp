@@ -41,11 +41,19 @@ cmake_policy(VERSION 3.2.0)
 enable_language(CXX C)
 
 # Enable C++11 support universally, with C++14 where available
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED 11)
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+if(NOT CMAKE_CXX_STANDARD_REQUIRED)
+  set(CMAKE_CXX_STANDARD_REQUIRED 11)
+endif()
 # Enable C99 support universally
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_STANDARD_REQUIRED 99)
+if(NOT CMAKE_C_STANDARD)
+  set(CMAKE_C_STANDARD 99)
+endif()
+if(NOT CMAKE_C_STANDARD_REQUIRED)
+  set(CMAKE_C_STANDARD_REQUIRED 99)
+endif()
 
 list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/cmake")
