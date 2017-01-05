@@ -71,14 +71,14 @@ namespace ome
         {}
 
         Node&
-        NodeList::iterator::operator* () noexcept
+        NodeList::iterator::operator* ()
         {
           assert(xmlnode && *xmlnode);
           return *xmlnode;
         }
 
         Node *
-        NodeList::iterator::operator-> () noexcept
+        NodeList::iterator::operator-> ()
         {
           assert(xmlnode && *xmlnode);
           return &*xmlnode;
@@ -112,7 +112,7 @@ namespace ome
         }
 
         bool
-        NodeList::iterator::operator == (const iterator& rhs) const noexcept
+        NodeList::iterator::operator == (const iterator& rhs) const
         {
           // both null
           if ((!xmlnode || !(*xmlnode)) && ((!rhs.xmlnode) || !(*rhs.xmlnode)))

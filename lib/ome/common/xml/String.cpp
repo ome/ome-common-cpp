@@ -63,7 +63,7 @@ namespace ome
                 xercesc::TranscodeToStr tc(str, "UTF-8");
                 return reinterpret_cast<char *>(tc.adopt());
               }
-            catch (const xercesc::XMLException& e)
+            catch (const xercesc::XMLException&)
               {
                 throw std::runtime_error("XML UTF-16 to UTF-8 transcoding failure");
               }
@@ -88,7 +88,7 @@ namespace ome
                 xercesc::TranscodeFromStr tc(reinterpret_cast<const XMLByte *>(str), std::strlen(str), "UTF-8");
                 return tc.adopt();
               }
-            catch (const xercesc::XMLException& e)
+            catch (const xercesc::XMLException&)
               {
                 throw std::runtime_error("XML UTF-8 to UTF-16 transcoding failure");
               }

@@ -38,25 +38,12 @@
 
 /**
  * @file ome/compat/cstdint.h Standard integer types.
- *
- * This header substitutes C++ cstdint types for the same types in the
- * Boost boost/cstdint.hpp or C99 stdint.h header when not using a
- * conforming C++11 compiler.  This permits all code to use the C++11
- * standard types irrespective of the compiler being used.
  */
 
 #ifndef OME_COMPAT_CSTDINT_H
-# define OME_COMPAT_CSTDINT_H
+#define OME_COMPAT_CSTDINT_H
 
-# include <ome/common/config.h>
-
-# ifdef OME_HAVE_CSTDINT
-#  include <cstdint>
-# elif OME_HAVE_BOOST_CSTDINT
-#  include <boost/cstdint.hpp>
-# else
-#  include <stdint.h>
-# endif
+#include <cstdint>
 
 #endif /* OME_COMPAT_CSTDINT_H */
 
