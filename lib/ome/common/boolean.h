@@ -44,8 +44,6 @@
 #include <limits>
 #include <ostream>
 
-#include <ome/compat/cstdint.h>
-
 #ifdef _MSC_VER
 #pragma push_macro("min")
 #undef min

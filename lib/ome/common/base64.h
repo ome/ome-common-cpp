@@ -40,11 +40,10 @@
 #define OME_COMMON_BASE64_H
 
 #include <cctype>
+#include <cstdint>
 #include <iterator>
 #include <stdexcept>
 #include <string>
-
-#include <ome/compat/cstdint.h>
 
 namespace ome
 {
