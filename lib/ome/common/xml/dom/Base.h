@@ -145,9 +145,9 @@ namespace ome
           }
 
           /**
-           * Check if the wrapped type is NULL.
+           * Check if the wrapped type is not null.
            *
-           * @returns true if valid, false if NULL.
+           * @returns true if not null, false if null.
            */
           operator bool () const
           {
@@ -155,9 +155,9 @@ namespace ome
           }
 
           /**
-           * Check if the wrapped type is NULL.
+           * Check if the wrapped type is null.
            *
-           * @returns true if valid, false if NULL.
+           * @returns true if null, false if not null.
            */
           bool
           operator == (std::nullptr_t) const
@@ -166,9 +166,9 @@ namespace ome
           }
 
           /**
-           * Check if the wrapped type is NULL.
+           * Check if the wrapped type is not null.
            *
-           * @returns true if valid, false if NULL.
+           * @returns true if not null, false if null.
            */
           bool
           operator != (std::nullptr_t) const
@@ -191,9 +191,9 @@ namespace ome
 
         protected:
           /**
-           * Check if the wrapped type is NULL.
+           * Check if the wrapped type is null.
            *
-           * @throws a @c std::logic_error if NULL.
+           * @throws a @c std::logic_error if null.
            */
           virtual
           void
