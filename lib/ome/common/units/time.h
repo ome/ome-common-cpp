@@ -72,49 +72,49 @@ namespace ome
       typedef quantity<si::time> time_quantity;
 
       /// Unit definition for yoctosecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<-24> > >::type yoctosecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<-24>>>::type yoctosecond_unit;
       /// Unit definition for zeptosecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<-21> > >::type zeptosecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<-21>>>::type zeptosecond_unit;
       /// Unit definition for attosecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<-18> > >::type attosecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<-18>>>::type attosecond_unit;
       /// Unit definition for femtosecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<-15> > >::type femtosecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<-15>>>::type femtosecond_unit;
       /// Unit definition for picosecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<-12> > >::type picosecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<-12>>>::type picosecond_unit;
       /// Unit definition for nanosecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< -9> > >::type nanosecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< -9>>>::type nanosecond_unit;
       /// Unit definition for microsecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< -6> > >::type microsecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< -6>>>::type microsecond_unit;
       /// Unit definition for millisecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< -3> > >::type millisecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< -3>>>::type millisecond_unit;
       /// Unit definition for centisecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< -2> > >::type centisecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< -2>>>::type centisecond_unit;
       /// Unit definition for decisecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< -1> > >::type decisecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< -1>>>::type decisecond_unit;
       /// Unit definition for second time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<  0> > >::type second_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<  0>>>::type second_unit;
       /// Unit definition for dekasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<  1> > >::type dekasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<  1>>>::type dekasecond_unit;
       /// Unit definition for decasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<  1> > >::type decasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<  1>>>::type decasecond_unit;
       /// Unit definition for hectosecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<  2> > >::type hectosecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<  2>>>::type hectosecond_unit;
       /// Unit definition for kilosecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<  3> > >::type kilosecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<  3>>>::type kilosecond_unit;
       /// Unit definition for megasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<  6> > >::type megasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<  6>>>::type megasecond_unit;
       /// Unit definition for gigasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational<  9> > >::type gigasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational<  9>>>::type gigasecond_unit;
       /// Unit definition for terasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< 12> > >::type terasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< 12>>>::type terasecond_unit;
       /// Unit definition for petasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< 15> > >::type petasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< 15>>>::type petasecond_unit;
       /// Unit definition for exasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< 18> > >::type exasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< 18>>>::type exasecond_unit;
       /// Unit definition for zettasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< 21> > >::type zettasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< 21>>>::type zettasecond_unit;
       /// Unit definition for yottasecond time.
-      typedef make_scaled_unit<si::time,scale<10,static_rational< 24> > >::type yottasecond_unit;
+      typedef make_scaled_unit<si::time,scale<10,static_rational< 24>>>::type yottasecond_unit;
 
       /// Numeric constant for yoctosecond.
       BOOST_UNITS_STATIC_CONSTANT(yoctosecond, yoctosecond_unit);

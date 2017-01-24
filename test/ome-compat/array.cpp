@@ -36,13 +36,13 @@
  * #L%
  */
 
-#include <ome/compat/array.h>
+#include <array>
 
 #include <ome/test/test.h>
 
 TEST(Array, DefaultConstruct)
 {
-  ome::compat::array<int, 10> a;
+  std::array<int, 10> a;
   // We're not explicitly testing here, but it squashed an unused
   // variable compiler warning.
   a[0] = 0;
@@ -51,7 +51,7 @@ TEST(Array, DefaultConstruct)
 
 TEST(Array, Assign)
 {
-  ome::compat::array<int, 10> a;
+  std::array<int, 10> a;
   a[4] = 453;
   ASSERT_EQ(a[4], 453);
 }

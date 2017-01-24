@@ -106,7 +106,7 @@ TEST(Variant, MPLVectorNonNumeric)
   ASSERT_FALSE(boost::get<bool>(v2));
 }
 
-#include <ome/compat/cstdint.h>
+#include <cstdint>
 
 typedef boost::mpl::vector<uint8_t,
                            uint16_t,
@@ -129,7 +129,7 @@ TEST(Variant, MPLVectorInteger)
 typedef boost::mpl::joint_view<non_numeric_types,
                                integer_types>::type joint_types_view;
 
-typedef boost::mpl::insert_range<boost::mpl::vector0<>, boost::mpl::end<boost::mpl::vector0<> >::type, joint_types_view>::type joint_types;
+typedef boost::mpl::insert_range<boost::mpl::vector0<>, boost::mpl::end<boost::mpl::vector0<>>::type, joint_types_view>::type joint_types;
 typedef boost::make_variant_over<joint_types>::type joint_variant;
 
 TEST(Variant, MPLVectorJointView)
@@ -147,8 +147,8 @@ struct make_vector
   typedef std::vector<T> type;
 };
 
-typedef boost::mpl::transform_view<joint_types_view, make_vector<boost::mpl::_1> >::type list_types_view;
-typedef boost::mpl::insert_range<boost::mpl::vector0<>, boost::mpl::end<boost::mpl::vector0<> >::type, list_types_view>::type list_types;
+typedef boost::mpl::transform_view<joint_types_view, make_vector<boost::mpl::_1>>::type list_types_view;
+typedef boost::mpl::insert_range<boost::mpl::vector0<>, boost::mpl::end<boost::mpl::vector0<>>::type, list_types_view>::type list_types;
 typedef boost::make_variant_over<list_types>::type list_variant;
 
 TEST(Variant, MPLVectorTransformList)
@@ -159,7 +159,7 @@ TEST(Variant, MPLVectorTransformList)
   strings.push_back("s3");
 
   list_variant v1(strings);
-  ASSERT_EQ(3U, boost::get<std::vector< std::string> >(v1).size());
+  ASSERT_EQ(3U, boost::get<std::vector< std::string>>(v1).size());
 
   std::vector<uint8_t> ints;
   ints.push_back(3);
@@ -168,5 +168,5 @@ TEST(Variant, MPLVectorTransformList)
   ints.push_back(43);
 
   list_variant v2(ints);
-  ASSERT_EQ(4U, boost::get<std::vector<uint8_t> >(v2).size());
+  ASSERT_EQ(4U, boost::get<std::vector<uint8_t>>(v2).size());
 }

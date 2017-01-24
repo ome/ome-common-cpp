@@ -36,21 +36,21 @@
  * #L%
  */
 
-#include <ome/compat/tuple.h>
+#include <tuple>
 
 #include <ome/test/test.h>
 
 TEST(Tuple, Create)
 {
-  typedef ome::compat::tuple<int,double,std::string> t1;
+  typedef std::tuple<int,double,std::string> t1;
   t1 i(34, 2342.23, "test");
 }
 
 TEST(Tuple, Get)
 {
-  typedef ome::compat::tuple<int,std::string> t2;
+  typedef std::tuple<int,std::string> t2;
   t2 i(34, "test");
 
-  ASSERT_EQ(ome::compat::get<0>(i), 34);
-  ASSERT_EQ(ome::compat::get<1>(i), "test");
+  ASSERT_EQ(std::get<0>(i), 34);
+  ASSERT_EQ(std::get<1>(i), "test");
 }

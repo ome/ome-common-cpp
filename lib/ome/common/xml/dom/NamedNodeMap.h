@@ -66,14 +66,14 @@ namespace ome
          * wrapped object.  It can also be cast to a pointer to the
          * wrapped object, so can substitute for it directly.
          */
-        class NamedNodeMap : public Wrapper<xercesc::DOMNamedNodeMap, Base<xercesc::DOMNamedNodeMap> >
+        class NamedNodeMap : public Wrapper<xercesc::DOMNamedNodeMap, Base<xercesc::DOMNamedNodeMap>>
         {
         public:
           /**
            * Construct a NULL NamedNodeMap.
            */
           NamedNodeMap ():
-            Wrapper<xercesc::DOMNamedNodeMap, Base<xercesc::DOMNamedNodeMap> >()
+            Wrapper<xercesc::DOMNamedNodeMap, Base<xercesc::DOMNamedNodeMap>>()
           {
           }
 
@@ -83,7 +83,7 @@ namespace ome
            * @param nodelist the NamedNodeMap to copy.
            */
           NamedNodeMap (const NamedNodeMap& nodelist):
-            Wrapper<xercesc::DOMNamedNodeMap, Base<xercesc::DOMNamedNodeMap> >(nodelist)
+            Wrapper<xercesc::DOMNamedNodeMap, Base<xercesc::DOMNamedNodeMap>>(nodelist)
           {
           }
 
@@ -93,7 +93,7 @@ namespace ome
            * @param nodelist the NamedNodeMap to wrap.
            */
           NamedNodeMap (xercesc::DOMNamedNodeMap *nodelist):
-            Wrapper<xercesc::DOMNamedNodeMap, Base<xercesc::DOMNamedNodeMap> >(static_cast<base_element_type *>(nodelist))
+            Wrapper<xercesc::DOMNamedNodeMap, Base<xercesc::DOMNamedNodeMap>>(static_cast<base_element_type *>(nodelist))
           {
           }
 

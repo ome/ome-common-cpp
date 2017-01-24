@@ -54,7 +54,7 @@ namespace xml = ome::common::xml;
 class XercesTestParameters
 {
 public:
-  enum Resolver
+  enum class Resolver
     {
       NONE,
       FILES,
@@ -85,7 +85,7 @@ public:
   {
     const XercesTestParameters& params = GetParam();
 
-    if (params.resolver == XercesTestParameters::FILES)
+    if (params.resolver == XercesTestParameters::Resolver::FILES)
       {
         resolver.registerEntity("http://www.w3.org/2001/XMLSchema",
                                boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/external/XMLSchema.xsd"));
@@ -108,7 +108,7 @@ public:
         resolver.registerEntity("http://www.openmicroscopy.org/Schemas/ROI/2012-06/ROI.xsd",
                                 boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/2012-06/ROI.xsd"));
       }
-    else if (params.resolver == XercesTestParameters::CATALOG)
+    else if (params.resolver == XercesTestParameters::Resolver::CATALOG)
       {
         resolver.registerCatalog(boost::filesystem::path(PROJECT_SOURCE_DIR "/test/ome-common/data/schema/catalog.xml"));
       }
@@ -251,12 +251,12 @@ TEST_P(XercesTest, DocumentFromFile)
   if (params.valid)
     {
       ASSERT_NO_THROW(doc = ome::common::xml::dom::createDocument(boost::filesystem::path(params.filename), resolver));
-      ASSERT_TRUE(doc != 0);
+      ASSERT_TRUE(doc != nullptr);
     }
   else
     {
       ASSERT_THROW(doc = ome::common::xml::dom::createDocument(boost::filesystem::path(params.filename), resolver), std::runtime_error);
-      ASSERT_TRUE(doc == 0);
+      ASSERT_TRUE(doc == nullptr);
     }
 }
 
@@ -271,12 +271,12 @@ TEST_P(XercesTest, DocumentFromStream)
   if (params.valid)
     {
       ASSERT_NO_THROW(doc = ome::common::xml::dom::createDocument(in, resolver));
-      ASSERT_TRUE(doc != 0);
+      ASSERT_TRUE(doc != nullptr);
     }
   else
     {
       ASSERT_THROW(doc = ome::common::xml::dom::createDocument(in, resolver), std::runtime_error);
-      ASSERT_TRUE(doc == 0);
+      ASSERT_TRUE(doc == nullptr);
     }
 }
 
@@ -300,12 +300,12 @@ TEST_P(XercesTest, DocumentFromString)
   if (params.valid)
     {
       ASSERT_NO_THROW(doc = ome::common::xml::dom::createDocument(data, resolver));
-      ASSERT_TRUE(doc != 0);
+      ASSERT_TRUE(doc != nullptr);
     }
   else
     {
       ASSERT_THROW(doc = ome::common::xml::dom::createDocument(data, resolver), std::runtime_error);
-      ASSERT_TRUE(doc == 0);
+      ASSERT_TRUE(doc == nullptr);
     }
 }
 
@@ -318,10 +318,10 @@ TEST_P(XercesTest, ResetDocument)
       xml::dom::Document doc(ome::common::xml::dom::createDocument(boost::filesystem::path(params.filename), resolver));
 
       ASSERT_TRUE(doc);
-      ASSERT_TRUE(doc.get() != 0);
+      ASSERT_TRUE(doc.get() != nullptr);
       ASSERT_NO_THROW(doc.reset());
       ASSERT_FALSE(doc);
-      ASSERT_TRUE(doc.get() == 0);
+      ASSERT_TRUE(doc.get() == nullptr);
     }
 }
 
@@ -619,13 +619,13 @@ TEST_P(XercesTest, NodeWriteStream)
     }
 }
 
-XercesTestParameters params[] =
+const std::vector<XercesTestParameters> params =
   {
-    //    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::NONE),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::FILES, true),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::CATALOG, true),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid.ome", XercesTestParameters::CATALOG, false),
-    XercesTestParameters(PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid2.ome", XercesTestParameters::CATALOG, false)
+    // { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::Resolver::NONE },
+    { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::Resolver::FILES, true },
+    { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text.ome", XercesTestParameters::Resolver::CATALOG, true },
+    { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid.ome", XercesTestParameters::Resolver::CATALOG, false },
+    { PROJECT_SOURCE_DIR "/test/ome-common/data/18x24y5z5t2c8b-text-invalid2.ome", XercesTestParameters::Resolver::CATALOG, false }
   };
 
 // Disable missing-prototypes warning for INSTANTIATE_TEST_CASE_P;

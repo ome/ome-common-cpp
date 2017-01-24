@@ -69,49 +69,49 @@ namespace ome
       typedef quantity<si::frequency> frequency_quantity;
 
       /// Unit definition for yoctohertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-24> > >::type yoctohertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-24>>>::type yoctohertz_unit;
       /// Unit definition for zeptohertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-21> > >::type zeptohertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-21>>>::type zeptohertz_unit;
       /// Unit definition for attohertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-18> > >::type attohertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-18>>>::type attohertz_unit;
       /// Unit definition for femtohertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-15> > >::type femtohertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-15>>>::type femtohertz_unit;
       /// Unit definition for picohertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-12> > >::type picohertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<-12>>>::type picohertz_unit;
       /// Unit definition for nanohertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -9> > >::type nanohertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -9>>>::type nanohertz_unit;
       /// Unit definition for microhertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -6> > >::type microhertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -6>>>::type microhertz_unit;
       /// Unit definition for millihertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -3> > >::type millihertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -3>>>::type millihertz_unit;
       /// Unit definition for centihertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -2> > >::type centihertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -2>>>::type centihertz_unit;
       /// Unit definition for decihertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -1> > >::type decihertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< -1>>>::type decihertz_unit;
       /// Unit definition for hertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  0> > >::type hertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  0>>>::type hertz_unit;
       /// Unit definition for dekahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  1> > >::type dekahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  1>>>::type dekahertz_unit;
       /// Unit definition for decahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  1> > >::type decahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  1>>>::type decahertz_unit;
       /// Unit definition for hectohertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  2> > >::type hectohertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  2>>>::type hectohertz_unit;
       /// Unit definition for kilohertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  3> > >::type kilohertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  3>>>::type kilohertz_unit;
       /// Unit definition for megahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  6> > >::type megahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  6>>>::type megahertz_unit;
       /// Unit definition for gigahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  9> > >::type gigahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational<  9>>>::type gigahertz_unit;
       /// Unit definition for terahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 12> > >::type terahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 12>>>::type terahertz_unit;
       /// Unit definition for petahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 15> > >::type petahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 15>>>::type petahertz_unit;
       /// Unit definition for exahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 18> > >::type exahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 18>>>::type exahertz_unit;
       /// Unit definition for zettahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 21> > >::type zettahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 21>>>::type zettahertz_unit;
       /// Unit definition for yottahertz frequency.
-      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 24> > >::type yottahertz_unit;
+      typedef make_scaled_unit<si::frequency,scale<10,static_rational< 24>>>::type yottahertz_unit;
 
       /// Numeric constant for yoctohertz.
       BOOST_UNITS_STATIC_CONSTANT(yoctohertz, yoctohertz_unit);

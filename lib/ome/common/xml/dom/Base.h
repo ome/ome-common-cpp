@@ -39,9 +39,9 @@
 #ifndef OME_COMMON_XML_DOM_BASE_H
 #define OME_COMMON_XML_DOM_BASE_H
 
-#include <ome/common/config.h>
+#include <memory>
 
-#include <ome/compat/memory.h>
+#include <ome/common/config.h>
 
 #include <iostream>
 #include <stdexcept>
@@ -97,8 +97,8 @@ namespace ome
           Base(base_element_type *wrapped,
                Deleter            del):
             base(wrapped ?
-                 ome::compat::shared_ptr<base_element_type>(wrapped, del) :
-                 ome::compat::shared_ptr<base_element_type>())
+                 std::shared_ptr<base_element_type>(wrapped, del) :
+                 std::shared_ptr<base_element_type>())
           {}
 
           /**
@@ -109,8 +109,8 @@ namespace ome
           explicit
           Base(base_element_type *wrapped):
             base(wrapped ?
-                 ome::compat::shared_ptr<base_element_type>(wrapped, &ome::common::xml::dom::detail::unmanaged<base_element_type>) :
-                 ome::compat::shared_ptr<base_element_type>())
+                 std::shared_ptr<base_element_type>(wrapped, &ome::common::xml::dom::detail::unmanaged<base_element_type>) :
+                 std::shared_ptr<base_element_type>())
           {}
 
           /// Destructor.
@@ -145,13 +145,35 @@ namespace ome
           }
 
           /**
-           * Check if the wrapped type is NULL.
+           * Check if the wrapped type is not null.
            *
-           * @returns true if valid, false if NULL.
+           * @returns true if not null, false if null.
            */
           operator bool () const
           {
-            return get() != 0;
+            return get() != nullptr;
+          }
+
+          /**
+           * Check if the wrapped type is null.
+           *
+           * @returns true if null, false if not null.
+           */
+          bool
+          operator == (std::nullptr_t) const
+          {
+            return get() == nullptr;
+          }
+
+          /**
+           * Check if the wrapped type is not null.
+           *
+           * @returns true if not null, false if null.
+           */
+          bool
+          operator != (std::nullptr_t) const
+          {
+            return get() != nullptr;
           }
 
           /**
@@ -163,15 +185,15 @@ namespace ome
           reset()
           {
             base.reset();
-            ome::compat::shared_ptr<base_element_type> n;
+            std::shared_ptr<base_element_type> n;
             assign(n);
           }
 
         protected:
           /**
-           * Check if the wrapped type is NULL.
+           * Check if the wrapped type is null.
            *
-           * @throws a @c std::logic_error if NULL.
+           * @throws a @c std::logic_error if null.
            */
           virtual
           void
@@ -201,7 +223,7 @@ namespace ome
            */
           virtual
           void
-          assign(ome::compat::shared_ptr<base_element_type>& wrapped)
+          assign(std::shared_ptr<base_element_type>& wrapped)
           {
             base = wrapped;
           }
@@ -228,7 +250,7 @@ namespace ome
 
         private:
           /// Wrapped reference.
-          ome::compat::shared_ptr<base_element_type> base;
+          std::shared_ptr<base_element_type> base;
         };
 
       }

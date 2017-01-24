@@ -39,11 +39,10 @@
 #ifndef OME_COMMON_BOOLEAN_H
 #define OME_COMMON_BOOLEAN_H
 
+#include <cstdint>
 #include <istream>
 #include <limits>
 #include <ostream>
-
-#include <ome/compat/cstdint.h>
 
 #ifdef _MSC_VER
 #pragma push_macro("min")

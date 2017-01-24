@@ -2,7 +2,7 @@
  * #%L
  * OME-COMPAT C++ library for C++ compatibility/portability
  * %%
- * Copyright © 2006 - 2015 Open Microscopy Environment:
+ * Copyright © 2006 - 2017 Open Microscopy Environment:
  *   - Massachusetts Institute of Technology
  *   - National Institutes of Health
  *   - University of Dundee
@@ -37,7 +37,9 @@
  */
 
 /**
- * @file ome/compat/tuple.h Tuple types.
+ * @file ome/compat/tuple.h Tuple type substitution.
+ *
+ * @deprecated Use <tuple>.
  */
 
 #ifndef OME_COMPAT_TUPLE_H

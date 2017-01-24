@@ -66,7 +66,7 @@ namespace ome
          * wrapped object.  It can also be cast to a pointer to the
          * wrapped object, so can substitute for it directly.
          */
-        class NodeList : public Wrapper<xercesc::DOMNodeList, Base<xercesc::DOMNodeList> >
+        class NodeList : public Wrapper<xercesc::DOMNodeList, Base<xercesc::DOMNodeList>>
         {
         public:
           /// The NodeList size type.
@@ -166,14 +166,14 @@ namespace ome
             /// List being iterated over.
             xercesc::DOMNodeList *xmlnodelist;
             /// Node at current position.
-            ome::compat::shared_ptr<Node> xmlnode;
+            std::shared_ptr<Node> xmlnode;
           };
 
           /**
            * Construct a NULL NodeList.
            */
           NodeList ():
-            Wrapper<xercesc::DOMNodeList, Base<xercesc::DOMNodeList> >()
+            Wrapper<xercesc::DOMNodeList, Base<xercesc::DOMNodeList>>()
           {
           }
 
@@ -183,7 +183,7 @@ namespace ome
            * @param nodelist the NodeList to copy.
            */
           NodeList (const NodeList& nodelist):
-            Wrapper<xercesc::DOMNodeList, Base<xercesc::DOMNodeList> >(nodelist)
+            Wrapper<xercesc::DOMNodeList, Base<xercesc::DOMNodeList>>(nodelist)
           {
           }
 
@@ -193,7 +193,7 @@ namespace ome
            * @param nodelist the NodeList to wrap.
            */
           NodeList (xercesc::DOMNodeList *nodelist):
-            Wrapper<xercesc::DOMNodeList, Base<xercesc::DOMNodeList> >(static_cast<base_element_type *>(nodelist))
+            Wrapper<xercesc::DOMNodeList, Base<xercesc::DOMNodeList>>(static_cast<base_element_type *>(nodelist))
           {
           }
 

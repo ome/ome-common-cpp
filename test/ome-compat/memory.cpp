@@ -36,7 +36,7 @@
  * #L%
  */
 
-#include <ome/compat/memory.h>
+#include <memory>
 
 #include <ome/test/test.h>
 
@@ -58,77 +58,77 @@ public:
   virtual ~fail() {}
 };
 
-class cshared : public ome::compat::enable_shared_from_this<cshared>
+class cshared : public std::enable_shared_from_this<cshared>
 {
 public:
 public:
   virtual ~cshared() {}
 
-  ome::compat::shared_ptr<cshared>
+  std::shared_ptr<cshared>
   getptr()
   { return shared_from_this(); }
 };
 
 TEST(Memory, CreateShared)
 {
-  ome::compat::shared_ptr<inh> p(ome::compat::make_shared<inh>());
+  std::shared_ptr<inh> p(std::make_shared<inh>());
   ASSERT_TRUE(static_cast<bool>(p));
 }
 
 TEST(Memory, CreateWeak)
 {
-  ome::compat::shared_ptr<inh> p(ome::compat::make_shared<inh>());
+  std::shared_ptr<inh> p(std::make_shared<inh>());
   ASSERT_TRUE(static_cast<bool>(p));
 
-  ome::compat::shared_ptr<inh> w(p);
-  ome::compat::shared_ptr<inh> p2(w);
+  std::shared_ptr<inh> w(p);
+  std::shared_ptr<inh> p2(w);
   ASSERT_TRUE(static_cast<bool>(p2));
 }
 
 TEST(Memory, StaticPointerCast)
 {
-  ome::compat::shared_ptr<inh> p(ome::compat::make_shared<inh>());
+  std::shared_ptr<inh> p(std::make_shared<inh>());
   ASSERT_TRUE(static_cast<bool>(p));
 
-  ome::compat::shared_ptr<base> b(ome::compat::static_pointer_cast<base>(p));
+  std::shared_ptr<base> b(std::static_pointer_cast<base>(p));
   ASSERT_TRUE(static_cast<bool>(b));
 }
 
 TEST(Memory, DynamicPointerCast)
 {
-  ome::compat::shared_ptr<base> b(ome::compat::make_shared<inh>());
+  std::shared_ptr<base> b(std::make_shared<inh>());
   ASSERT_TRUE(static_cast<bool>(b));
 
-  ome::compat::shared_ptr<inh> p = ome::compat::dynamic_pointer_cast<inh>(b);
+  std::shared_ptr<inh> p = std::dynamic_pointer_cast<inh>(b);
   ASSERT_TRUE(static_cast<bool>(p));
 }
 
 TEST(Memory, DynamicPointerCastFail)
 {
-  ome::compat::shared_ptr<base> b(ome::compat::make_shared<inh>());
+  std::shared_ptr<base> b(std::make_shared<inh>());
   ASSERT_TRUE(static_cast<bool>(b));
 
-  ome::compat::shared_ptr<fail> f = ome::compat::dynamic_pointer_cast<fail>(b);
+  std::shared_ptr<fail> f = std::dynamic_pointer_cast<fail>(b);
   ASSERT_FALSE(static_cast<bool>(f));
 }
 
 TEST(Memory, ConstPointerCast)
 {
-  ome::compat::shared_ptr<base> b(ome::compat::make_shared<inh>());
+  std::shared_ptr<base> b(std::make_shared<inh>());
   ASSERT_TRUE(static_cast<bool>(b));
 
-  ome::compat::shared_ptr<const base> c = ome::compat::const_pointer_cast<base>(b);
+  std::shared_ptr<const base> c = std::const_pointer_cast<base>(b);
   ASSERT_TRUE(static_cast<bool>(c));
 }
 
 TEST(Memory, EnableSharedFromThis)
 {
-  ome::compat::shared_ptr<cshared> c(ome::compat::make_shared<cshared>());
+  std::shared_ptr<cshared> c(std::make_shared<cshared>());
   ASSERT_TRUE(static_cast<bool>(c));
   ASSERT_EQ(c.use_count(), 1);
 
   {
-    ome::compat::shared_ptr<cshared> c2 = c->getptr();
+    std::shared_ptr<cshared> c2 = c->getptr();
     ASSERT_TRUE(static_cast<bool>(c2));
     ASSERT_EQ(c.use_count(), 2);
     ASSERT_EQ(c2.use_count(), 2);

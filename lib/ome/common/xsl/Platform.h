@@ -39,9 +39,9 @@
 #ifndef OME_COMMON_XSL_PLATFORM_H
 #define OME_COMMON_XSL_PLATFORM_H
 
-#include <boost/thread.hpp>
+#include <cstdint>
 
-#include <ome/compat/cstdint.h>
+#include <boost/thread.hpp>
 
 #include <ome/common/xml/Platform.h>
 

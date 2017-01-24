@@ -79,49 +79,49 @@ namespace ome
       typedef quantity<si::length> length_quantity;
 
       /// Unit definition for yoctometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<-24> > >::type yoctometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<-24>>>::type yoctometre_unit;
       /// Unit definition for zeptometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<-21> > >::type zeptometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<-21>>>::type zeptometre_unit;
       /// Unit definition for attometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<-18> > >::type attometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<-18>>>::type attometre_unit;
       /// Unit definition for femtometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<-15> > >::type femtometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<-15>>>::type femtometre_unit;
       /// Unit definition for picometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<-12> > >::type picometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<-12>>>::type picometre_unit;
       /// Unit definition for nanometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< -9> > >::type nanometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< -9>>>::type nanometre_unit;
       /// Unit definition for micrometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< -6> > >::type micrometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< -6>>>::type micrometre_unit;
       /// Unit definition for millimetre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< -3> > >::type millimetre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< -3>>>::type millimetre_unit;
       /// Unit definition for centimetre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< -2> > >::type centimetre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< -2>>>::type centimetre_unit;
       /// Unit definition for decimetre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< -1> > >::type decimetre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< -1>>>::type decimetre_unit;
       /// Unit definition for metre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<  0> > >::type metre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<  0>>>::type metre_unit;
       /// Unit definition for dekametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<  1> > >::type dekametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<  1>>>::type dekametre_unit;
       /// Unit definition for decametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<  1> > >::type decametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<  1>>>::type decametre_unit;
       /// Unit definition for hectometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<  2> > >::type hectometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<  2>>>::type hectometre_unit;
       /// Unit definition for kilometre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<  3> > >::type kilometre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<  3>>>::type kilometre_unit;
       /// Unit definition for megametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<  6> > >::type megametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<  6>>>::type megametre_unit;
       /// Unit definition for gigametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational<  9> > >::type gigametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational<  9>>>::type gigametre_unit;
       /// Unit definition for terametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< 12> > >::type terametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< 12>>>::type terametre_unit;
       /// Unit definition for petametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< 15> > >::type petametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< 15>>>::type petametre_unit;
       /// Unit definition for exametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< 18> > >::type exametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< 18>>>::type exametre_unit;
       /// Unit definition for zettametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< 21> > >::type zettametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< 21>>>::type zettametre_unit;
       /// Unit definition for yottametre length.
-      typedef make_scaled_unit<si::length,scale<10,static_rational< 24> > >::type yottametre_unit;
+      typedef make_scaled_unit<si::length,scale<10,static_rational< 24>>>::type yottametre_unit;
 
       /// Unit definition for yoctometer length.
       typedef yoctometre_unit yoctometer_unit;
@@ -457,7 +457,7 @@ namespace ome
       typedef quantity<thou_unit> thou_quantity;
 
       /// Base unit definition for line length (defined as 1/12 inch, used in botany).
-      typedef scaled_base_unit<boost::units::imperial::inch_base_unit, scale<12, static_rational<-1> > > line_base_unit;
+      typedef scaled_base_unit<boost::units::imperial::inch_base_unit, scale<12, static_rational<-1>>> line_base_unit;
       /// Unit definition for line length (defined as 1/12 inch, used in botany).
       typedef line_base_unit::unit_type line_unit;
       /// Numeric constant for line.
@@ -531,7 +531,7 @@ namespace ome
       typedef quantity<parsec_unit> parsec_quantity;
 
       /// Base unit definition for point length.
-      typedef scaled_base_unit<boost::units::imperial::inch_base_unit, scale<72, static_rational<-1> > > point_base_unit;
+      typedef scaled_base_unit<boost::units::imperial::inch_base_unit, scale<72, static_rational<-1>>> point_base_unit;
       /// Unit definition for point length.
       typedef point_base_unit::unit_type point_unit;
       /// Numeric constant for point.

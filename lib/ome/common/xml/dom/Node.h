@@ -67,7 +67,7 @@ namespace ome
          * object.  It can also be cast to a pointer to the wrapped
          * object, so can substitute for it directly.
          */
-        class Node : public Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode> >
+        class Node : public Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode>>
         {
         public:
           /// The derived object type of a node.
@@ -77,7 +77,7 @@ namespace ome
            * Construct a NULL Node.
            */
           Node ():
-            Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode> >()
+            Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode>>()
           {
           }
 
@@ -87,7 +87,7 @@ namespace ome
            * @param node the Node to copy.
            */
           Node (const Node& node):
-            Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode> >(node)
+            Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode>>(node)
           {
           }
 
@@ -99,9 +99,9 @@ namespace ome
            */
           Node (xercesc::DOMNode *node,
                 bool              managed):
-            Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode> >(managed ?
-                                                               Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode> >(node, std::mem_fun(&base_element_type::release)) :
-                                                               Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode> >(node, &ome::common::xml::dom::detail::unmanaged<base_element_type>))
+            Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode>>(managed ?
+                                                              Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode>>(node, std::mem_fun(&base_element_type::release)) :
+                                                              Wrapper<xercesc::DOMNode, Base<xercesc::DOMNode>>(node, &ome::common::xml::dom::detail::unmanaged<base_element_type>))
           {
           }
 

@@ -69,49 +69,49 @@ namespace ome
       typedef quantity<si::electric_potential> electric_potential_quantity;
 
       /// Unit definition for yoctovolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-24> > >::type yoctovolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-24>>>::type yoctovolt_unit;
       /// Unit definition for zeptovolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-21> > >::type zeptovolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-21>>>::type zeptovolt_unit;
       /// Unit definition for attovolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-18> > >::type attovolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-18>>>::type attovolt_unit;
       /// Unit definition for femtovolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-15> > >::type femtovolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-15>>>::type femtovolt_unit;
       /// Unit definition for picovolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-12> > >::type picovolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<-12>>>::type picovolt_unit;
       /// Unit definition for nanovolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -9> > >::type nanovolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -9>>>::type nanovolt_unit;
       /// Unit definition for microvolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -6> > >::type microvolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -6>>>::type microvolt_unit;
       /// Unit definition for millivolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -3> > >::type millivolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -3>>>::type millivolt_unit;
       /// Unit definition for centivolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -2> > >::type centivolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -2>>>::type centivolt_unit;
       /// Unit definition for decivolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -1> > >::type decivolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< -1>>>::type decivolt_unit;
       /// Unit definition for volt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  0> > >::type volt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  0>>>::type volt_unit;
       /// Unit definition for dekavolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  1> > >::type dekavolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  1>>>::type dekavolt_unit;
       /// Unit definition for decavolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  1> > >::type decavolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  1>>>::type decavolt_unit;
       /// Unit definition for hectovolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  2> > >::type hectovolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  2>>>::type hectovolt_unit;
       /// Unit definition for kilovolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  3> > >::type kilovolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  3>>>::type kilovolt_unit;
       /// Unit definition for megavolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  6> > >::type megavolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  6>>>::type megavolt_unit;
       /// Unit definition for gigavolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  9> > >::type gigavolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational<  9>>>::type gigavolt_unit;
       /// Unit definition for teravolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 12> > >::type teravolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 12>>>::type teravolt_unit;
       /// Unit definition for petavolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 15> > >::type petavolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 15>>>::type petavolt_unit;
       /// Unit definition for exavolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 18> > >::type exavolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 18>>>::type exavolt_unit;
       /// Unit definition for zettavolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 21> > >::type zettavolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 21>>>::type zettavolt_unit;
       /// Unit definition for yottavolt electric potential.
-      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 24> > >::type yottavolt_unit;
+      typedef make_scaled_unit<si::electric_potential,scale<10,static_rational< 24>>>::type yottavolt_unit;
 
       /// Numeric constant for yoctovolt.
       BOOST_UNITS_STATIC_CONSTANT(yoctovolt, yoctovolt_unit);
