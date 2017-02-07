@@ -39,7 +39,7 @@
 /**
  * @file ome/compat/array.h Array type substitution.
  *
- * @deprecated Use <array>.
+ * @deprecated Use the standard @c array header.
  */
 
 #ifndef OME_COMPAT_ARRAY_H

@@ -39,7 +39,7 @@
 /**
  * @file ome/compat/memory.h Memory type substitution.
  *
- * @deprecated Use <memory>.
+ * @deprecated Use the standard @c memory header.
  */
 
 #ifndef OME_COMPAT_MEMORY_H

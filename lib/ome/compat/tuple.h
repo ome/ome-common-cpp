@@ -39,7 +39,7 @@
 /**
  * @file ome/compat/tuple.h Tuple type substitution.
  *
- * @deprecated Use <tuple>.
+ * @deprecated Use the standard @c tuple header.
  */
 
 #ifndef OME_COMPAT_TUPLE_H
