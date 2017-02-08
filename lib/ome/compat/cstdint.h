@@ -39,7 +39,7 @@
 /**
  * @file ome/compat/cstdint.h Standard integer types.
  *
- * @deprecated Use <cstdint>.
+ * @deprecated Use the standard @c cstdint header.
  */
 
 #ifndef OME_COMPAT_CSTDINT_H
