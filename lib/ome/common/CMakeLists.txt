@@ -142,7 +142,7 @@ target_link_libraries(ome-common
                       ${LibDl_LIBRARIES})
 
 set_target_properties(ome-common PROPERTIES LINKER_LANGUAGE CXX)
-set_target_properties(ome-common PROPERTIES VERSION ${OME_VERSION_SHORT})
+set_target_properties(ome-common PROPERTIES VERSION ${ome-common_VERSION})
 
 add_library(OME::Common ALIAS ome-common)
 
@@ -171,7 +171,7 @@ configure_package_config_file(
   INSTALL_DESTINATION "${ome_common_config_dir}")
 write_basic_package_version_file(
   ${CMAKE_CURRENT_BINARY_DIR}/OMECommonConfigVersion.cmake
-  VERSION "${PROJECT_VERSION}"
+  VERSION "${ome-common_VERSION}"
   COMPATIBILITY SameMajorVersion)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/OMECommonConfig.cmake
               ${CMAKE_CURRENT_BINARY_DIR}/OMECommonConfigVersion.cmake
