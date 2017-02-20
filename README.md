@@ -25,11 +25,7 @@ supported by OME C++ projects.  It currently includes:
 
 - Missing C++ standard library functionality:
 
-  * array
-  * cstdint
-  * memory
   * regex
-  * tuple
 
 - Missing Boost functionality:
 
@@ -63,7 +59,7 @@ Pull request testing
 We welcome pull requests from anyone, but ask that you please verify the
 following before submitting a pull request:
 
- * verify that the branch merges cleanly into ```develop```
+ * verify that the branch merges cleanly into ```master```
  * verify that the branch compiles
  * run the unit tests (```ctest -V```) and correct any failures
  * make sure that your commits contain the correct authorship information and,
