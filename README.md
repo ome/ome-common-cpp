@@ -10,6 +10,11 @@ It serves a similar purpose to the OME formats-common Java library,
 with some shared functionality, though for the most part they are
 quite different.
 
+Links
+-----
+
+- [Documentation] (http://www.openmicroscopy.org/site/support/ome-files-cpp/)
+- [API reference](http://www.openmicroscopy.org/site/support/ome-files-cpp/ome-common/api/html/namespaces.html)
 
 Purpose
 -------
@@ -47,8 +52,9 @@ supported by OME C++ projects.  It currently includes:
 More information
 ----------------
 
-For more information, see the [Bio-Formats C++ web
-site](http://www.openmicroscopy.org/site/support/bio-formats5.2/developers/cpp/overview.html).
+
+For more information, see the [documentation]
+(http://www.openmicroscopy.org/site/support/ome-files-cpp/).
 
 
 Pull request testing
