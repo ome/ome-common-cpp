@@ -10,6 +10,11 @@ It serves a similar purpose to the OME formats-common Java library,
 with some shared functionality, though for the most part they are
 quite different.
 
+Links
+-----
+
+- [Documentation] (http://www.openmicroscopy.org/site/support/ome-files-cpp/)
+- [API reference](http://www.openmicroscopy.org/site/support/ome-files-cpp/ome-common/api/html/namespaces.html)
 
 Purpose
 -------
@@ -20,11 +25,7 @@ supported by OME C++ projects.  It currently includes:
 
 - Missing C++ standard library functionality:
 
-  * array
-  * cstdint
-  * memory
   * regex
-  * tuple
 
 - Missing Boost functionality:
 
@@ -47,8 +48,9 @@ supported by OME C++ projects.  It currently includes:
 More information
 ----------------
 
-For more information, see the [Bio-Formats C++ web
-site](http://www.openmicroscopy.org/site/support/bio-formats5.2/developers/cpp/overview.html).
+
+For more information, see the [documentation]
+(http://www.openmicroscopy.org/site/support/ome-files-cpp/).
 
 
 Pull request testing
@@ -57,7 +59,7 @@ Pull request testing
 We welcome pull requests from anyone, but ask that you please verify the
 following before submitting a pull request:
 
- * verify that the branch merges cleanly into ```develop```
+ * verify that the branch merges cleanly into ```master```
  * verify that the branch compiles
  * run the unit tests (```ctest -V```) and correct any failures
  * make sure that your commits contain the correct authorship information and,
