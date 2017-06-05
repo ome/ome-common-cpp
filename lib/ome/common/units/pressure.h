@@ -377,10 +377,12 @@ namespace ome
   }
 }
 
-/// Conversion factor for pound-force per square inch (psi) to pascal.
+/// @cond SKIP
+// Conversion factor for pound-force per square inch (psi) to pascal.
 BOOST_UNITS_DEFINE_CONVERSION_FACTOR(ome::common::units::psi_base_unit, si::pressure, double, 6894.7573); // exact conversion
-/// Default conversion for pound-force per square inch (psi) to is to SI pressure units (pascals).
+// Default conversion for pound-force per square inch (psi) to is to SI pressure units (pascals).
 BOOST_UNITS_DEFAULT_CONVERSION(ome::common::units::psi_base_unit, si::pressure);
+/// @endcond SKIP
 
 namespace boost
 {
@@ -390,9 +392,15 @@ namespace boost
     /// Unit information for pound-force per square inch (psi).
     template<> struct base_unit_info<ome::common::units::psi_base_unit>
     {
-      /// Unit name.
+      /**
+       * Unit name.
+       * @returns the unit name.
+       */
       static std::string name()   { return "pound-force per square inch"; }
-      /// Unit symbol.
+      /**
+       * Unit symbol.
+       * @returns the unit symbol.
+       */
       static std::string symbol() { return "lbf/in^2"; }
     };
 

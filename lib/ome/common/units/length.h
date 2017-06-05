@@ -581,36 +581,60 @@ namespace boost
     /// Unit information for lines.
     template<> struct base_unit_info<ome::common::units::line_base_unit>
     {
-      /// Unit name.
+      /**
+       * Unit name.
+       * @returns the unit name.
+       */
       static std::string name()   { return "line"; }
-      /// Unit symbol.
+      /**
+       * Unit symbol.
+       * @returns the unit symbol.
+       */
       static std::string symbol() { return "li"; }
     };
 
     /// Unit information for points.
     template<> struct base_unit_info<ome::common::units::point_base_unit>
     {
-      /// Unit name.
+      /**
+       * Unit name.
+       * @returns the unit name.
+       */
       static std::string name()   { return "point"; }
-      /// Unit symbol.
+      /**
+       * Unit symbol.
+       * @returns the unit symbol.
+       */
       static std::string symbol() { return "pt"; }
     };
 
     /// Unit information for pixels.
     template<> struct base_unit_info<ome::common::units::pixel_base_unit>
     {
-      /// Unit name.
+      /**
+       * Unit name.
+       * @returns the unit name.
+       */
       static std::string name()   { return "pixel"; }
-      /// Unit symbol.
+       /**
+       * Unit symbol.
+       * @returns the unit symbol.
+       */
       static std::string symbol() { return "px"; }
     };
 
     /// Unit information for reference frame.
     template<> struct base_unit_info<ome::common::units::reference_frame_base_unit>
     {
-      /// Unit name.
+      /**
+       * Unit name.
+       * @returns the unit name.
+       */
       static std::string name()   { return "reference frame"; }
-      /// Unit symbol.
+      /**
+       * Unit symbol.
+       * @returns the unit symbol.
+       */
       static std::string symbol() { return "r.f."; }
     };
 

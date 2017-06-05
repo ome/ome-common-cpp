@@ -158,6 +158,7 @@ namespace ome
               return !(*this == rhs);
             }
 
+            /// Other specializations of this template are friends.
             friend class NodeList;
 
           private:
