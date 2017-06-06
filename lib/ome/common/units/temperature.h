@@ -138,20 +138,22 @@ namespace ome
   }
 }
 
-/// Conversion factor for Rankine to kelvin.
+/// @cond SKIP
+// Conversion factor for Rankine to kelvin.
 BOOST_UNITS_DEFINE_CONVERSION_FACTOR(ome::common::units::rankine_base_unit, boost::units::si::kelvin_base_unit, double, 5.0 / 9.0); // exact conversion
-/// Conversion offset for Rankine to kelvin.
+// Conversion offset for Rankine to kelvin.
 BOOST_UNITS_DEFINE_CONVERSION_OFFSET(ome::common::units::rankine_base_unit, boost::units::si::kelvin_base_unit, double, 0.0);
-/// Conversion factor for Rankine to Celsius.
+// Conversion factor for Rankine to Celsius.
 BOOST_UNITS_DEFINE_CONVERSION_FACTOR(ome::common::units::rankine_base_unit, boost::units::temperature::celsius_base_unit, double, 5.0 / 9.0); // exact conversion
-/// Conversion offset for Rankine to Celsius.
+// Conversion offset for Rankine to Celsius.
 BOOST_UNITS_DEFINE_CONVERSION_OFFSET(ome::common::units::rankine_base_unit, boost::units::temperature::celsius_base_unit, double, -273.15);
-/// Conversion factor for Rankine to Fahrenheit.
+// Conversion factor for Rankine to Fahrenheit.
 BOOST_UNITS_DEFINE_CONVERSION_FACTOR(ome::common::units::rankine_base_unit, boost::units::temperature::fahrenheit_base_unit, one, make_one()); // exact conversion
-/// Conversion offset for Rankine to Fahrenheit.
+// Conversion offset for Rankine to Fahrenheit.
 BOOST_UNITS_DEFINE_CONVERSION_OFFSET(ome::common::units::rankine_base_unit, boost::units::temperature::fahrenheit_base_unit, double, -459.67);
-/// Default conversion for Rankine is to SI temperature units (kelvin).
+// Default conversion for Rankine is to SI temperature units (kelvin).
 BOOST_UNITS_DEFAULT_CONVERSION(ome::common::units::rankine_base_unit, boost::units::si::kelvin_base_unit);
+/// @endcond SKIP
 
 namespace boost
 {
@@ -161,9 +163,15 @@ namespace boost
     /// Unit information for Rankine.
     template<> struct base_unit_info<ome::common::units::rankine_base_unit>
     {
-      /// Unit name.
+      /**
+       * Unit name.
+       * @returns the unit name.
+       */
       static std::string name()   { return "rankine"; }
-      /// Unit symbol.
+      /**
+       * Unit symbol.
+       * @returns the unit symbol.
+       */
       static std::string symbol() { return "R"; }
     };
 
