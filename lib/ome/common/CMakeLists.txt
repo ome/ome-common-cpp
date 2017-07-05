@@ -130,6 +130,7 @@ target_include_directories(ome-common PUBLIC
 
 target_link_libraries(ome-common
                       PUBLIC
+                      Threads::Threads
                       OME::Compat
                       Boost::log_setup
                       Boost::log

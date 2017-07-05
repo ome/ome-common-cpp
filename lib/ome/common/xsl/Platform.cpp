@@ -45,7 +45,7 @@ namespace ome
     namespace xsl
     {
 
-      boost::mutex Platform::mutex;
+      std::mutex Platform::mutex;
 
       uint32_t Platform::refcount = 0;
 

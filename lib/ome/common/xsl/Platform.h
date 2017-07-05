@@ -41,7 +41,7 @@
 
 #include <cstdint>
 
-#include <boost/thread.hpp>
+#include <mutex>
 
 #include <ome/common/xml/Platform.h>
 
@@ -90,7 +90,7 @@ namespace ome
 	  xmlplatform(),
           skip(skip)
         {
-	  boost::lock_guard<boost::mutex> lock(mutex);
+	  std::lock_guard<std::mutex> lock(mutex);
 
           // Only call initialize for first instance.
           if (refcount == 0 && !skip)
@@ -103,7 +103,7 @@ namespace ome
          */
         ~Platform()
         {
-	  boost::lock_guard<boost::mutex> lock(mutex);
+	  std::lock_guard<std::mutex> lock(mutex);
 
           // Only call terminate for last instance.
           // refcount will never be zero at this point.
@@ -118,7 +118,7 @@ namespace ome
         /// Skip initialize and terminate calls.
         bool skip;
         /// Mutex to lock libxalan access.
-        static boost::mutex mutex;
+        static std::mutex mutex;
         /// Reference count.
         static uint32_t refcount;
       };

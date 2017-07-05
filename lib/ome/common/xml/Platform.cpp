@@ -45,7 +45,7 @@ namespace ome
     namespace xml
     {
 
-      boost::mutex Platform::mutex;
+      std::mutex Platform::mutex;
 
     }
   }

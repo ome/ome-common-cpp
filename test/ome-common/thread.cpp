@@ -36,7 +36,9 @@
  * #L%
  */
 
-#include <boost/thread.hpp>
+#include <functional>
+#include <mutex>
+#include <thread>
 
 #include <ome/test/test.h>
 
@@ -54,7 +56,7 @@ namespace
     int a;
     int b;
     int value;
-    boost::mutex value_guard;
+    std::mutex value_guard;
 
   public:
     threadtest2(int a, int b):
@@ -66,13 +68,13 @@ namespace
 
     void operator() ()
     {
-      boost::lock_guard<boost::mutex> lock(value_guard);
+      std::lock_guard<std::mutex> lock(value_guard);
       value = a + b;
     }
 
     int result()
     {
-      boost::lock_guard<boost::mutex> lock(value_guard);
+      std::lock_guard<std::mutex> lock(value_guard);
       return value;
     }
   };
@@ -81,15 +83,16 @@ namespace
 
 TEST(Mutex, LockGuard)
 {
-  boost::mutex m;
-  boost::lock_guard<boost::mutex> lock(m);
+  std::mutex m;
+  std::lock_guard<std::mutex> lock(m);
 }
 
 // Create thread from bare function.  Note: Could also have been a
 // static class method.
 TEST(Thread, Function)
 {
-  boost::thread foo(threadtest1);
+  std::thread foo(threadtest1);
+  foo.join();
 }
 
 // Create thread from function object.  Check state after join and use
@@ -98,9 +101,9 @@ TEST(Thread, Object)
 {
   threadtest2 t(4,55);
 
-  // Note that boost::ref avoids a copy of the functor so the result
+  // Note that std::ref avoids a copy of the functor so the result
   // is set in the same object.
-  boost::thread foo(boost::ref(t));
+  std::thread foo(std::ref(t));
   foo.join();
 
   ASSERT_EQ(59, t.result());

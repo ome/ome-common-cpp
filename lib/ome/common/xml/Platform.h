@@ -39,7 +39,7 @@
 #ifndef OME_COMMON_XML_PLATFORM_H
 #define OME_COMMON_XML_PLATFORM_H
 
-#include <boost/thread.hpp>
+#include <mutex>
 
 #include <xercesc/util/PlatformUtils.hpp>
 
@@ -76,7 +76,7 @@ namespace ome
          */
         Platform()
         {
-	  boost::lock_guard<boost::mutex> lock(mutex);
+	  std::lock_guard<std::mutex> lock(mutex);
 
           xercesc::XMLPlatformUtils::Initialize();
         }
@@ -87,13 +87,13 @@ namespace ome
         inline
         ~Platform()
         {
-	  boost::lock_guard<boost::mutex> lock(mutex);
+	  std::lock_guard<std::mutex> lock(mutex);
 
           xercesc::XMLPlatformUtils::Terminate();
         }
 
 	/// Mutex to lock libxerces access.
-        static boost::mutex mutex;
+        static std::mutex mutex;
       };
 
     }
