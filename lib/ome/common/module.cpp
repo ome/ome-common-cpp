@@ -480,7 +480,7 @@ namespace ome
                 }
             }
         }
-      boost::format fmt("Could not determine Bio-Formats runtime path for “%1%” directory");
+      boost::format fmt("Could not determine runtime path for “%1%” directory");
       fmt % dtype;
       throw std::runtime_error(fmt.str());
     }
