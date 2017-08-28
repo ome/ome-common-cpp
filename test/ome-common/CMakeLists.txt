@@ -1,5 +1,5 @@
 # #%L
-# Bio-Formats C++ libraries (cmake build infrastructure)
+# OME C++ libraries (cmake build infrastructure)
 # %%
 # Copyright © 2006 - 2015 Open Microscopy Environment:
 #   - Massachusetts Institute of Technology
@@ -77,7 +77,7 @@ if(BUILD_TESTS)
   ome_add_test(ome-common/mstream mstream)
 
   add_executable(thread thread.cpp)
-  target_link_libraries(thread OME::Common ${THREAD_LIBRARY})
+  target_link_libraries(thread OME::Common Threads::Threads)
   target_link_libraries(thread OME::Test)
 
   ome_add_test(ome-common/thread thread)
