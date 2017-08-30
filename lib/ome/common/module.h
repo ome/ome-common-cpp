@@ -50,6 +50,7 @@
 #include <boost/filesystem/path.hpp>
 
 #include <ome/common/config.h>
+#include <ome/common/filesystem.h>
 
 /**
  * Open Microscopy Environment C++.
@@ -243,7 +244,7 @@ namespace
   module_path()
   {
     if (this_module.dli_fname)
-      return boost::filesystem::canonical(boost::filesystem::path(this_module.dli_fname));
+      return canonical(boost::filesystem::path(this_module.dli_fname));
     return boost::filesystem::path();
   }
 #elif _MSC_VER
