@@ -128,12 +128,17 @@ target_include_directories(ome-common PUBLIC
                            $<BUILD_INTERFACE:${LibDl_INCLUDE_DIRS}>
                            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
+if(OME_HAVE_BOOST_LOG)
+  set(log_libraries
+      Boost::log_setup
+      Boost::log)
+endif()
+
 target_link_libraries(ome-common
                       PUBLIC
                       Threads::Threads
                       OME::Compat
-                      Boost::log_setup
-                      Boost::log
+                      ${log_libraries}
                       Boost::iostreams
                       Boost::filesystem
                       Boost::system

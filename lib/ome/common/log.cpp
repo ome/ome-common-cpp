@@ -63,10 +63,12 @@ namespace ome
     setLogLevel(logging::trivial::severity_level severity)
     {
       globalSeverity = severity;
+#ifdef OME_HAVE_BOOST_LOG
       ome::logging::core::get()->set_filter
         (
          ome::logging::trivial::severity >= severity
          );
+#endif // OME_HAVE_BOOST_LOG
     }
 
     logging::trivial::severity_level

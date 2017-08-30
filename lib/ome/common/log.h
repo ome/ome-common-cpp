@@ -51,6 +51,7 @@
 
 #include <ome/common/config.h>
 
+#ifdef OME_HAVE_BOOST_LOG
 #define BOOST_LOG_DYN_LINK
 #include <boost/log/core.hpp>
 #include <boost/log/trivial.hpp>
@@ -58,15 +59,41 @@
 #include <boost/log/sources/severity_logger.hpp>
 #include <boost/log/sources/severity_feature.hpp>
 #include <boost/log/attributes/constant.hpp>
+#else // ! OME_HAVE_BOOST_LOG
+// For std::clog
+#include <iostream>
+#endif // OME_HAVE_BOOST_LOG
 
 namespace ome
 {
 
+#ifdef OME_HAVE_BOOST_LOG
   namespace logging = boost::log;
+#else
+  namespace logging
+  {
+    namespace trivial
+    {
+
+      /// Trivial severity levels
+      enum severity_level
+        {
+          trace,   ///< Trace
+          debug,   ///< Debug
+          info,    ///< Information
+          warning, ///< Warning
+          error,   ///< Error
+          fatal    ///< Fatal error
+        };
+
+    }
+  }
+#endif // OME_HAVE_BOOST_LOG
 
   namespace common
   {
 
+#ifdef OME_HAVE_BOOST_LOG
     /// Message logger.
     typedef logging::sources::severity_logger_mt<logging::trivial::severity_level> Logger;
 
@@ -84,6 +111,113 @@ namespace ome
       logger.add_attribute("ClassName", logging::attributes::constant<std::string>(className));
       return logger;
     }
+#else // ! OME_HAVE_BOOST_LOG
+    class Logger
+    {
+    private:
+      /// Class name.
+      std::string klass;
+
+    public:
+      /**
+       * Constructor.
+       *
+       * @param className the class name.
+       */
+      Logger(const std::string& className):
+        klass(className)
+      {}
+
+      void
+      className(const std::string& className)
+      {
+        this->klass = className;
+      }
+
+      const std::string&
+      className() const
+      {
+        return this->klass;
+      }
+    };
+
+    // No switch default to avoid -Wunreachable-code errors.
+    // However, this then makes -Wswitch-default complain.  Disable
+    // temporarily.
+#ifdef __GNUC__
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wswitch-default"
+#endif
+
+    class LogMessage
+    {
+    private:
+      std::ostream& ostream;
+      logging::trivial::severity_level severity;
+
+    public:
+      LogMessage(std::ostream& ostream,
+                 logging::trivial::severity_level severity):
+        ostream(ostream),
+        severity(severity)
+      {
+        const char * sevstr;
+        switch(severity)
+          {
+          case logging::trivial:: trace:
+            sevstr = "trace";
+            break;
+          case logging::trivial:: debug:
+            sevstr = "debug";
+            break;
+          case logging::trivial:: info:
+            sevstr = "info";
+            break;
+          case logging::trivial:: warning:
+            sevstr = "warning";
+            break;
+          case logging::trivial:: error:
+            sevstr = "error";
+            break;
+          case logging::trivial:: fatal:
+            sevstr = "fatal";
+            break;
+          }
+
+        ostream << '[' << sevstr << "] ";
+      }
+
+      ~LogMessage()
+      {
+        try
+          {
+            ostream << '\n';
+          }
+        catch (...)
+          {
+          }
+      }
+
+      std::ostream&
+      stream()
+      {
+        return ostream;
+      }
+    };
+
+#ifdef __GNUC__
+#  pragma GCC diagnostic pop
+#endif
+
+    inline
+    Logger
+    createLogger(const std::string& className)
+    {
+      Logger logger(className);
+      return logger;
+    }
+
+#endif // OME_HAVE_BOOST_LOG
 
     /**
      * Set global logging level.
@@ -110,6 +244,13 @@ namespace ome
 
   }
 }
+
+/// Fallback if Boost.Log is missing.
+#ifndef OME_HAVE_BOOST_LOG
+#define BOOST_LOG_SEV(logger, severity)\
+  if (severity >= ome::common::getLogLevel())\
+    ome::common::LogMessage(std::clog, severity).stream() << logger.className() << ": "
+#endif // !OME_HAVE_BOOST_LOG
 
 #endif // OME_COMMON_LOG_H
 

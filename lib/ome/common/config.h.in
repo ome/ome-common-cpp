@@ -44,6 +44,7 @@
 #cmakedefine OME_HAVE_REGEX 1
 #cmakedefine OME_HAVE_TR1_REGEX 1
 #cmakedefine OME_HAVE_BOOST_REGEX 1
+#cmakedefine OME_HAVE_BOOST_LOG 1
 #cmakedefine OME_HAVE_SNPRINTF 1
 #cmakedefine OME_VARIANT_LIMIT 1
 #cmakedefine OME_HAVE_DLADDR 1
