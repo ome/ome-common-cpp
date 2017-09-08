@@ -47,6 +47,8 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/format.hpp>
 
+#include <ome/common/filesystem.h>
+
 #include <ome/common/xml/EntityResolver.h>
 #include <ome/common/xml/String.h>
 
@@ -202,7 +204,7 @@ namespace ome
 
 	ome::common::xml::Platform platform;
 
-        pending.push_back(boost::filesystem::canonical(catalog));
+        pending.push_back(ome::common::canonical(catalog));
 
         while(!pending.empty())
           {
@@ -246,9 +248,9 @@ namespace ome
                                     BOOST_LOG_SEV(logger, ome::logging::trivial::debug)
 
                                       << "Registering " << static_cast<std::string>(e.getAttribute("name"))
-                                      << " as " << boost::filesystem::canonical(newid);
+                                      << " as " << ome::common::canonical(newid);
                                     registerEntity(static_cast<std::string>(e.getAttribute("name")),
-                                                   boost::filesystem::canonical(newid));
+                                                   ome::common::canonical(newid));
                                   }
                               }
                             if (e.getTagName() == "nextCatalog")
@@ -256,7 +258,7 @@ namespace ome
                                 if (e.hasAttribute("catalog"))
                                   {
                                     boost::filesystem::path newcatalog(currentdir / static_cast<std::string>(e.getAttribute("catalog")));
-                                    pending.push_back(boost::filesystem::canonical(newcatalog));
+                                    pending.push_back(ome::common::canonical(newcatalog));
                                   }
                               }
                           }

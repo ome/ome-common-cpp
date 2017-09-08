@@ -55,8 +55,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/parsers/XercesDOMParser.hpp>
 
-#include <ome/common/filesystem.h>
-
 #include <ome/common/xml/dom/Element.h>
 #include <ome/common/xml/dom/NodeList.h>
 #include <ome/common/xml/dom/Wrapper.h>
