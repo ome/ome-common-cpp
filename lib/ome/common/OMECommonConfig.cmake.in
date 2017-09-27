@@ -1,12 +1,12 @@
 @PACKAGE_INIT@
 
 include(CMakeFindDependencyMacro)
-find_dependency(OMECompat REQUIRED)
-find_dependency(Boost 1.46 REQUIRED
+find_dependency(OMECompat)
+find_dependency(Boost 1.46
                 COMPONENTS date_time filesystem system iostreams
                 program_options regex @OME_COMMON_OPTIONAL_BOOST_COMPONENTS@)
-find_dependency(XercesC 3.0.0 REQUIRED)
-find_dependency(XalanC 1.10 REQUIRED)
+find_dependency(XercesC 3.0.0)
+find_dependency(XalanC 1.10)
 
 include("${CMAKE_CURRENT_LIST_DIR}/OMECommonInternal.cmake")
 
