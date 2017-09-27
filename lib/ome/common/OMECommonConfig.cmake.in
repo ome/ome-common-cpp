@@ -4,7 +4,7 @@ include(CMakeFindDependencyMacro)
 find_dependency(OMECompat REQUIRED)
 find_dependency(Boost 1.46 REQUIRED
                 COMPONENTS date_time filesystem system iostreams
-                program_options regex)
+                program_options regex @OME_COMMON_OPTIONAL_BOOST_COMPONENTS@)
 find_dependency(XercesC 3.0.0 REQUIRED)
 find_dependency(XalanC 1.10 REQUIRED)
 
