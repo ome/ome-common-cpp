@@ -132,6 +132,7 @@ if(OME_HAVE_BOOST_LOG)
   set(log_libraries
       Boost::log_setup
       Boost::log)
+  set(OME_COMMON_OPTIONAL_BOOST_COMPONENTS "log_setup log")
 endif()
 
 target_link_libraries(ome-common
