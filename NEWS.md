@@ -62,4 +62,4 @@
 * Add support for Boost 1.60 ([#4](https://github.com/ome/ome-common-cpp/pull/4))
 * Add Xalan-C support ([#7](https://github.com/ome/ome-common-cpp/pull/7))
 * Rename all uses of bioformats to ome-common ([#10](https://github.com/ome/ome-common-cpp/pull/10))
-* Add source-archive script to generate a source release ([#12](https://github.com/ome/ome-common-cpp/pull/12), [#13](https://github.com/ome/ome-common-cpp/pull/13), [#14](https://github.com/ome/ome-common-cpp/pull/14))
+* Add `source-archive` script to generate a source release ([#12](https://github.com/ome/ome-common-cpp/pull/12), [#13](https://github.com/ome/ome-common-cpp/pull/13), [#14](https://github.com/ome/ome-common-cpp/pull/14))
