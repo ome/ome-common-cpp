@@ -1,5 +1,12 @@
-5.5.0 (2017-10-20)
+5.5.0 (2017-11-27)
 ------------------
+
+* Use CMP0067 to enable standard setting in feature tests ([#47](https://github.com/ome/ome-common-cpp/pull/47))
+* CMake 3.4 is the minimum version ([#48](https://github.com/ome/ome-common-cpp/pull/48))
+* Use C++11 <thread> and <mutex> ([#46](https://github.com/ome/ome-common-cpp/pull/46))
+* Restore support for Boost 1.53 ([#49](https://github.com/ome/ome-common-cpp/pull/49))
+* Add support for Boost 1.65 and 1.65.1 ([#50](https://github.com/ome/ome-common-cpp/pull/50))
+* Conditionally add log and log_setup to exported configuration ([#51](https://github.com/ome/ome-common-cpp/pull/51))
 
 5.4.2 (2017-06-12)
 ------------------
