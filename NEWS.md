@@ -1,4 +1,4 @@
-5.5.0 (2017-11-27)
+5.5.0 (2017-11-28)
 ------------------
 
 * Use CMP0067 to enable standard setting in feature tests ([#47](https://github.com/ome/ome-common-cpp/pull/47))
