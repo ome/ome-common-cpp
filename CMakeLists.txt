@@ -53,7 +53,7 @@ list(APPEND CMAKE_MODULE_PATH
      "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 set(release-name "ome-common-cpp")
-set(release-version "5.4.2")
+set(release-version "5.5.0")
 project(ome-common
         VERSION "${release-version}"
         LANGUAGES CXX)
