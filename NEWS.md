@@ -7,6 +7,7 @@
 * Restore support for Boost 1.53 ([#49](https://github.com/ome/ome-common-cpp/pull/49))
 * Add support for Boost 1.65 and 1.65.1 ([#50](https://github.com/ome/ome-common-cpp/pull/50))
 * Conditionally add `Boost::log` and `Boost::log_setup` to exported configuration ([#51](https://github.com/ome/ome-common-cpp/pull/51))
+* Drop embedded copies of FindBoost, FindXalanC and FindXercesC ([#53](https://github.com/ome/ome-common-cpp/pull/53))
 
 5.4.2 (2017-06-12)
 ------------------
