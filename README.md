@@ -13,8 +13,8 @@ quite different.
 Links
 -----
 
-- [Documentation] (http://www.openmicroscopy.org/site/support/ome-files-cpp/)
-- [API reference](http://www.openmicroscopy.org/site/support/ome-files-cpp/ome-common/api/html/namespaces.html)
+- [Documentation](https://docs.openmicroscopy.org/latest/ome-files-cpp/)
+- [API reference](https://docs.openmicroscopy.org/latest/ome-files-cpp/ome-common/api/html/namespaces.html)
 
 Purpose
 -------
@@ -49,8 +49,7 @@ More information
 ----------------
 
 
-For more information, see the [documentation]
-(http://www.openmicroscopy.org/site/support/ome-files-cpp/).
+For more information, see the [documentation](https://docs.openmicroscopy.org/latest/ome-files-cpp/).
 
 
 Pull request testing
