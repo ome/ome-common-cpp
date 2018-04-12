@@ -40,9 +40,10 @@ cmake_policy(VERSION 3.4.0)
 # For MSVC and FindThreads, respectively.
 enable_language(CXX C)
 
-# Enable C++11 support universally, with C++14 where available
+# Require C++14 support
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 endif()
 # Enable C99 support universally
 if(NOT CMAKE_C_STANDARD)
