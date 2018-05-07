@@ -39,7 +39,15 @@ set(ome_compat_headers
     cstdint.h
     memory.h
     regex.h
-    tuple.h)
+    tuple.h
+    variant.h)
+
+set(ome_compat_detail_headers
+    detail/variant.hpp)
+
+set(ome_compat_all_headers
+    ${ome_compat_headers}
+    ${ome_compat_detail_headers})
 
 add_library(ome-compat INTERFACE)
 
@@ -91,6 +99,9 @@ set(ome_compat_includedir "${CMAKE_INSTALL_INCLUDEDIR}/ome/compat")
 install(FILES ${ome_compat_headers}
         DESTINATION ${ome_compat_includedir}
         COMPONENT "development")
+install(FILES ${ome_compat_detail_headers}
+        DESTINATION ${ome_compat_includedir}/detail
+        COMPONENT "development")
 
 # Dump header list for testing
-header_include_list_write(ome_compat_headers "" ome/compat ${PROJECT_BINARY_DIR}/test/ome-compat)
+header_include_list_write(ome_compat_all_headers "" ome/compat ${PROJECT_BINARY_DIR}/test/ome-compat)

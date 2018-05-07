@@ -104,11 +104,11 @@ if(BUILD_TESTS)
 
   ome_add_test(ome-common/units units)
 
-  add_executable(variant variant.cpp)
-  target_link_libraries(variant OME::Common)
-  target_link_libraries(variant OME::Test)
+  add_executable(boost-variant variant.cpp)
+  target_link_libraries(boost-variant OME::Common)
+  target_link_libraries(boost-variant OME::Test)
 
-  ome_add_test(ome-common/variant variant)
+  ome_add_test(ome-common/boost-variant boost-variant)
 
   add_executable(xerces xerces.cpp)
   target_link_libraries(xerces OME::Common)

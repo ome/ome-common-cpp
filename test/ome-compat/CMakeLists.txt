@@ -70,4 +70,10 @@ if(BUILD_TESTS)
 
   ome_add_test(ome-compat/tuple tuple)
 
+  add_executable(variant variant.cpp)
+  target_link_libraries(variant OME::Compat)
+  target_link_libraries(variant OME::Test)
+
+  ome_add_test(ome-compat/variant variant)
+
 endif(BUILD_TESTS)
